@@ -96,5 +96,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Prisijungti"
 
+[node name="domantai kentekk nuo merge conflicto" type="Control" parent="MarginContainer" unique_id=1924612537]
+layout_mode = 2
+
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/HBoxContainer/login" to="MarginContainer/MainLayout/MainView" method="openLoginPage"]
 [connection signal="pressed" from="MarginContainer/MainLayout/LoginView/VSplitContainer/Button" to="MarginContainer/MainLayout/LoginView" method="submit"]
