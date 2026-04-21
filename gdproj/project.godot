@@ -14,3 +14,7 @@ config/name="galactic-travels"
 run/main_scene="uid://b52lgsphrb5qp"
 config/features=PackedStringArray("4.6")
 config/icon="res://icon.svg"
+
+[autoload]
+
+_userController="*uid://csnnnpi1nygr1"

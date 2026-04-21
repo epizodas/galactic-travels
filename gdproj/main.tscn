@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://b52lgsphrb5qp"]
 
 [ext_resource type="Script" uid="uid://d0lh5npqmfc22" path="res://testing.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://c611brv4ynr1a" path="res://Views/MainView.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://dvb58rayqwfq3" path="res://Views/LoginView.gd" id="3_h2yge"]
 
 [node name="Control" type="Control" unique_id=229342197]
 layout_mode = 3
@@ -10,3 +12,89 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ig7tw")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=244534756]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="MainLayout" type="PanelContainer" parent="MarginContainer" unique_id=257309348]
+layout_mode = 2
+
+[node name="MainView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1666998233]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("2_0xm2m")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView" unique_id=881821649]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/MainLayout/MainView/VBoxContainer" unique_id=933677266]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer" unique_id=1495023897]
+layout_mode = 2
+
+[node name="login" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/HBoxContainer" unique_id=1014332067]
+layout_mode = 2
+text = "Prisijungti	"
+
+[node name="register" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/HBoxContainer" unique_id=1380207455]
+layout_mode = 2
+text = "Registruotis
+"
+
+[node name="LoginView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1013348188]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("3_h2yge")
+
+[node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer/MainLayout/LoginView" unique_id=565560901]
+layout_mode = 2
+size_flags_vertical = 0
+split_offsets = PackedInt32Array(0, 0)
+
+[node name="UsernameInput" type="HSplitContainer" parent="MarginContainer/MainLayout/LoginView/VSplitContainer" unique_id=296201375]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/LoginView/VSplitContainer/UsernameInput" unique_id=997721118]
+layout_mode = 2
+text = "Vartotojo vardas"
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/MainLayout/LoginView/VSplitContainer/UsernameInput" unique_id=1340284367]
+layout_mode = 2
+
+[node name="PasswordInput" type="HSplitContainer" parent="MarginContainer/MainLayout/LoginView/VSplitContainer" unique_id=1421588263]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/LoginView/VSplitContainer/PasswordInput" unique_id=157412813]
+layout_mode = 2
+text = "Slaptažodis"
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/MainLayout/LoginView/VSplitContainer/PasswordInput" unique_id=832050020]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/MainLayout/LoginView/VSplitContainer" unique_id=2132042769]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Prisijungti"
+
+[connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/HBoxContainer/login" to="MarginContainer/MainLayout/MainView" method="openLoginPage"]
+[connection signal="pressed" from="MarginContainer/MainLayout/LoginView/VSplitContainer/Button" to="MarginContainer/MainLayout/LoginView" method="submit"]
