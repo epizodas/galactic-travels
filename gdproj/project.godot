@@ -18,3 +18,4 @@ config/icon="res://icon.svg"
 [autoload]
 
 _userController="*uid://csnnnpi1nygr1"
+_spaceshipController="*uid://b53fjjcd7uufr"

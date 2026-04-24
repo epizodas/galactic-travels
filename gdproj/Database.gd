@@ -10,8 +10,8 @@ static func init():
 	if ResourceLoader.exists(db.path):
 		hasDb = true
 	db.open_db()
-	if !hasDb:
-		_setup_database()
+	#if !hasDb:
+	_setup_database()
 	pass
 
 static func _setup_database() -> void:
@@ -105,18 +105,18 @@ static func _setup_database() -> void:
 		"order_id":{"data_type": "int"},
 	})
 	
-	db.create_table("spaceships", {
+	db.create_table("spaceship", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
 		"code": {"data_type": "text"},
 		"name": {"data_type": "text"},
 		"speed": {"data_type": "real"},
-		"max_temperature": {"data_type": "real"},
-		"baggage_length": {"data_type": "real"},
-		"baggage_width": {"data_type": "real"},
-		"spaceship_category_id": {"data_type": "int"},
-		"fuel_capacity": {"data_type": "real"},
-		"fuel_usage": {"data_type": "real"},
-		"module_capacity": {"data_type": "int"},
+		"maxTemp": {"data_type": "real"},
+		"cargoLength": {"data_type": "real"},
+		"cargoWidth": {"data_type": "real"},
+		"category": {"data_type": "int"},
+		"fuelCapacity": {"data_type": "real"},
+		"fuelUsage": {"data_type": "real"},
+		"moduleCapacity": {"data_type": "int"},
 	
 		"hangar_id":{"data_type": "int"},
 	})

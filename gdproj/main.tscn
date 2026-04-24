@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d0lh5npqmfc22" path="res://testing.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://c611brv4ynr1a" path="res://Views/MainView.gd" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://dvb58rayqwfq3" path="res://Views/LoginView.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://d0e5bffu564xi" path="res://Views/SpaceshipView.gd" id="4_1bvp3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13
@@ -33,6 +34,7 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 
 [node name="MainView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1666998233]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -205,6 +207,44 @@ offset_bottom = 31.0
 grow_horizontal = 0
 size_flags_horizontal = 4
 text = "Pamiršote slaptažodį?"
+
+[node name="SpaceshipView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=137253772]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("4_1bvp3")
+
+[node name="SpaceObjects" type="VBoxContainer" parent="MarginContainer/MainLayout/SpaceshipView" unique_id=1689436751]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/SpaceshipView/SpaceObjects" unique_id=622380231]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/HBoxContainer" unique_id=1448268185]
+layout_mode = 2
+text = "Erdvėlaiviai"
+
+[node name="spacer" type="Control" parent="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/HBoxContainer" unique_id=32966889]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AddSpaceship" type="Button" parent="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/HBoxContainer" unique_id=1897165717]
+layout_mode = 2
+text = "Pridėti erdvėlaivį"
+
+[node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/SpaceshipView/SpaceObjects" unique_id=1324012666]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/container" unique_id=596215108]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/container/ScrollContainer" unique_id=1455045573]
+layout_mode = 2
 
 [connection signal="about_to_popup" from="MarginContainer/MainLayout/MainView/VBoxContainer/Navbar/UserAccountDropdown" to="MarginContainer/MainLayout/MainView" method="openUserDropdown"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar/login" to="MarginContainer/MainLayout/MainView" method="openLoginPage"]
