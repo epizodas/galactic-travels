@@ -1,15 +1,6 @@
+extends SpaceBody
 class_name Planet
 
-var name: String
-var mass: float
-var temp: float
-var radius: float
-var color: float
-var orbitXOffset: float
-var orbitYOffset: float
-var orbitalPeriod: float
-var orbitalRadius: float
-var phase: float
 var atmHeight: float
 var atmDensity: float
 
@@ -27,15 +18,17 @@ func _init(
 	p_atmHeight: float,
 	p_atmDensity: float
 ) -> void:
-	name = p_name
-	mass = p_mass
-	temp = p_temp
-	radius = p_radius
-	color = p_color
-	orbitXOffset = p_orbitXOffset
-	orbitYOffset = p_orbitYOffset
-	orbitalPeriod = p_orbitalPeriod
-	orbitalRadius = p_orbitalRadius
-	phase = p_phase
+	super._init(
+		p_name, 
+		p_mass, 
+		p_temp, 
+		p_radius, 
+		p_color, 
+		p_orbitXOffset, 
+		p_orbitYOffset, 
+		p_orbitalPeriod, 
+		p_orbitalRadius, 
+		p_phase
+	)
 	atmHeight = p_atmHeight
 	atmDensity = p_atmDensity

@@ -150,7 +150,7 @@ static func _setup_database() -> void:
 		#planet id turi ig
 	})
 	
-	db.create_table("planets", {
+	db.create_table("spacebodies", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
 		"name": {"data_type": "string"},
 		"mass": {"data_type": "float"},
@@ -166,17 +166,7 @@ static func _setup_database() -> void:
 	
 	db.create_table("planets", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
-		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
-		"name": {"data_type": "string"},
-		"mass": {"data_type": "float"},
-		"temp": {"data_type": "float"},
-		"radius": {"data_type": "float"},
-		"color": {"data_type": "string"},
-		"orbitXOffset": {"data_type": "float"},
-		"orbitYOffset": {"data_type": "float"},
-		"orbitalPeriod": {"data_type": "float"},
-		"orbitalRadius": {"data_type": "float"},
-		"phase": {"data_type": "float"},
+		"planet_id": {"data_type": "int", "not_null": true},
 		"atmHeight": {"data_type": "float"},
 		"atmDensity": {"data_type": "float"},
 	})
