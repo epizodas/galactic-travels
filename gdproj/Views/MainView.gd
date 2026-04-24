@@ -28,6 +28,8 @@ func displayMainPage() -> void:
 	var LoginViewRef = get_tree().current_scene.find_child("LoginView") as LoginView
 	LoginViewRef.visible = false
 	self.visible = true
+	for child in $VBoxContainer/Placeholder.get_children() as Array[Control]:
+		child.visible = false
 	if _userController.loggedInUser:
 		$VBoxContainer/LoginBar.visible = false
 		var roleName = ""
@@ -36,6 +38,7 @@ func displayMainPage() -> void:
 				roleName = "Klientas"
 			2:
 				roleName = "Skrydžio koordinatorius"
+				$VBoxContainer/Placeholder/CoordinatorView.visible = true
 			3:
 				roleName = "Administratorius"
 		$VBoxContainer/Navbar/UserAccountDropdown.text = roleName

@@ -56,7 +56,8 @@ text = "Svečias"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder" unique_id=622064877]
+[node name="CoordinatorView" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder" unique_id=622064877]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,70 +65,70 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer" unique_id=1409902882]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView" unique_id=1409902882]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer" unique_id=1630901384]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer" unique_id=1630901384]
 layout_mode = 2
 
-[node name="Vykdyti kelionę" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer" unique_id=1066983907]
+[node name="Vykdyti kelionę" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer" unique_id=1066983907]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Vykdyti kelionę"
 
-[node name="SpaceObjects" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer" unique_id=762786320]
+[node name="SpaceObjects" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer" unique_id=762786320]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects" unique_id=200347287]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/SpaceObjects" unique_id=200347287]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects/HBoxContainer" unique_id=367848389]
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/SpaceObjects/HBoxContainer" unique_id=367848389]
 layout_mode = 2
 text = "Planetos"
 
-[node name="spacer" type="Control" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects/HBoxContainer" unique_id=293369060]
+[node name="spacer" type="Control" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/SpaceObjects/HBoxContainer" unique_id=293369060]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="AddPlanet" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects/HBoxContainer" unique_id=995410915]
+[node name="AddPlanet" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/SpaceObjects/HBoxContainer" unique_id=995410915]
 layout_mode = 2
 text = "Pridėti planetą"
 
-[node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects" unique_id=1973162567]
+[node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/SpaceObjects" unique_id=1973162567]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects/container" unique_id=1548287043]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/SpaceObjects/container" unique_id=1548287043]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects/container/ScrollContainer" unique_id=346363207]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/SpaceObjects/container/ScrollContainer" unique_id=346363207]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Pilots" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer" unique_id=6832587]
+[node name="Pilots" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer" unique_id=6832587]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/Pilots" unique_id=851670066]
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/Pilots" unique_id=851670066]
 layout_mode = 2
 text = "Pilotai"
 
-[node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/Pilots" unique_id=1141790896]
+[node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/Pilots" unique_id=1141790896]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/Pilots/container" unique_id=841473593]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/Pilots/container" unique_id=841473593]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/Pilots/container/ScrollContainer" unique_id=743705628]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/Pilots/container/ScrollContainer" unique_id=743705628]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
