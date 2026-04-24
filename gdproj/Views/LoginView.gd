@@ -8,5 +8,9 @@ func displayLoginPage():
 	pass
 	
 func submit():
-	_userController.validate()
+	var username = $VBoxContainer/UsernameInput/LineEdit.text
+	var password = $VBoxContainer/PasswordInput/LineEdit.text
+	var errMsg = _userController.validate(username, password)
+	if errMsg != "":
+		$VBoxContainer/Error.text = errMsg
 	pass

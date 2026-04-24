@@ -6,8 +6,12 @@ static var db : SQLite
 static func init():
 	db = SQLite.new()
 	db.path="res://data.db"
+	var hasDb = false
+	if ResourceLoader.exists(db.path):
+		hasDb = true
 	db.open_db()
-	_setup_database()
+	if !hasDb:
+		_setup_database()
 	pass
 
 static func _setup_database() -> void:
@@ -68,11 +72,18 @@ static func _setup_database() -> void:
 		"user_role_id": {"data_type": "int"}
 	})
 	
-	db.insert_row("users", {"id": 1, 
-		"username":"test_admin", 
-		"password": "abc", 
-		"email": "a@a.com",
-		"user_role_id": 1
+	db.insert_row("users", {
+		"username":"admin", 
+		"password": "admin.pass", 
+		"email": "admin@example.com",
+		"user_role_id": 3
+	})
+	
+	db.insert_row("users", {
+		"username":"coord", 
+		"password": "coord.passw", 
+		"email": "coordinator@example.com",
+		"user_role_id": 2
 	})
 	
 	db.create_table("orders", {
@@ -139,6 +150,36 @@ static func _setup_database() -> void:
 		#planet id turi ig
 	})
 	
+	db.create_table("planets", {
+		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
+		"name": {"data_type": "string"},
+		"mass": {"data_type": "float"},
+		"temp": {"data_type": "float"},
+		"radius": {"data_type": "float"},
+		"color": {"data_type": "string"},
+		"orbitXOffset": {"data_type": "float"},
+		"orbitYOffset": {"data_type": "float"},
+		"orbitalPeriod": {"data_type": "float"},
+		"orbitalRadius": {"data_type": "float"},
+		"phase": {"data_type": "float"},
+	})
+	
+	db.create_table("planets", {
+		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
+		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
+		"name": {"data_type": "string"},
+		"mass": {"data_type": "float"},
+		"temp": {"data_type": "float"},
+		"radius": {"data_type": "float"},
+		"color": {"data_type": "string"},
+		"orbitXOffset": {"data_type": "float"},
+		"orbitYOffset": {"data_type": "float"},
+		"orbitalPeriod": {"data_type": "float"},
+		"orbitalRadius": {"data_type": "float"},
+		"phase": {"data_type": "float"},
+		"atmHeight": {"data_type": "float"},
+		"atmDensity": {"data_type": "float"},
+	})
 	# nzn ar daryt viena entele ar kelias
 	#db.create_table("celestial_objects",
 		#{}

@@ -4,6 +4,10 @@
 [ext_resource type="Script" uid="uid://c611brv4ynr1a" path="res://Views/MainView.gd" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://dvb58rayqwfq3" path="res://Views/LoginView.gd" id="3_h2yge"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
+font_size = 13
+font_color = Color(1, 0.5612976, 0.5198636, 1)
+
 [node name="Control" type="Control" unique_id=229342197]
 layout_mode = 3
 anchors_preset = 15
@@ -39,18 +43,101 @@ script = ExtResource("2_0xm2m")
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView" unique_id=881821649]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="MarginContainer/MainLayout/MainView/VBoxContainer" unique_id=933677266]
+[node name="Navbar" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer" unique_id=9773463]
+layout_mode = 2
+
+[node name="UserAccountDropdown" type="MenuButton" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Navbar" unique_id=1604895172]
+layout_mode = 2
+text = "Svečias"
+
+[node name="Placeholder" type="Control" parent="MarginContainer/MainLayout/MainView/VBoxContainer" unique_id=933677266]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer" unique_id=1495023897]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder" unique_id=622064877]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer" unique_id=1409902882]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer" unique_id=1630901384]
 layout_mode = 2
 
-[node name="login" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/HBoxContainer" unique_id=1014332067]
+[node name="Vykdyti kelionę" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer" unique_id=1066983907]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Vykdyti kelionę"
+
+[node name="SpaceObjects" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer" unique_id=762786320]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects" unique_id=200347287]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects/HBoxContainer" unique_id=367848389]
+layout_mode = 2
+text = "Planetos"
+
+[node name="spacer" type="Control" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects/HBoxContainer" unique_id=293369060]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AddPlanet" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects/HBoxContainer" unique_id=995410915]
+layout_mode = 2
+text = "Pridėti planetą"
+
+[node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects" unique_id=1973162567]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects/container" unique_id=1548287043]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/SpaceObjects/container/ScrollContainer" unique_id=346363207]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Pilots" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer" unique_id=6832587]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/Pilots" unique_id=851670066]
+layout_mode = 2
+text = "Pilotai"
+
+[node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/Pilots" unique_id=1141790896]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/Pilots/container" unique_id=841473593]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/PanelContainer/MarginContainer/VBoxContainer/Pilots/container/ScrollContainer" unique_id=743705628]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LoginBar" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer" unique_id=1495023897]
+layout_mode = 2
+
+[node name="login" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar" unique_id=1014332067]
 layout_mode = 2
 text = "Prisijungti	"
 
-[node name="register" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/HBoxContainer" unique_id=1380207455]
+[node name="register" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar" unique_id=1380207455]
 layout_mode = 2
 text = "Registruotis
 "
@@ -64,40 +151,61 @@ theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 script = ExtResource("3_h2yge")
 
-[node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer/MainLayout/LoginView" unique_id=565560901]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/LoginView" unique_id=1185108037]
 layout_mode = 2
-size_flags_vertical = 0
-split_offsets = PackedInt32Array(0, 0)
 
-[node name="UsernameInput" type="HSplitContainer" parent="MarginContainer/MainLayout/LoginView/VSplitContainer" unique_id=296201375]
+[node name="UsernameInput" type="HBoxContainer" parent="MarginContainer/MainLayout/LoginView/VBoxContainer" unique_id=739639538]
 layout_mode = 2
-size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="MarginContainer/MainLayout/LoginView/VSplitContainer/UsernameInput" unique_id=997721118]
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/LoginView/VBoxContainer/UsernameInput" unique_id=997721118]
 layout_mode = 2
 text = "Vartotojo vardas"
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/MainLayout/LoginView/VSplitContainer/UsernameInput" unique_id=1340284367]
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/MainLayout/LoginView/VBoxContainer/UsernameInput" unique_id=1340284367]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PasswordInput" type="HBoxContainer" parent="MarginContainer/MainLayout/LoginView/VBoxContainer" unique_id=440421088]
 layout_mode = 2
 
-[node name="PasswordInput" type="HSplitContainer" parent="MarginContainer/MainLayout/LoginView/VSplitContainer" unique_id=1421588263]
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="Label" type="Label" parent="MarginContainer/MainLayout/LoginView/VSplitContainer/PasswordInput" unique_id=157412813]
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/LoginView/VBoxContainer/PasswordInput" unique_id=157412813]
 layout_mode = 2
 text = "Slaptažodis"
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/MainLayout/LoginView/VSplitContainer/PasswordInput" unique_id=832050020]
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/MainLayout/LoginView/VBoxContainer/PasswordInput" unique_id=832050020]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Error" type="Label" parent="MarginContainer/MainLayout/LoginView/VBoxContainer" unique_id=138662321]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_h2yge")
+
+[node name="Control" type="Control" parent="MarginContainer/MainLayout/LoginView/VBoxContainer" unique_id=1186375926]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MarginContainer/MainLayout/LoginView/VSplitContainer" unique_id=2132042769]
-layout_mode = 2
+[node name="LoginButton" type="Button" parent="MarginContainer/MainLayout/LoginView/VBoxContainer/Control" unique_id=2132042769]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -43.0
+offset_right = 43.0
+offset_bottom = 31.0
+grow_horizontal = 2
 size_flags_horizontal = 4
 text = "Prisijungti"
 
-[node name="domantai kentekk nuo merge conflicto" type="Control" parent="MarginContainer" unique_id=1924612537]
-layout_mode = 2
+[node name="ForgotPassowrd" type="Button" parent="MarginContainer/MainLayout/LoginView/VBoxContainer/Control" unique_id=207537582]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -178.0
+offset_bottom = 31.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+text = "Pamiršote slaptažodį?"
 
-[connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/HBoxContainer/login" to="MarginContainer/MainLayout/MainView" method="openLoginPage"]
-[connection signal="pressed" from="MarginContainer/MainLayout/LoginView/VSplitContainer/Button" to="MarginContainer/MainLayout/LoginView" method="submit"]
+[connection signal="about_to_popup" from="MarginContainer/MainLayout/MainView/VBoxContainer/Navbar/UserAccountDropdown" to="MarginContainer/MainLayout/MainView" method="openUserDropdown"]
+[connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar/login" to="MarginContainer/MainLayout/MainView" method="openLoginPage"]
+[connection signal="pressed" from="MarginContainer/MainLayout/LoginView/VBoxContainer/Control/LoginButton" to="MarginContainer/MainLayout/LoginView" method="submit"]
