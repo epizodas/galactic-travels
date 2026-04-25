@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://c611brv4ynr1a" path="res://Views/MainView.gd" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://dvb58rayqwfq3" path="res://Views/LoginView.gd" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://d0e5bffu564xi" path="res://Views/SpaceshipView.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://cuf8fivs8oi8d" path="res://Views/EditSpaceshipView.gd" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://cbec1b8rfd7qj" path="res://Views/AddSpaceshipView.gd" id="6_7mycd"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13
@@ -57,7 +59,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="CoordinatorView" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder" unique_id=622064877]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,10 +76,18 @@ theme_override_constants/margin_bottom = 16
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer" unique_id=1630901384]
 layout_mode = 2
 
-[node name="Vykdyti kelionę" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer" unique_id=1066983907]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer" unique_id=124573802]
+layout_mode = 2
+
+[node name="Vykdyti kelionę" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1066983907]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Vykdyti kelionę"
+
+[node name="ViewSpaceshipData" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1097080602]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Peržiūrėti erdvėlaivių duomenis"
 
 [node name="SpaceObjects" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer" unique_id=762786320]
 layout_mode = 2
@@ -246,7 +255,113 @@ size_flags_vertical = 3
 
 [node name="Tree" type="Tree" parent="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/container/ScrollContainer" unique_id=1455045573]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EditSpaceshipView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=394396427]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("5_lquwl")
+
+[node name="SpaceObjects" type="VBoxContainer" parent="MarginContainer/MainLayout/EditSpaceshipView" unique_id=259682763]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects" unique_id=1929008487]
+layout_mode = 2
+text = "Redaguoti erdvėlaivį"
+
+[node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects" unique_id=598156488]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="margin" type="MarginContainer" parent="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/container" unique_id=1692715694]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/container/margin" unique_id=735740990]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Left" type="VBoxContainer" parent="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/container/margin/HBoxContainer" unique_id=372278381]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Right" type="VBoxContainer" parent="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/container/margin/HBoxContainer" unique_id=1065386285]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects" unique_id=1065759259]
+layout_mode = 2
+
+[node name="save" type="Button" parent="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/HBoxContainer" unique_id=1260293656]
+layout_mode = 2
+text = "Išsaugoti"
+
+[node name="cancel" type="Button" parent="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/HBoxContainer" unique_id=1039620391]
+layout_mode = 2
+text = "Atšaukti"
+
+[node name="AddSpaceshipView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=532875888]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("6_7mycd")
+
+[node name="SpaceObjects" type="VBoxContainer" parent="MarginContainer/MainLayout/AddSpaceshipView" unique_id=1766012230]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects" unique_id=2065290049]
+layout_mode = 2
+text = "Pridėti erdvėlaivį"
+
+[node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects" unique_id=1157967228]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="margin" type="MarginContainer" parent="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/container" unique_id=905624454]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/container/margin" unique_id=250026536]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Left" type="VBoxContainer" parent="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/container/margin/HBoxContainer" unique_id=183574427]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Right" type="VBoxContainer" parent="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/container/margin/HBoxContainer" unique_id=600967622]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects" unique_id=955114124]
+layout_mode = 2
+
+[node name="save" type="Button" parent="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer" unique_id=2010833048]
+layout_mode = 2
+text = "Išsaugoti"
 
 [connection signal="about_to_popup" from="MarginContainer/MainLayout/MainView/VBoxContainer/Navbar/UserAccountDropdown" to="MarginContainer/MainLayout/MainView" method="openUserDropdown"]
+[connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer/ViewSpaceshipData" to="MarginContainer/MainLayout/MainView" method="openSpaceshipTable"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar/login" to="MarginContainer/MainLayout/MainView" method="openLoginPage"]
 [connection signal="pressed" from="MarginContainer/MainLayout/LoginView/VBoxContainer/Control/LoginButton" to="MarginContainer/MainLayout/LoginView" method="submit"]
+[connection signal="pressed" from="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/HBoxContainer/AddSpaceship" to="MarginContainer/MainLayout/SpaceshipView" method="openAddSpaceshipPage"]
+[connection signal="item_activated" from="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/container/ScrollContainer/Tree" to="MarginContainer/MainLayout/SpaceshipView" method="editSpaceship"]
+[connection signal="pressed" from="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/HBoxContainer/save" to="MarginContainer/MainLayout/EditSpaceshipView" method="saveSpaceship"]
+[connection signal="pressed" from="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/HBoxContainer/cancel" to="MarginContainer/MainLayout/EditSpaceshipView" method="cancel"]
+[connection signal="pressed" from="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer/save" to="MarginContainer/MainLayout/AddSpaceshipView" method="submitSpaceshipData"]

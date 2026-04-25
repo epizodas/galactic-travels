@@ -1,7 +1,7 @@
 extends MarginContainer
 class_name SpaceshipView
 
-@onready var table: Tree = $VBoxContainer/Tree 
+@onready var table: Tree = $SpaceObjects/container/ScrollContainer/Tree
 
 func _ready():
 	setup_table_columns()
@@ -22,10 +22,12 @@ func setup_table_columns():
 	table.set_column_title(7, "Fuel con.")
 	table.set_column_title(8, "Module cap.")
 
-func displaySpaceshipPage():
+func displaySpaceshipsPage(list: Array[Spaceship]):
 	var _mainView = get_tree().current_scene.find_child("MainView", true, false) as Control
 	if _mainView: _mainView.visible = false
 	self.visible = true
+	openSpaceshipTable(list)
+	
 
 func openSpaceshipTable(spaceships: Array[Spaceship]):
 	table.clear()
@@ -35,13 +37,22 @@ func openSpaceshipTable(spaceships: Array[Spaceship]):
 	for ship in spaceships:
 		var row = table.create_item(root)
 		row.set_text(0, ship.name)
-		row.set_text(1, ship.code)
+		row.set_text(1, ship.shipId)
 		row.set_text(2, str(ship.speed) + "m/s")
 		row.set_text(3, str(ship.maxTemp) + "K")
 		row.set_text(4, str(ship.cargoLength) + "x" + str(ship.cargoWidth))
-		row.set_text(5, ship.category)
+		row.set_text(5, str(ship.category))
 		row.set_text(6, str(ship.fuelCapacity) + "L")
-		row.set_text(6, str(ship.fuelConsumption) + "L/km")
-		row.set_text(6, str(ship.moduleCapacity))
+		row.set_text(7, str(ship.fuelConsumption) + "L/km")
+		row.set_text(8, str(ship.moduleCapacity))
 		
 		row.set_metadata(0, ship.shipId)
+
+func editSpaceship() -> void:
+	var selected: TreeItem = table.get_selected()
+	if selected:
+		_spaceshipController.openSpaceshipEdit(selected.get_text(1))
+	pass # Replace with function body.
+
+func openAddSpaceshipPage():
+	_spaceshipController.openAddSpaceshipPage()

@@ -1,7 +1,6 @@
 class_name SpaceBody
 
 var name: String
-var code: String
 var mass: float
 var temp: float
 var radius: float
@@ -14,7 +13,6 @@ var phase: float
 
 func _init(
 	p_name: String,
-	p_code: String,
 	p_mass: float,
 	p_temp: float,
 	p_radius: float,
@@ -26,7 +24,6 @@ func _init(
 	p_phase: float
 ) -> void:
 	name = p_name
-	code = p_code
 	mass = p_mass
 	temp = p_temp
 	radius = p_radius

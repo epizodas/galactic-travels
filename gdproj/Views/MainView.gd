@@ -7,6 +7,10 @@ func _ready() -> void:
 	accDropdown.id_pressed.connect(_handleAccountDropdown)
 	$VBoxContainer/Navbar/UserAccountDropdown.disabled = true
 
+func openSpaceshipTable() -> void:
+	_spaceshipController.openSpaceshipTable()
+	pass
+
 func openUserDropdown():
 	var user = _userController.getCurrentUser()
 	accDropdown.clear()

@@ -1,18 +1,30 @@
 class_name Database
 
-static var db : SQLite
+static var _db : SQLite
+static var db : SQLite:
+	get:
+		if !_db:
+			_db = SQLite.new()
+			_db.path="res://data.db"
+			var hasDb = false
+			if ResourceLoader.exists(_db.path):
+				hasDb = true
+			_db.open_db()
+			if !hasDb:
+				_setup_database()
+		return _db
 # good intro to the plugin
 # https://www.youtube.com/watch?v=j-BRiTrw_F0
-static func init():
-	db = SQLite.new()
-	db.path="res://data.db"
-	var hasDb = false
-	if ResourceLoader.exists(db.path):
-		hasDb = true
-	db.open_db()
-	#if !hasDb:
-	_setup_database()
-	pass
+#static func init():
+	#db = SQLite.new()
+	#db.path="res://data.db"
+	#var hasDb = false
+	#if ResourceLoader.exists(db.path):
+		#hasDb = true
+	#db.open_db()
+	##if !hasDb:
+	#_setup_database()
+	#pass
 
 static func _setup_database() -> void:
 	db.create_table("order_states", {
@@ -115,11 +127,26 @@ static func _setup_database() -> void:
 		"cargoWidth": {"data_type": "real"},
 		"category": {"data_type": "int"},
 		"fuelCapacity": {"data_type": "real"},
-		"fuelUsage": {"data_type": "real"},
+		"fuelConsumption": {"data_type": "real"},
 		"moduleCapacity": {"data_type": "int"},
-	
 		"hangar_id":{"data_type": "int"},
 	})
+	
+	db.insert_row("spaceship", {
+		"code": "a", 
+		"name": "spaceship 1",
+		"speed": 200.3,
+		"maxTemp": 2000.3,
+		"cargoLength": 5,
+		"cargoWidth": 5,
+		"category": 5,
+		"fuelCapacity": 500,
+		"fuelConsumption": 1,
+		"moduleCapacity": 1,
+		"hangar_id": 1,
+	})
+	print("Inserted spaceship row")
+	
 	
 	db.create_table("spaceship_modules", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},

@@ -5,7 +5,7 @@ var speed: float
 var maxTemp: float
 var cargoLength: int
 var cargoWidth: int
-var category: String #ENUM
+var category: int #ENUM
 var fuelCapacity: float
 var fuelConsumption: float
 var moduleCapacity: int
@@ -17,7 +17,7 @@ func _init(
 	p_maxTemp: float,
 	p_cargoLength: int,
 	p_cargoWidth: int,
-	p_category: String,
+	p_category: int,
 	p_fuelCapacity: float,
 	p_fuelConsumption: float,
 	p_moduleCapacity: int,
@@ -33,7 +33,7 @@ func _init(
 	fuelConsumption = p_fuelConsumption
 	moduleCapacity = p_moduleCapacity
 
-static func getAll() -> Array[Spaceship]:
+static func fetchAllSpaceships() -> Array[Spaceship]:
 	var output = Database.db.select_rows("spaceship", "", ["id", "name", "code", "speed", "maxTemp",
 	 "cargoLength", "cargoWidth", "category", "fuelCapacity", "fuelConsumption", "moduleCapacity"])
 	var retval: Array[Spaceship] = []
@@ -44,5 +44,17 @@ static func getAll() -> Array[Spaceship]:
 		 spaceshipData.moduleCapacity))
 	return retval
 
-static func add():
-	pass
+static func getSpaceship(id: String) -> Spaceship:
+	var output = Database.db.select_rows("spaceship", "code = '%s'" % [id], ["id", "name", "code", "speed", "maxTemp",
+	 "cargoLength", "cargoWidth", "category", "fuelCapacity", "fuelConsumption", "moduleCapacity"])
+	var spaceshipData = output[0]
+	return new(spaceshipData.name, spaceshipData.code, spaceshipData.speed,
+		 spaceshipData.maxTemp,	spaceshipData.cargoLength, spaceshipData.cargoWidth,
+		 spaceshipData.category, spaceshipData.fuelCapacity, spaceshipData.fuelConsumption,
+		 spaceshipData.moduleCapacity)
+
+static func updateSpaceship(ship: Spaceship):
+	pass # TODO
+	
+static func addSpaceship(ship: Spaceship):
+	pass # TODO
