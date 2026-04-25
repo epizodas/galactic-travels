@@ -119,7 +119,6 @@ static func _setup_database() -> void:
 	
 	db.create_table("spaceship", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
-		"code": {"data_type": "text"},
 		"name": {"data_type": "text"},
 		"speed": {"data_type": "real"},
 		"maxTemp": {"data_type": "real"},
@@ -133,7 +132,6 @@ static func _setup_database() -> void:
 	})
 	
 	db.insert_row("spaceship", {
-		"code": "a", 
 		"name": "spaceship 1",
 		"speed": 200.3,
 		"maxTemp": 2000.3,
@@ -145,9 +143,31 @@ static func _setup_database() -> void:
 		"moduleCapacity": 1,
 		"hangar_id": 1,
 	})
-	print("Inserted spaceship row")
-	
-	
+	db.insert_row("spaceship", {
+		"name": "spaceship 2",
+		"speed": 145.5,
+		"maxTemp": 2299.0,
+		"cargoLength": 5,
+		"cargoWidth": 9,
+		"category": 2,
+		"fuelCapacity": 800,
+		"fuelConsumption": 4,
+		"moduleCapacity": 3,
+		"hangar_id": 1,
+	})
+	db.insert_row("spaceship", {
+		"name": "spaceship 3",
+		"speed": 255.0,
+		"maxTemp": 1888.4,
+		"cargoLength": 3,
+		"cargoWidth": 8,
+		"category": 3,
+		"fuelCapacity": 770,
+		"fuelConsumption": 4,
+		"moduleCapacity": 6,
+		"hangar_id": 1,
+	})
+
 	db.create_table("spaceship_modules", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
 		"name": {"data_type": "text"},

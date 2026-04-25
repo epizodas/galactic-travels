@@ -65,5 +65,9 @@ func submitSpaceshipData(ship: Spaceship):
 		var AddSpaceshipViewRef = get_tree().current_scene.find_child("AddSpaceshipView") as AddSpaceshipView
 		AddSpaceshipViewRef.visible = false
 	pass
-	
-	
+
+func removeSpaceship(id: int):
+	Spaceship.deleteSpaceship(id)
+	var spaceships = Spaceship.fetchAllSpaceships()
+	var SpaceshipViewRef = get_tree().current_scene.find_child("SpaceshipView") as SpaceshipView
+	SpaceshipViewRef.displaySpaceshipsPage(spaceships)
