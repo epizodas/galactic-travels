@@ -16,9 +16,9 @@ func errorMessage(msg: String):
 
 func checkInUse(_ship: Spaceship) -> bool:
 	return Time.get_ticks_msec() % 2 == 0 # Not yet implemented
-
-func openSpaceshipEdit(shipId):
-	var ship = Spaceship.getSpaceship(shipId)
+  
+func openSpaceshipEdit(code: String):
+	var ship = Spaceship.getSpaceship(code)
 	var inUse = checkInUse(ship)
 	if !inUse:
 		var EditSpaceshipViewRef = get_tree().current_scene.find_child("EditSpaceshipView") as EditSpaceshipView
@@ -31,33 +31,46 @@ func openSpaceshipEdit(shipId):
 func submit():
 	pass
 
-func saveSpaceship(): # TODO add ship arg, actual checking
-	var isValid = validateSpaceship(null)
+func saveSpaceship(ship: Spaceship): # TODO add ship arg, actual checking
+	var isValid = validateSpaceship(ship)
 	if isValid:
-		Spaceship.updateSpaceship(null)
+		Spaceship.updateSpaceship(ship)
+		
 		var EditSpaceshipViewRef = get_tree().current_scene.find_child("EditSpaceshipView") as EditSpaceshipView
-		Spaceship.updateSpaceship(null)
 		EditSpaceshipViewRef.closeEdit()
+		
+		var spaceships = Spaceship.fetchAllSpaceships()
+		var SpaceshipViewRef = get_tree().current_scene.find_child("SpaceshipView") as SpaceshipView
+		SpaceshipViewRef.displaySpaceshipsPage(spaceships)
 	else:
 		# TODO error message
 		pass
 	pass
 
-func cancel(): # TODO really descriptive name
+func cancelEditSpaceship(): # TODO really descriptive name
 	var EditSpaceshipViewRef = get_tree().current_scene.find_child("EditSpaceshipView") as EditSpaceshipView
 	EditSpaceshipViewRef.closeEdit()
+	
+func cancelAddSpaceship():
+	var AddSpaceshipViewRef = get_tree().current_scene.find_child("AddSpaceshipView") as AddSpaceshipView
+	AddSpaceshipViewRef.closeEdit()
 	
 func openAddSpaceshipPage():
 	var AddSpaceshipViewRef = get_tree().current_scene.find_child("AddSpaceshipView") as AddSpaceshipView
 	AddSpaceshipViewRef.displayAddSpaceshipView()
 
-func validateSpaceshipData(_ship: Spaceship):
-	return Time.get_ticks_msec() % 2 == 0 # Not yet implemented
+func validateSpaceshipData(ship: Spaceship):
+	return (
+		ship.name.length() > 0
+		and ship.speed > 0
+		and ship.fuelCapacity > 0
+		and ship.fuelConsumption > 0
+		and ship.moduleCapacity >= 0
+	)
 
 func submitSpaceshipData(ship: Spaceship):
-	var valid = validateSpaceship(ship)
-	if valid:
-		print("Data is valid")
+	var isValid = validateSpaceship(ship)
+	if isValid:
 		Spaceship.addSpaceship(ship)
 		var spaceships = Spaceship.fetchAllSpaceships()
 		var SpaceshipViewRef = get_tree().current_scene.find_child("SpaceshipView") as SpaceshipView
@@ -66,8 +79,8 @@ func submitSpaceshipData(ship: Spaceship):
 		AddSpaceshipViewRef.visible = false
 	pass
 
-func removeSpaceship(id: int):
-	Spaceship.deleteSpaceship(id)
+func removeSpaceship(code: String):
+	Spaceship.deleteSpaceship(code)
 	var spaceships = Spaceship.fetchAllSpaceships()
 	var SpaceshipViewRef = get_tree().current_scene.find_child("SpaceshipView") as SpaceshipView
 	SpaceshipViewRef.displaySpaceshipsPage(spaceships)

@@ -7,3 +7,7 @@ extends Control
 
 func _exit_tree() -> void:
 	Database.db.close_db()
+
+
+func _on_cancel_pressed() -> void:
+	pass # Replace with function body.

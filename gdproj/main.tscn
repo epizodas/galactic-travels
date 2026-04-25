@@ -357,6 +357,10 @@ layout_mode = 2
 layout_mode = 2
 text = "Išsaugoti"
 
+[node name="cancel" type="Button" parent="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer" unique_id=460600414]
+layout_mode = 2
+text = "Atšaukti"
+
 [connection signal="about_to_popup" from="MarginContainer/MainLayout/MainView/VBoxContainer/Navbar/UserAccountDropdown" to="MarginContainer/MainLayout/MainView" method="openUserDropdown"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer/ViewSpaceshipData" to="MarginContainer/MainLayout/MainView" method="openSpaceshipTable"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar/login" to="MarginContainer/MainLayout/MainView" method="openLoginPage"]
@@ -366,3 +370,4 @@ text = "Išsaugoti"
 [connection signal="pressed" from="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/HBoxContainer/save" to="MarginContainer/MainLayout/EditSpaceshipView" method="saveSpaceship"]
 [connection signal="pressed" from="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/HBoxContainer/cancel" to="MarginContainer/MainLayout/EditSpaceshipView" method="cancel"]
 [connection signal="pressed" from="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer/save" to="MarginContainer/MainLayout/AddSpaceshipView" method="submitSpaceshipData"]
+[connection signal="pressed" from="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer/cancel" to="MarginContainer/MainLayout/AddSpaceshipView" method="cancel"]

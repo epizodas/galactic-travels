@@ -13,8 +13,8 @@ func setup_table_columns():
 	table.hide_root = true
 	table.select_mode = Tree.SELECT_ROW
 	
-	table.set_column_title(0, "ID")
-	table.set_column_title(1, "Name")
+	table.set_column_title(0, "Name")
+	table.set_column_title(1, "Code")
 	table.set_column_title(2, "Speed")
 	table.set_column_title(3, "Max t.")
 	table.set_column_title(4, "Cargo(LxW)")
@@ -39,8 +39,8 @@ func openSpaceshipTable(spaceships: Array[Spaceship]):
 	
 	for ship in spaceships:
 		var row = table.create_item(root)
-		row.set_text(0, str(ship.id))
-		row.set_text(1, ship.name)
+		row.set_text(0, ship.name)
+		row.set_text(1, ship.code)
 		row.set_text(2, str(ship.speed) + "m/s")
 		row.set_text(3, str(ship.maxTemp) + "K")
 		row.set_text(4, str(ship.cargoLength) + "x" + str(ship.cargoWidth))
@@ -51,7 +51,13 @@ func openSpaceshipTable(spaceships: Array[Spaceship]):
 		row.add_button(9, preload("res://edit.svg"), 0, false, "Edit")
 		row.add_button(10, preload("res://trash.svg"), 0, false, "Remove")
 		
-		row.set_metadata(0, ship.id)
+		row.set_metadata(0, ship.code)
+
+func editSpaceship() -> void:
+	var selected: TreeItem = table.get_selected()
+	if selected:
+		_spaceshipController.openSpaceshipEdit(selected.get_text(1))
+	pass # Replace with function body.
 
 func openAddSpaceshipPage():
 	_spaceshipController.openAddSpaceshipPage()

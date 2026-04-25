@@ -1,6 +1,8 @@
 extends MarginContainer
 class_name EditSpaceshipView
 
+var ship_code = null
+
 func _createEditableEntry(internalName, prettyname, side: int, value = ""):
 	var sideToAdd = $SpaceObjects/container/margin/HBoxContainer/Left if side == 0 else $SpaceObjects/container/margin/HBoxContainer/Right
 	var container= HBoxContainer.new()
@@ -20,6 +22,11 @@ func _createEditableEntry(internalName, prettyname, side: int, value = ""):
 	sideToAdd.add_child(container)
 	pass
 	
+func _getEditableEntryValue(internalName) -> String:
+	var container = self.find_child(internalName, true, false) as Control
+	var inputbox = container.get_child(1) as LineEdit
+	return inputbox.text
+	
 func openEditSpaceshipView(ship: Spaceship):
 	_createEditableEntry("name", "Pavadinimas", 0, ship.name)
 	_createEditableEntry("speed", "Greitis", 1, ship.speed)
@@ -30,6 +37,7 @@ func openEditSpaceshipView(ship: Spaceship):
 	_createEditableEntry("fuelCapacity", "Kuro talpos dydis", 0, ship.fuelCapacity)
 	_createEditableEntry("fuelConsumption", "Kuro sąnaudos", 1, ship.fuelConsumption)
 	_createEditableEntry("moduleCapacity", "Palaikomų modulių kiekis", 0, ship.moduleCapacity)
+	ship_code = ship.code
 	var SpaceshipViewRef = get_tree().current_scene.find_child("SpaceshipView") as SpaceshipView
 	SpaceshipViewRef.visible = false
 	self.visible = true
@@ -42,7 +50,19 @@ func submit():
 	_spaceshipController.submit()
 
 func saveSpaceship():
-	_spaceshipController.saveSpaceship()
+	var spaceship = Spaceship.new(
+		self._getEditableEntryValue("name"),
+		ship_code,
+		float(self._getEditableEntryValue("speed")),
+		float(self._getEditableEntryValue("maxTemp")),
+		int(self._getEditableEntryValue("cargoLength")),
+		int(self._getEditableEntryValue("cargoWidth")),
+		Spaceship.Category.get(self._getEditableEntryValue("category")),
+		float(self._getEditableEntryValue("fuelCapacity")),
+		float(self._getEditableEntryValue("fuelConsumption")),
+		int(self._getEditableEntryValue("moduleCapacity")),
+	)
+	_spaceshipController.saveSpaceship(spaceship)
 	
 func closeEdit():
 	self.visible = false
@@ -58,5 +78,5 @@ func closeEdit():
 	SpaceshipViewRef.visible = true
 	
 func cancel():
-	_spaceshipController.cancel()
+	_spaceshipController.cancelEditSpaceship()
 	pass
