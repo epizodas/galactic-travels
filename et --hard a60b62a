@@ -1,0 +1,15 @@
+[33m3d48105[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mretry-rebase[m[33m)[m HEAD@{0}: checkout: moving from retry-rebase to main
+[33m3d48105[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mretry-rebase[m[33m)[m HEAD@{1}: checkout: moving from main to retry-rebase
+[33m3d48105[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mretry-rebase[m[33m)[m HEAD@{2}: reset: moving to 3d48105
+[33m1c5efe4[m[33m ([m[1;32mbackup-broken-state[m[33m)[m HEAD@{3}: rebase (finish): returning to refs/heads/main
+[33m1c5efe4[m[33m ([m[1;32mbackup-broken-state[m[33m)[m HEAD@{4}: rebase (continue): Misc uzsakymai changes
+[33mc36afe3[m HEAD@{5}: pull --rebase (start): checkout c36afe3b25dc74dcaaccc776817135429898f2d6
+[33m3d48105[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mretry-rebase[m[33m)[m HEAD@{6}: rebase (abort): returning to refs/heads/main
+[33mc36afe3[m HEAD@{7}: pull --rebase (start): checkout c36afe3b25dc74dcaaccc776817135429898f2d6
+[33m3d48105[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mretry-rebase[m[33m)[m HEAD@{8}: commit: Misc uzsakymai changes
+[33ma60b62a[m HEAD@{9}: pull: Fast-forward
+[33mcde110d[m HEAD@{10}: pull: Fast-forward
+[33m625e46b[m HEAD@{11}: pull: Fast-forward
+[33m8ed9086[m HEAD@{12}: pull: Fast-forward
+[33m1508d62[m HEAD@{13}: commit: Added temporary database template
+[33mbdc5ce3[m HEAD@{14}: clone: from https://github.com/epizodas/galactic-travels.git

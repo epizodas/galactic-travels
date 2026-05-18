@@ -62,4 +62,3 @@ func displayMainPage() -> void:
 func openOrdersPage():
 	_orderController.openOrdersPage()
 	pass
-
