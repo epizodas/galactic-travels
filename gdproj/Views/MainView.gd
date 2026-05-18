@@ -7,27 +7,6 @@ func _ready() -> void:
 	accDropdown.id_pressed.connect(_handleAccountDropdown)
 	$VBoxContainer/Navbar/UserAccountDropdown.disabled = true
 
-func openSpaceshipTable() -> void:
-	_spaceshipController.openSpaceshipTable()
-	pass
-
-func openUserDropdown():
-	var user = _userController.getCurrentUser()
-	accDropdown.clear()
-	accDropdown.add_item(user.username, 0)
-	accDropdown.set_item_disabled(0, true)
-	accDropdown.add_item("Atsijungti", 1)
-	pass
-
-func _handleAccountDropdown(id: int):
-	match id:
-		1:
-			_userController.logout()
-	pass
-
-func openLoginPage() -> void:
-	_userController.openLoginPage()
-
 func displayMainPage() -> void:
 	var LoginViewRef = get_tree().current_scene.find_child("LoginView") as LoginView
 	LoginViewRef.visible = false
@@ -40,6 +19,7 @@ func displayMainPage() -> void:
 		match _userController.loggedInUser.role:
 			1:
 				roleName = "Klientas"
+				$VBoxContainer/Placeholder/ClientView.visible = true
 			2:
 				roleName = "Skrydžio koordinatorius"
 				$VBoxContainer/Placeholder/CoordinatorView.visible = true
@@ -52,4 +32,33 @@ func displayMainPage() -> void:
 		$VBoxContainer/Navbar/UserAccountDropdown.text = "Svečias"
 		$VBoxContainer/Navbar/UserAccountDropdown.disabled = true
 		
+	pass
+
+func openLoginPage() -> void:
+	_userController.openLoginPage()
+
+func openUserDropdown():
+	var user = _userController.getCurrentUser()
+	accDropdown.clear()
+	accDropdown.add_item(user.username, 0)
+	accDropdown.set_item_disabled(0, true)
+	accDropdown.add_item("Atsijungti", 1)
+	pass
+
+func openSpaceshipTable() -> void:
+	_spaceshipController.openSpaceshipTable()
+	pass
+
+
+func _handleAccountDropdown(id: int):
+	match id:
+		1:
+			_userController.logout()
+	pass
+
+func openOrdersPage():
+	_orderController.openOrdersPage()
+	pass
+	
+func openSpaceMapPage():
 	pass

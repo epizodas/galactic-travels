@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://d0e5bffu564xi" path="res://Views/SpaceshipView.gd" id="4_1bvp3"]
 [ext_resource type="Script" uid="uid://cuf8fivs8oi8d" path="res://Views/EditSpaceshipView.gd" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://cbec1b8rfd7qj" path="res://Views/AddSpaceshipView.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://bi5appc71lt2" path="res://Views/OrdersView.gd" id="7_272bh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13
@@ -141,6 +142,25 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="ClientView" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder" unique_id=1394214362]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/ClientView" unique_id=687688620]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/ClientView/MarginContainer" unique_id=2024073966]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/ClientView/MarginContainer/VBoxContainer" unique_id=2113737513]
+layout_mode = 2
+
+[node name="ViewOrders" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/ClientView/MarginContainer/VBoxContainer/HBoxContainer" unique_id=792834537]
+layout_mode = 2
+text = "Peržiūrėti užsakymus"
 
 [node name="LoginBar" type="HBoxContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer" unique_id=1495023897]
 layout_mode = 2
@@ -357,8 +377,31 @@ layout_mode = 2
 layout_mode = 2
 text = "Išsaugoti"
 
+[node name="OrdersView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=503115512]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("7_272bh")
+
+[node name="AddOrderView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1265306326]
+visible = false
+layout_mode = 2
+
+[node name="SingleOrderView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=533651954]
+visible = false
+layout_mode = 2
+
+[node name="PaymentView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=119849966]
+visible = false
+layout_mode = 2
+
 [connection signal="about_to_popup" from="MarginContainer/MainLayout/MainView/VBoxContainer/Navbar/UserAccountDropdown" to="MarginContainer/MainLayout/MainView" method="openUserDropdown"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer/ViewSpaceshipData" to="MarginContainer/MainLayout/MainView" method="openSpaceshipTable"]
+[connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/SpaceObjects/HBoxContainer/AddPlanet" to="." method="_on_add_planet_pressed"]
+[connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/ClientView/MarginContainer/VBoxContainer/HBoxContainer/ViewOrders" to="MarginContainer/MainLayout/MainView" method="openOrdersPage"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar/login" to="MarginContainer/MainLayout/MainView" method="openLoginPage"]
 [connection signal="pressed" from="MarginContainer/MainLayout/LoginView/VBoxContainer/Control/LoginButton" to="MarginContainer/MainLayout/LoginView" method="submit"]
 [connection signal="pressed" from="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/HBoxContainer/AddSpaceship" to="MarginContainer/MainLayout/SpaceshipView" method="openAddSpaceshipPage"]
