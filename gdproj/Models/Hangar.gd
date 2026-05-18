@@ -10,8 +10,9 @@ func _init(
 	self.shipCapacity = p_shipCapacity
 	self.moduleCapacity = p_moduleCapacity
 
-static func getSpaceshipModuleByType():
-	pass
+static func getSpaceshipModuleByType(moduleType: SpaceshipModule.Type):
+	var module = SpaceshipModule.new('modulis', moduleType)
+	return module
 	
 static func getHangarSpaceships():
 	

@@ -56,3 +56,7 @@ func displayMainPage() -> void:
 		$VBoxContainer/Navbar/UserAccountDropdown.disabled = true
 		
 	pass
+
+
+func openFulfillOrderView() -> void:
+	_flightController.openFulfillOrderView()

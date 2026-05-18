@@ -6,3 +6,9 @@ func displayFlightView():
 
 func submitPlanets():
 	_flightController.submitPlanets()
+
+func changeSpaceshipModules() -> void:
+	_flightController.changeSpaceshipModules()
+
+func displayAvailableModules(modules: Array[SpaceshipModule]):
+	pass

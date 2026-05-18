@@ -154,6 +154,10 @@ layout_mode = 2
 text = "Registruotis
 "
 
+[node name="openFlightView" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar" unique_id=278999679]
+layout_mode = 2
+text = "Vykdyti kelione"
+
 [node name="LoginView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1013348188]
 visible = false
 layout_mode = 2
@@ -363,13 +367,22 @@ layout_mode = 2
 text = "Atšaukti"
 
 [node name="FlightView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=409853611]
+visible = false
 layout_mode = 2
 script = ExtResource("7_272bh")
+
+[node name="Layout" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightView" unique_id=1757397092]
+layout_mode = 2
+
+[node name="ChangeModules" type="Button" parent="MarginContainer/MainLayout/FlightView/Layout" unique_id=188173267]
+layout_mode = 2
+text = "Pakeisti erdvelaivio modulius"
 
 [connection signal="about_to_popup" from="MarginContainer/MainLayout/MainView/VBoxContainer/Navbar/UserAccountDropdown" to="MarginContainer/MainLayout/MainView" method="openUserDropdown"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer/Vykdyti kelionę" to="MarginContainer/MainLayout/MainView" method="openFlightView"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer/ViewSpaceshipData" to="MarginContainer/MainLayout/MainView" method="openSpaceshipTable"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar/login" to="MarginContainer/MainLayout/MainView" method="openLoginPage"]
+[connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar/openFlightView" to="MarginContainer/MainLayout/MainView" method="openFlightView"]
 [connection signal="pressed" from="MarginContainer/MainLayout/LoginView/VBoxContainer/Control/LoginButton" to="MarginContainer/MainLayout/LoginView" method="submit"]
 [connection signal="pressed" from="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/HBoxContainer/AddSpaceship" to="MarginContainer/MainLayout/SpaceshipView" method="openAddSpaceshipPage"]
 [connection signal="item_activated" from="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/container/ScrollContainer/Tree" to="MarginContainer/MainLayout/SpaceshipView" method="editSpaceship"]
@@ -377,3 +390,4 @@ script = ExtResource("7_272bh")
 [connection signal="pressed" from="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/HBoxContainer/cancel" to="MarginContainer/MainLayout/EditSpaceshipView" method="cancel"]
 [connection signal="pressed" from="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer/save" to="MarginContainer/MainLayout/AddSpaceshipView" method="submitSpaceshipData"]
 [connection signal="pressed" from="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer/cancel" to="MarginContainer/MainLayout/AddSpaceshipView" method="cancel"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/Layout/ChangeModules" to="MarginContainer/MainLayout/FlightView" method="changeSpaceshipModules"]
