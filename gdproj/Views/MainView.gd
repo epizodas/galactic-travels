@@ -43,6 +43,7 @@ func displayMainPage() -> void:
 		match _userController.loggedInUser.role:
 			1:
 				roleName = "Klientas"
+				$VBoxContainer/Placeholder/ClientView.visible = true
 			2:
 				roleName = "Skrydžio koordinatorius"
 				$VBoxContainer/Placeholder/CoordinatorView.visible = true
@@ -58,5 +59,7 @@ func displayMainPage() -> void:
 	pass
 
 
-func openFulfillOrderView() -> void:
-	_flightController.openFulfillOrderView()
+func openOrdersPage():
+	_orderController.openOrdersPage()
+	pass
+

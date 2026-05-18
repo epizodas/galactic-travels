@@ -98,6 +98,13 @@ static func _setup_database() -> void:
 		"user_role_id": 2
 	})
 	
+	db.insert_row("users", {
+		"username":"client", 
+		"password": "client.passw", 
+		"email": "client@example.com",
+		"user_role_id": 1
+	})
+	
 	db.create_table("orders", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
 		"price": {"data_type": "real"},
