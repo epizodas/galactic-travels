@@ -5,7 +5,7 @@ static var db : SQLite:
 	get:
 		if !_db:
 			_db = SQLite.new()
-			_db.path="res://data.db"
+			_db.path="res://galatic-travels.sqlite"
 			var hasDb = false
 			if ResourceLoader.exists(_db.path):
 				hasDb = true
