@@ -58,7 +58,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="CoordinatorView" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder" unique_id=622064877]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -187,6 +186,7 @@ text = "Slaptažodis"
 [node name="LineEdit" type="LineEdit" parent="MarginContainer/MainLayout/LoginView/VBoxContainer/PasswordInput" unique_id=832050020]
 layout_mode = 2
 size_flags_horizontal = 3
+secret = true
 
 [node name="Error" type="Label" parent="MarginContainer/MainLayout/LoginView/VBoxContainer" unique_id=138662321]
 layout_mode = 2
@@ -362,6 +362,7 @@ layout_mode = 2
 text = "Atšaukti"
 
 [connection signal="about_to_popup" from="MarginContainer/MainLayout/MainView/VBoxContainer/Navbar/UserAccountDropdown" to="MarginContainer/MainLayout/MainView" method="openUserDropdown"]
+[connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer/Vykdyti kelionę" to="MarginContainer/MainLayout/MainView" method="openFlightView"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer/ViewSpaceshipData" to="MarginContainer/MainLayout/MainView" method="openSpaceshipTable"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar/login" to="MarginContainer/MainLayout/MainView" method="openLoginPage"]
 [connection signal="pressed" from="MarginContainer/MainLayout/LoginView/VBoxContainer/Control/LoginButton" to="MarginContainer/MainLayout/LoginView" method="submit"]

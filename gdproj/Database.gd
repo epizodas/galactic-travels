@@ -192,19 +192,31 @@ static func _setup_database() -> void:
 	
 	db.create_table("planets", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
-		"planet_id": {"data_type": "int", "not_null": true},
+		"spaceBody_id": {"data_type": "int", "not_null": true},
+		"hangar_id": {"data_type": "int", "not_null": true},
 		"atmHeight": {"data_type": "float"},
 		"atmDensity": {"data_type": "float"},
 	})
-	# nzn ar daryt viena entele ar kelias
-	#db.create_table("celestial_objects",
-		#{}
-	#)
-	#db.create_table("planets",
-		#{}
-	#)
-	#db.create_table("stars",
-		#{}
-	#)
+	
+	db.insert_row("spacebodies", {
+		"id": 0,
+		"name": "Žemė",
+		"mass": 1500,
+		"temp": 273,
+		"radius": 10,
+		"color": "#FFF",
+		"orbitXOffset": 0,
+		"orbitYOffset": 0,
+		"orbitalPeriod": 10,
+		"orbitalRadius": 10,
+		"phase": 0
+	})
+	
+	db.insert_row("planets", {
+		"spaceBody_id": 0,
+		"hangar_id": 0,
+		"atmHeight": 10,
+		"atmDensity": 0.5
+	})
 	
 	pass

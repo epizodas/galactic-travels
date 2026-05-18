@@ -28,6 +28,9 @@ func _handleAccountDropdown(id: int):
 func openLoginPage() -> void:
 	_userController.openLoginPage()
 
+func openFlightView() -> void:
+	_flightController.openFlightView()
+
 func displayMainPage() -> void:
 	var LoginViewRef = get_tree().current_scene.find_child("LoginView") as LoginView
 	LoginViewRef.visible = false

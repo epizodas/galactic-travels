@@ -4,7 +4,7 @@ var name: String
 var mass: float
 var temp: float
 var radius: float
-var color: float
+var color: String
 var orbitXOffset: float
 var orbitYOffset: float
 var orbitalPeriod: float
@@ -16,7 +16,7 @@ func _init(
 	p_mass: float,
 	p_temp: float,
 	p_radius: float,
-	p_color: float,
+	p_color: String,
 	p_orbitXOffset: float,
 	p_orbitYOffset: float,
 	p_orbitalPeriod: float,

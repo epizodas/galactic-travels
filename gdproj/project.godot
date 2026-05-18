@@ -19,3 +19,4 @@ config/icon="res://icon.svg"
 
 _userController="*uid://csnnnpi1nygr1"
 _spaceshipController="*uid://b53fjjcd7uufr"
+_flightController="*uid://cr2pu5vhstlp2"
