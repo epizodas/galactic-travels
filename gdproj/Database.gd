@@ -219,4 +219,13 @@ static func _setup_database() -> void:
 		"atmDensity": 0.5
 	})
 	
-	pass
+	db.create_table("hangars", {
+		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
+		"shipCapacity": {"data_type": "int", "not_null": true},
+		"moduleCapacity": {"data_type": "int", "not_null": true},
+	})
+
+	db.insert_row("hangars", {
+		"shipCapacity": 2,
+		"moduleCapacity": 4
+	})

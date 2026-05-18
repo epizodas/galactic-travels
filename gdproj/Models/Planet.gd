@@ -3,6 +3,7 @@ class_name Planet
 
 var atmHeight: float
 var atmDensity: float
+var hangarId: int
 
 func _init(
 	p_name: String,
@@ -16,7 +17,8 @@ func _init(
 	p_orbitalRadius: float,
 	p_phase: float,
 	p_atmHeight: float,
-	p_atmDensity: float
+	p_atmDensity: float,
+	p_hangarId: int
 ) -> void:
 	super._init(
 		p_name, 
@@ -32,6 +34,7 @@ func _init(
 	)
 	atmHeight = p_atmHeight
 	atmDensity = p_atmDensity
+	hangarId = p_hangarId
 	
 static func fetchAllPlanets():
 	var output = Database.db.select_rows(
@@ -48,6 +51,15 @@ static func fetchAllPlanets():
 			continue
 		sb = sb[0]
 		retval.push_back(new(sb.name, sb.mass, sb.temp, sb.radius, sb.color, 
-			sb.orbitXOffset, sb.orbitYOffset, sb.orbitalPeriod, sb.orbitalRadius, sb.phase, pd.atmHeight, pd.atmDensity))
+			sb.orbitXOffset, sb.orbitYOffset, sb.orbitalPeriod, sb.orbitalRadius, 
+			sb.phase, pd.atmHeight, pd.atmDensity, pd.hangar_id))
 
 	return retval
+
+func getPlanetHangar() -> Hangar :
+	var output = Database.db.select_rows(
+	"hangars",
+	"id = '%s'" % [hangarId],
+	["id", "shipCapacity", "moduleCapacity"])
+	var hData = output[0]
+	return Hangar.new(hData.shipCapacity, hData.moduleCapacity)

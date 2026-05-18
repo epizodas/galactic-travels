@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://d0e5bffu564xi" path="res://Views/SpaceshipView.gd" id="4_1bvp3"]
 [ext_resource type="Script" uid="uid://cuf8fivs8oi8d" path="res://Views/EditSpaceshipView.gd" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://cbec1b8rfd7qj" path="res://Views/AddSpaceshipView.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://cj6vjaurr4500" path="res://Views/FlightView.gd" id="7_272bh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13
@@ -360,6 +361,10 @@ text = "Išsaugoti"
 [node name="cancel" type="Button" parent="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer" unique_id=460600414]
 layout_mode = 2
 text = "Atšaukti"
+
+[node name="FlightView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=409853611]
+layout_mode = 2
+script = ExtResource("7_272bh")
 
 [connection signal="about_to_popup" from="MarginContainer/MainLayout/MainView/VBoxContainer/Navbar/UserAccountDropdown" to="MarginContainer/MainLayout/MainView" method="openUserDropdown"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer/Vykdyti kelionę" to="MarginContainer/MainLayout/MainView" method="openFlightView"]
