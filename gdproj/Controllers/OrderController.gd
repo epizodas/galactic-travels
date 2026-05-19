@@ -6,7 +6,7 @@ func openOrdersPage():
 	var orders = Order.fetchUserOrders(user)
 	pass
 
-func openSignleOrderPage():
+func openSingleOrderPage():
 	pass
 
 func validateOrderData():

@@ -236,3 +236,18 @@ static func _setup_database() -> void:
 		"shipCapacity": 2,
 		"moduleCapacity": 4
 	})
+
+	db.create_table("pilots", {
+		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
+		"name": {"data_type": "text"},
+		"surname": {"data_type": "text"},
+		"spaceship_category_id": {"data_type": "int"},
+		"hourly_wage": {"data_type": "real"}
+	})
+
+	db.insert_row("pilots", {
+		"name": "Jebediah",
+		"surname": "Kerman",
+		"spaceship_category_id": 1,
+		"hourly_wage": 67.69
+	})

@@ -62,3 +62,12 @@ func changeSpaceshipModules():
 	
 	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
 	FlightViewRef.displayAvailableModules(availableModules)
+
+func getRememberedNeededFuel():
+	pass
+
+func calculateTotalCosts():
+	var totalCost = 0.0
+	for module in _selectedModules:
+		totalCost += module.cost
+	return totalCost
