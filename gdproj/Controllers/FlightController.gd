@@ -7,13 +7,14 @@ var _spaceship = null
 var _selectedModules = []
 
 func openFlightView():
-	var planets = Planet.fetchAllPlanets()
-	
+	var planets: Array[Planet] = Planet.fetchAllPlanets()
+	print(len(planets))
+
 	var MainViewRef = get_tree().current_scene.find_child("MainView") as MainView
 	MainViewRef.visible = false
 	
 	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
-	FlightViewRef.displayFlightView()
+	FlightViewRef.displayFlightView(planets)
 
 func rememberPlanets():
 	pass

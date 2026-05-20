@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://b52lgsphrb5qp"]
 
-[ext_resource type="Script" uid="uid://d0lh5npqmfc22" path="res://testing.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://c611brv4ynr1a" path="res://Views/MainView.gd" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://dvb58rayqwfq3" path="res://Views/LoginView.gd" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://d0e5bffu564xi" path="res://Views/SpaceshipView.gd" id="4_1bvp3"]
@@ -19,7 +18,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ig7tw")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=244534756]
 layout_mode = 1
@@ -385,17 +383,43 @@ text = "Išsaugoti"
 layout_mode = 2
 text = "Atšaukti"
 
-[node name="FlightView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=409853611]
+[node name="FlightView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=409853611 node_paths=PackedStringArray("DepartureSelection", "DestinationSelection")]
 visible = false
 layout_mode = 2
 script = ExtResource("7_272bh")
+DepartureSelection = NodePath("Layout/DeparturePlanet/Selection")
+DestinationSelection = NodePath("Layout/DestinationPlanet/Selection")
 
 [node name="Layout" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightView" unique_id=1757397092]
+layout_mode = 2
+
+[node name="DeparturePlanet" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/Layout" unique_id=479522661]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightView/Layout/DeparturePlanet" unique_id=2020235784]
+layout_mode = 2
+text = "Išvykimo planeta"
+
+[node name="Selection" type="OptionButton" parent="MarginContainer/MainLayout/FlightView/Layout/DeparturePlanet" unique_id=1047510763]
+layout_mode = 2
+
+[node name="DestinationPlanet" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/Layout" unique_id=501092354]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightView/Layout/DestinationPlanet" unique_id=1773562921]
+layout_mode = 2
+text = "Atvykimo planeta"
+
+[node name="Selection" type="OptionButton" parent="MarginContainer/MainLayout/FlightView/Layout/DestinationPlanet" unique_id=1854808683]
 layout_mode = 2
 
 [node name="ChangeModules" type="Button" parent="MarginContainer/MainLayout/FlightView/Layout" unique_id=188173267]
 layout_mode = 2
 text = "Pakeisti erdvelaivio modulius"
+
+[node name="FindRoute" type="Button" parent="MarginContainer/MainLayout/FlightView/Layout" unique_id=1131188409]
+layout_mode = 2
+text = "Sudaryti kelionei maršrutą"
 
 [node name="OrdersView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=503115512]
 visible = false
@@ -432,4 +456,6 @@ layout_mode = 2
 [connection signal="pressed" from="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/HBoxContainer/cancel" to="MarginContainer/MainLayout/EditSpaceshipView" method="cancel"]
 [connection signal="pressed" from="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer/save" to="MarginContainer/MainLayout/AddSpaceshipView" method="submitSpaceshipData"]
 [connection signal="pressed" from="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer/cancel" to="MarginContainer/MainLayout/AddSpaceshipView" method="cancel"]
+[connection signal="item_selected" from="MarginContainer/MainLayout/FlightView/Layout/DeparturePlanet/Selection" to="MarginContainer/MainLayout/FlightView" method="submitPlanets"]
+[connection signal="item_selected" from="MarginContainer/MainLayout/FlightView/Layout/DestinationPlanet/Selection" to="MarginContainer/MainLayout/FlightView" method="submitPlanets"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/Layout/ChangeModules" to="MarginContainer/MainLayout/FlightView" method="changeSpaceshipModules"]

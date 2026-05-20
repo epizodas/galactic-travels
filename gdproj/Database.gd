@@ -27,6 +27,8 @@ static var db : SQLite:
 	#pass
 
 static func _setup_database() -> void:
+	print("Setting up database")
+	
 	db.create_table("order_states", {
 		"id": {"data_type": "int", "primary_key": true},
 		"value": {"data_type": "text", "not_null": true, "unique": true}

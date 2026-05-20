@@ -1,8 +1,14 @@
 extends MarginContainer
 class_name FlightView
 
-func displayFlightView():
+@export var DepartureSelection: OptionButton
+@export var DestinationSelection: OptionButton
+
+func displayFlightView(planets: Array[Planet]):
 	self.visible = true
+	for planet in planets:
+		DepartureSelection.add_item(planet.name)
+		DestinationSelection.add_item(planet.name)
 
 func submitPlanets():
 	_flightController.submitPlanets()
