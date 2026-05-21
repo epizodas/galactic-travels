@@ -48,13 +48,13 @@ static func fetchAllPlanets():
 	for pd in output:
 		var sb = Database.db.select_rows("spacebodies", "id = '%s'" % [pd.spaceBody_id], 
 			["id", "name", "mass", "temp", "radius", "color", 
-			"orbitXOffset", "orbitYOffset", "orbitalPeriod", "orbitalRadius", "phase"])
+			"orbitXOffset", "orbitYOffset", "orbitalPeriod", "orbitalRadius", "phase", "fuelCost"])
 		if(len(sb) == 0):
 			continue
 		sb = sb[0]
 		retval.push_back(new(sb.name, sb.mass, sb.temp, sb.radius, sb.color, 
 			sb.orbitXOffset, sb.orbitYOffset, sb.orbitalPeriod, sb.orbitalRadius, 
-			sb.phase, pd.atmHeight, pd.atmDensity, pd.hangar_id))
+			sb.phase, pd.atmHeight, pd.atmDensity, pd.hangar_id, pd.fuelCost))
 
 	return retval
 

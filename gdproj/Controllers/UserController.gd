@@ -10,7 +10,8 @@ func logout():
 	pass
 
 func getCurrentUser() -> User:
-	var user = User.fetchUser(loggedInUser.username)
+	#var user = User.fetchUser(loggedInUser.username)
+	var user = User.fetchUser('client')
 	return user
 
 func openLoginPage():

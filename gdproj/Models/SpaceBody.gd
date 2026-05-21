@@ -10,6 +10,7 @@ var orbitYOffset: float
 var orbitalPeriod: float
 var orbitalRadius: float
 var phase: float
+var fuelCost: float
 
 func _init(
 	p_name: String,
@@ -21,7 +22,8 @@ func _init(
 	p_orbitYOffset: float,
 	p_orbitalPeriod: float,
 	p_orbitalRadius: float,
-	p_phase: float
+	p_phase: float,
+	p_fuelCost: float
 ) -> void:
 	name = p_name
 	mass = p_mass
@@ -33,3 +35,4 @@ func _init(
 	orbitalPeriod = p_orbitalPeriod
 	orbitalRadius = p_orbitalRadius
 	phase = p_phase
+	fuelCost = p_fuelCost
