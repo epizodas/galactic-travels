@@ -33,14 +33,9 @@ func submitPlanets():
 	#Planet.getPlanetHangar()
 	pass
 
-func getRememberedPlanets():
-	pass
-
-func getRememberedSpaceship():
-	pass
-
 func getRoute():
 	return null
+
 
 func selectModule(module: SpaceshipModule):
 	if not _selectedModules.has(module):
@@ -91,14 +86,72 @@ func submitModules():
 		
 	return null
 
-func getRememberedNeededFuel():
-	pass
+#eriko funkcija
+#diagramoje pervadinti fetchSpaceBody i fetchPlanet
+
+func validateCostValues() -> bool:
+	return true
+
+func getRememberedPlanets() -> Planet:
+	return _flightController.departPlanet
+
+func getRememberedSpaceship() -> int:
+	return 1
+
+func getNeededFuel() -> float:
+	return 67.0
+
+func calculateFuelCost(planet_fuel_cost: float, needed_fuel: float) -> float:
+	return planet_fuel_cost * needed_fuel
+
+func getRouteDuration() -> float:
+	return 0.0
+
+func calculatePilotCost(pilot_hourly_wage: float, route_duration: float) -> float:
+	return pilot_hourly_wage * route_duration
+
+func sumModuleRent(cost: float, module: SpaceshipModule) -> float:
+	return cost + module.rent
+
+func calculateSpaceshipSize(cargoLength: int, cargoWidth: int) -> int:
+	return cargoLength * cargoWidth
+
+func getRememberedOrders() -> Array:
+	return []
 
 func calculateTotalCosts():
-	var totalCost = 0.0
-	for module in _selectedModules:
-		totalCost += module.cost
-	return totalCost
+	if not validateCostValues():
+		return
+
+	var total = 0.0
+
+	var remembered_planets: Array[int] = getRememberedPlanets()
+	var remembered_spaceship_id: int = getRememberedSpaceship()
+
+	var planet_data = Planet.fetchPlanet(remembered_planets[0]) 
+
+	var needed_fuel = getNeededFuel()
+	var fuel_cost = calculateFuelCost(planet_data.fuelCost, needed_fuel)
+	total += fuel_cost
+
+	var pilot_data = Pilot.fetchPilot()
+	var route_duration = getRouteDuration()
+	var pilot_cost = calculatePilotCost(pilot_data.hourly_wage, route_duration)
+	total += pilot_cost
+
+	var spaceship_data = Spaceship.fetchSpaceship(remembered_spaceship_id)
+	var modules = SpaceshipModule.fetchSpaceshipModules(remembered_spaceship_id)
+	if modules and modules.size() > 0:
+		var module_rent = 0.0
+		for module in modules:
+			module_rent = sumModuleRent(module_rent, module)
+		total += module_rent
+
+	var spaceship_size = calculateSpaceshipSize(spaceship_data.cargoLength, spaceship_data.cargoWidth)
+	
+	var remembered_orders = getRememberedOrders()
+
+	return total
 
 var simulationPlanets: Array[SimulatedPlanet]
 var currentTime = 0

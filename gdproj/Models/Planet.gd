@@ -16,6 +16,7 @@ func _init(
 	p_orbitalPeriod: float,
 	p_orbitalRadius: float,
 	p_phase: float,
+	p_fuelCost: float,
 	p_atmHeight: float,
 	p_atmDensity: float,
 	p_hangarId: int
@@ -30,7 +31,8 @@ func _init(
 		p_orbitYOffset, 
 		p_orbitalPeriod, 
 		p_orbitalRadius, 
-		p_phase
+		p_phase,
+		p_fuelCost
 	)
 	atmHeight = p_atmHeight
 	atmDensity = p_atmDensity
@@ -55,6 +57,32 @@ static func fetchAllPlanets():
 			sb.phase, pd.atmHeight, pd.atmDensity, pd.hangar_id))
 
 	return retval
+
+func fetchPlanet(planet_id: int) -> Planet:
+	var output = Database.db.select_rows(
+	"planets",
+	"id = '%s'" % [planet_id],
+	["id", "name", "mass", "temp", "radius", "color", 
+	"orbitXOffset", "orbitYOffset", "orbitalPeriod", "orbitalRadius",
+	 "phase", "fuelCost", "atmHeight", "atmDensity", "hangar_id"])
+	
+	var planetData = output[0]	
+	return new(
+		planetData.name,
+		planetData.mass,
+		planetData.temp,
+		planetData.radius,
+		planetData.color,
+		planetData.orbitXOffset,
+		planetData.orbitYOffset,
+		planetData.orbitalPeriod,
+		planetData.orbitalRadius,
+		planetData.phase,
+		planetData.fuelCost,
+		planetData.atmHeight,
+		planetData.atmDensity,
+		planetData.hangar_id
+	)
 
 func getPlanetHangar() -> Hangar :
 	var output = Database.db.select_rows(
