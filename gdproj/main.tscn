@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://xexgyuwowjsv" path="res://Views/RouteView.gd" id="7_kek77"]
 [ext_resource type="Script" uid="uid://mfa3rapuegi5" path="res://Views/ModuleChooserList.gd" id="8_0m3d1"]
 [ext_resource type="Script" uid="uid://cgs8w1d62ss4i" path="res://Views/ToastLayer.gd" id="9_2xmvj"]
+[ext_resource type="Script" uid="uid://bi5appc71lt2" path="res://Views/OrdersView.gd" id="10_efxa6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13
@@ -62,6 +63,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="CoordinatorView" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder" unique_id=622064877]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -146,7 +148,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ClientView" type="PanelContainer" parent="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder" unique_id=1394214362]
-visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -557,7 +558,39 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
-script = ExtResource("7_272bh")
+script = ExtResource("10_efxa6")
+
+[node name="Orders" type="VBoxContainer" parent="MarginContainer/MainLayout/OrdersView" unique_id=2074112846]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/OrdersView/Orders" unique_id=836275370]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/OrdersView/Orders/HBoxContainer" unique_id=149398025]
+layout_mode = 2
+text = "Užsakymai"
+
+[node name="spacer" type="Control" parent="MarginContainer/MainLayout/OrdersView/Orders/HBoxContainer" unique_id=643196062]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Add order" type="Button" parent="MarginContainer/MainLayout/OrdersView/Orders/HBoxContainer" unique_id=554108610]
+layout_mode = 2
+text = "Pridėti užsakymą"
+
+[node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/OrdersView/Orders" unique_id=1119649634]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MainLayout/OrdersView/Orders/container" unique_id=1426759924]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="MarginContainer/MainLayout/OrdersView/Orders/container/ScrollContainer" unique_id=1300330049]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="AddOrderView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1265306326]
 visible = false

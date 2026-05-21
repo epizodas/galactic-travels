@@ -1,15 +1,24 @@
 class_name Order
-var orderId: int
-var price: String
-var status: int
+
+enum Status {
+	Placed,
+	Confirmed,
+	Paid,
+	Done,
+	Canceled
+}
+
+var id: int
+var price: float
+var status: Status
 
 func _init(
-	p_orderId: int,
-	p_price: String,
-	p_status: int
+	p_id: int,
+	p_price: float,
+	p_status: Status
 	,
 ) -> void:
-	orderId = p_orderId
+	id = p_id
 	price = p_price
 	status = p_status
 
@@ -33,8 +42,10 @@ static func fetchAllOrderedOrders():
 	pass
 
 static func fetchUserOrders(user: User) -> Array[Order]:
-	#var output = Database.db.select_rows("orders", "code = '%s'" % [id], ["id", "name", "code", "speed", "maxTemp"])
+	var output = Database.db.select_rows("orders", "user_id = '%s'" % [user.id], ["id", "price", "order_status"])
 	var orders: Array[Order] = []
+	for row in output:
+		orders.append(new(row.id, row.price if row.price else 0, Status.get(row.order_status)))
 	return orders
 
 static func updateOrderStatus():

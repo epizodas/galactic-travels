@@ -29,27 +29,6 @@ static var db : SQLite:
 static func _setup_database() -> void:
 	print("Setting up database")
 	
-	db.create_table("order_states", {
-		"id": {"data_type": "int", "primary_key": true},
-		"value": {"data_type": "text", "not_null": true, "unique": true}
-	})
-	
-	db.insert_row("order_states", {"id": 1, "value":"ordered"})
-	db.insert_row("order_states", {"id": 2, "value":"approved"})
-	db.insert_row("order_states", {"id": 3, "value":"paid_for"})
-	db.insert_row("order_states", {"id": 4, "value":"finished"})
-	db.insert_row("order_states", {"id": 5, "value":"cancelled"})
-
-	db.create_table("module_abilities", {
-		"id": {"data_type": "int", "primary_key": true},
-		"value": {"data_type": "text", "not_null": true, "unique": true}
-	})
-	
-	db.insert_row("module_abilities", {"id": 1, "value":"temperature_shield"})
-	db.insert_row("module_abilities", {"id": 2, "value":"shield"})
-	db.insert_row("module_abilities", {"id": 3, "value":"extra_fuel"})
-	db.insert_row("module_abilities", {"id": 4, "value":"extra_speed"})
-	
 	db.create_table("user_roles", {
 		"id": {"data_type": "int", "primary_key": true},
 		"value": {"data_type": "text", "not_null": true, "unique": true}
@@ -110,10 +89,16 @@ static func _setup_database() -> void:
 	db.create_table("orders", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
 		"price": {"data_type": "real"},
-		"order_status_id": {"data_type": "int"}
+		"order_status": {"data_type": "text"},
+		"user_id": {"data_type": "int"}
 	
 		#departure planet id
 		#arrival planet id
+	})
+	
+	db.insert_row("orders", {
+		"order_status": "Placed",
+		"user_id": 3
 	})
 	
 	db.create_table("cargo", {

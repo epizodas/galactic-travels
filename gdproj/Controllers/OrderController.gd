@@ -4,7 +4,9 @@ class_name OrderController
 func openOrdersPage():
 	var user = _userController.getCurrentUser()
 	var orders = Order.fetchUserOrders(user)
-	pass
+	
+	var OrdersViewRef = get_tree().current_scene.find_child("OrdersView") as OrdersView
+	OrdersViewRef.displayOrdersPage(orders)
 
 func openSingleOrderPage():
 	pass
