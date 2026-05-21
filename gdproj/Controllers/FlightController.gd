@@ -182,7 +182,42 @@ func calculateFuelUsage(distance, ship):
 	# padaryti actual fuel usage calculation
 	return distance
 
-func checkForColissions():
+func checkForCollisions(departSim: SimulatedPlanet, destSim: SimulatedPlanet, allSims: Array[SimulatedPlanet]) -> float:
+	var ax = departSim.x
+	var ay = departSim.y
+	var bx = destSim.x
+	var by = destSim.y
+	var dx = bx - ax
+	var dy = by - ay
+	var segLenSq = dx * dx + dy * dy
+	var totalGraze = 0.0
+
+	for sim in allSims:
+		if sim == departSim or sim == destSim:
+			continue
+		var cx = sim.x
+		var cy = sim.y
+		var planetRadius = sim.planet.radius
+		var atmRadius = planetRadius + sim.planet.atmHeight
+
+		var fx = ax - cx
+		var fy = ay - cy
+		var t = clamp((fx * dx + fy * dy) / segLenSq, 0.0, 1.0)
+		var closestX = ax + t * dx
+		var closestY = ay + t * dy
+		var distSq = (cx - closestX) * (cx - closestX) + (cy - closestY) * (cy - closestY)
+		var dist = sqrt(distSq)
+
+		if dist < planetRadius:
+			return -1.0
+		elif dist < atmRadius:
+			var halfChord = sqrt(atmRadius * atmRadius - dist * dist)
+			totalGraze += 2.0 * halfChord
+
+	return totalGraze
+
+func checkForAsteroidBelt():
+	
 	pass
 
 func findroute():
@@ -207,7 +242,21 @@ func findroute():
 				var fuelUsage = calculateFuelUsage(curDist, null) # TODO: ship
 				var fuelCapacity = 1000 # TODO: ship
 				if fuelUsage < fuelCapacity:
-					checkForColissions()
+					var departSim: SimulatedPlanet
+					var destSim: SimulatedPlanet
+					for s in simulationPlanets:
+						if s.planet == departPlanet:
+							departSim = s
+						elif s.planet == destPlanet:
+							destSim = s
+					var collisionResult = checkForCollisions(departSim, destSim, simulationPlanets)
+					var maxTemperature = 1 # TODO: ship
+					if collisionResult == -1:
+						continue # Collision with planet
+					if collisionResult > maxTemperature:
+						var RouteViewRef = get_tree().current_scene.find_child("RouteView") as RouteView
+						RouteViewRef.addWarning("Temperatūra viršyja erdvėlaivio leidžiamą ribą")
+
 					pass
 			else:
 				calculateNewStep(curDistDiff, lastDistDiff)

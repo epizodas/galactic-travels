@@ -31,7 +31,6 @@ func displayAvailableModules(modules: Array[SpaceshipModule]):
 		else:
 			availableModulesList.add_module(module)
 
-
 func selectModule(module: SpaceshipModule) -> void:
 	_flightController.selectModule(module)
 

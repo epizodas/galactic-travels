@@ -19,3 +19,11 @@ func findNextRoute():
 	if result == 0:
 		$VBoxContainer/error.text = "Nepavyko rasti išvykimo laiko"
 	pass
+
+func displayWarning(message):
+	_toast.show_message(message)
+	pass
+
+func addWarning(message):
+	displayWarning(message)
+	pass
