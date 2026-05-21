@@ -524,15 +524,31 @@ script = ExtResource("7_kek77")
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/RouteView" unique_id=2087190980]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/RouteView/VBoxContainer" unique_id=1903835483]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/RouteView/VBoxContainer" unique_id=1417531432]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/MainLayout/RouteView/VBoxContainer/HBoxContainer" unique_id=855905744]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer" unique_id=1903835483]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=855905744]
 layout_mode = 2
 text = " Išvykimo data: "
 
-[node name="DatePickerPanel" parent="MarginContainer/MainLayout/RouteView/VBoxContainer/HBoxContainer" unique_id=512119500 instance=ExtResource("7_5vw27")]
+[node name="DatePickerPanel" parent="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=512119500 instance=ExtResource("7_5vw27")]
 layout_mode = 2
+
+[node name="error" type="Label" parent="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer" unique_id=1471192889]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_h2yge")
+
+[node name="FindRouteButton" type="Button" parent="MarginContainer/MainLayout/RouteView/VBoxContainer" unique_id=63579570]
+layout_mode = 2
+disabled = true
+text = "Rasti maršrutą"
+
+[node name="error" type="Label" parent="MarginContainer/MainLayout/RouteView/VBoxContainer" unique_id=923867252]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_h2yge")
 
 [node name="OrdersView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=503115512]
 visible = false

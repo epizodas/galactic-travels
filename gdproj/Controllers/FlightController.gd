@@ -8,32 +8,40 @@ var _selectedModules: Array[SpaceshipModule] = []
 
 func openFlightView():
 	var planets: Array[Planet] = Planet.fetchAllPlanets()
-	print(len(planets))
 
 	var MainViewRef = get_tree().current_scene.find_child("MainView") as MainView
 	MainViewRef.visible = false
-	
+
 	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
 	FlightViewRef.displayFlightView(planets)
 
-func rememberPlanets():
+	storedPlanets = planets.duplicate_deep()
+
+var storedPlanets: Array[Planet]
+
+var departPlanet: Planet
+var destPlanet: Planet
+
+func rememberPlanets(depart: Planet, dest: Planet):
+	departPlanet = depart
+	destPlanet = dest
 	pass
 
 func submitPlanets():
-	rememberPlanets()
+	rememberPlanets(null, null)
 	printerr("Sita tikrai matysit, TODO submitPlanets()")
 	#Planet.getPlanetHangar()
 	pass
 
 func getRememberedPlanets():
 	pass
-	
+
 func getRememberedSpaceship():
 	pass
-	
+
 func getRoute():
 	return null
-	
+
 func selectModule(module: SpaceshipModule):
 	if not _selectedModules.has(module):
 		_selectedModules.append(module)
@@ -46,25 +54,25 @@ func getSelectedModules() -> Array[SpaceshipModule]:
 
 func changeSpaceshipModules():
 	var moduleTypes = SpaceshipModule.Type
-	
+
 	var availableModules: Array[SpaceshipModule] = []
-	
+
 	for type in moduleTypes:
 		var mod_type = SpaceshipModule.Type.get(type)
 		var module = Hangar.getSpaceshipModuleByType(mod_type)
-		
+
 		if not module:
 			continue
-		
+
 		availableModules.append(module)
-	
+
 	var route = getRoute()
-	
+
 	if route:
 		var shieldModule = availableModules.find_custom(func(m): return m.type == SpaceshipModule.Type.Sheld)
 		if shieldModule:
 			selectModule(shieldModule)
-	
+
 	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
 	print(availableModules)
 	FlightViewRef.displayAvailableModules(availableModules)
@@ -91,3 +99,77 @@ func calculateTotalCosts():
 	for module in _selectedModules:
 		totalCost += module.cost
 	return totalCost
+
+var simulationPlanets: Array[SimulatedPlanet]
+var currentTime = 0
+var step = 0
+var endTime = 0
+
+func validateEndDate(date):
+	var curDate = Time.get_date_dict_from_system()
+	curDate.hour = 0
+	curDate.minute = 0
+	curDate.second = 0
+
+	var sysTime = Time.get_unix_time_from_datetime_dict(curDate)
+	endTime = Time.get_unix_time_from_datetime_dict(date)
+	var comp = endTime > sysTime
+	if comp:
+		currentTime = sysTime
+		for planet in storedPlanets:
+			var simPlanet = SimulatedPlanet.new(planet)
+			simPlanet.x = (sin(sysTime + planet.phase) * planet.orbitalRadius) + planet.orbitXOffset
+			simPlanet.y = (cos(sysTime + planet.phase) * planet.orbitalRadius) + planet.orbitYOffset
+			simulationPlanets.append(SimulatedPlanet.new(planet))
+	return comp
+
+func findShortestDistance():
+	var outerPlanet: Planet
+	var innerPlanet: Planet
+	if destPlanet.orbitalRadius < departPlanet.orbitalRadius:
+		outerPlanet = departPlanet
+		innerPlanet = destPlanet
+	else:
+		outerPlanet = destPlanet
+		innerPlanet = departPlanet
+
+	var innerRadius = innerPlanet.orbitalRadius + innerPlanet.radius
+	var outerRadius = outerPlanet.orbitalRadius - outerPlanet.radius
+	var distanceBetweenCenters = sqrt(
+		pow(innerPlanet.orbitXOffset - outerPlanet.orbitXOffset, 2) +
+		pow(innerPlanet.orbitYOffset - outerPlanet.orbitYOffset, 2))
+	return outerRadius - innerRadius - distanceBetweenCenters
+
+func simulationStep():
+	currentTime += step
+	pass
+
+func calculateBodyPositions():
+	for simPlanet in simulationPlanets:
+		var planet = simPlanet.planet
+		simPlanet.x = sin(currentTime + planet.phase) + planet.orbitXOffset
+		simPlanet.y = cos(currentTime + planet.phase) + planet.orbitYOffset
+
+func compareOrbitDistances():
+	var outerPlanet: Planet
+	var innerPlanet: Planet
+	if destPlanet.orbitalRadius < departPlanet.orbitalRadius:
+		outerPlanet = departPlanet
+		innerPlanet = destPlanet
+	else:
+		outerPlanet = destPlanet
+		innerPlanet = departPlanet
+
+	var distanceBetweenCenters = sqrt(
+		pow(innerPlanet.orbitXOffset - outerPlanet.orbitXOffset, 2) +
+		pow(innerPlanet.orbitYOffset - outerPlanet.orbitYOffset, 2))
+	pass
+
+func findroute():
+	findShortestDistance()
+	while true:
+		simulationStep()
+		if currentTime > endTime:
+			return 0
+		pass
+	pass
