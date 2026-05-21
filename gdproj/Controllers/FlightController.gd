@@ -118,8 +118,8 @@ func validateEndDate(date):
 		currentTime = sysTime
 		for planet in storedPlanets:
 			var simPlanet = SimulatedPlanet.new(planet)
-			simPlanet.x = (sin(sysTime + planet.phase) * planet.orbitalRadius) + planet.orbitXOffset
-			simPlanet.y = (cos(sysTime + planet.phase) * planet.orbitalRadius) + planet.orbitYOffset
+			simPlanet.x = (sin((sysTime + planet.phase)*planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
+			simPlanet.y = (cos((sysTime + planet.phase)*planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
 			simulationPlanets.append(SimulatedPlanet.new(planet))
 	return comp
 
@@ -147,29 +147,61 @@ func simulationStep():
 func calculateBodyPositions():
 	for simPlanet in simulationPlanets:
 		var planet = simPlanet.planet
-		simPlanet.x = sin(currentTime + planet.phase) + planet.orbitXOffset
-		simPlanet.y = cos(currentTime + planet.phase) + planet.orbitYOffset
+		simPlanet.x = sin((currentTime + planet.phase)*planet.orbitalPeriod) + planet.orbitXOffset
+		simPlanet.y = cos((currentTime + planet.phase)*planet.orbitalPeriod) + planet.orbitYOffset
 
 func compareOrbitDistances():
-	var outerPlanet: Planet
-	var innerPlanet: Planet
-	if destPlanet.orbitalRadius < departPlanet.orbitalRadius:
-		outerPlanet = departPlanet
-		innerPlanet = destPlanet
-	else:
-		outerPlanet = destPlanet
-		innerPlanet = departPlanet
+	var departSim: SimulatedPlanet
+	var destSim: SimulatedPlanet
+	for sim in simulationPlanets:
+		if sim.planet == departPlanet:
+			departSim = sim
+		elif sim.planet == destPlanet:
+			destSim = sim
+	if departSim == null or destSim == null:
+		return -1
+	return sqrt(
+		pow(departSim.x - destSim.x, 2) +
+		pow(departSim.y - destSim.y, 2))
 
-	var distanceBetweenCenters = sqrt(
-		pow(innerPlanet.orbitXOffset - outerPlanet.orbitXOffset, 2) +
-		pow(innerPlanet.orbitYOffset - outerPlanet.orbitYOffset, 2))
+func calculateNewStep(curDistDiff: float, lastDistDiff: float) -> void:
+	if curDistDiff < 0:
+		step *= 0.9
+		step = max(step, 0.001)
+	elif curDistDiff > 0 and lastDistDiff > 0:
+		step *= 1.1
+		step = min(step, 1.0)
+
+var flag = 0
+
+func setFlag():
+	flag += 1
+
+func calculateFuelUsage():
+	
 	pass
 
 func findroute():
 	findShortestDistance()
+	var curDistDiff = -1
+	var lastDistDiff = -1
+	var lastDist = -1
 	while true:
 		simulationStep()
 		if currentTime > endTime:
 			return 0
-		pass
-	pass
+		calculateBodyPositions()
+		var curDist = compareOrbitDistances()
+		if lastDist == -1:
+			lastDist = curDist
+		curDistDiff = curDist - lastDist
+		if curDistDiff < 0:
+			calculateNewStep(curDistDiff, lastDistDiff)
+		elif curDistDiff > 0:
+			if lastDistDiff <= 0:
+				setFlag()
+			else:
+				calculateNewStep(curDistDiff, lastDistDiff)
+				
+				
+		lastDistDiff = curDistDiff
