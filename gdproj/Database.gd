@@ -5,7 +5,7 @@ static var db : SQLite:
 	get:
 		if !_db:
 			_db = SQLite.new()
-			_db.path="res://galatic-travels.sqlite"
+			_db.path="res://galactic-travels.sqlite"
 			var hasDb = false
 			if FileAccess.file_exists(_db.path):
 				hasDb = true
