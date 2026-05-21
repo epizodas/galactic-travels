@@ -39,6 +39,7 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 
 [node name="MainView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1666998233]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -513,7 +514,6 @@ layout_mode = 2
 text = "Kitas"
 
 [node name="RouteView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1849517016]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -594,4 +594,5 @@ script = ExtResource("9_2xmvj")
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/SubmitModules" to="MarginContainer/MainLayout/FlightView" method="submitModules"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav/Back" to="MarginContainer/MainLayout/FlightView" method="_choose_modules_back"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav/Next" to="MarginContainer/MainLayout/FlightView" method="_choose_modules_next"]
-[connection signal="dateSelected" from="MarginContainer/MainLayout/RouteView/VBoxContainer/HBoxContainer/DatePickerPanel" to="MarginContainer/MainLayout/RouteView" method="submitEndDate"]
+[connection signal="dateSelected" from="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer/DatePickerPanel" to="MarginContainer/MainLayout/RouteView" method="submitEndDate"]
+[connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/FindRouteButton" to="MarginContainer/MainLayout/RouteView" method="findNextRoute"]

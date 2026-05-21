@@ -177,7 +177,7 @@ var flag = 0
 func setFlag():
 	flag += 1
 
-func calculateFuelUsage():
+func calculateFuelUsage(distance, ship):
 	
 	pass
 
