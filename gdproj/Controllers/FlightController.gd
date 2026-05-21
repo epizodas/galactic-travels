@@ -178,7 +178,11 @@ func setFlag():
 	flag += 1
 
 func calculateFuelUsage(distance, ship):
-	
+	# TODO: Kai augis padarys erdvelaivio issaugojima,
+	# padaryti actual fuel usage calculation
+	return distance
+
+func checkForColissions():
 	pass
 
 func findroute():
@@ -200,6 +204,11 @@ func findroute():
 		elif curDistDiff > 0:
 			if lastDistDiff <= 0:
 				setFlag()
+				var fuelUsage = calculateFuelUsage(curDist, null) # TODO: ship
+				var fuelCapacity = 1000 # TODO: ship
+				if fuelUsage < fuelCapacity:
+					checkForColissions()
+					pass
 			else:
 				calculateNewStep(curDistDiff, lastDistDiff)
 				
