@@ -1,10 +1,10 @@
 extends Node
 class_name FlightController
 
-var _planets = null
-var _spaceship = null
+var _planets: Array[SpaceBody] = []
+var _spaceship: Spaceship = null
 
-var _selectedModules = []
+var _selectedModules: Array[SpaceshipModule] = []
 
 func openFlightView():
 	var planets: Array[Planet] = Planet.fetchAllPlanets()
@@ -35,10 +35,14 @@ func getRoute():
 	return null
 	
 func selectModule(module: SpaceshipModule):
-	_selectedModules.append(module)
+	if not _selectedModules.has(module):
+		_selectedModules.append(module)
 	
 func deselectModule(module: SpaceshipModule):
 	_selectedModules.erase(module)
+
+func getSelectedModules() -> Array[SpaceshipModule]:
+	return _selectedModules.duplicate()
 
 func changeSpaceshipModules():
 	var moduleTypes = SpaceshipModule.Type
@@ -62,7 +66,22 @@ func changeSpaceshipModules():
 			selectModule(shieldModule)
 	
 	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
+	print(availableModules)
 	FlightViewRef.displayAvailableModules(availableModules)
+
+func submitModules():
+	var selected_modules = getSelectedModules()
+	
+	if _spaceship:
+		var ok = _spaceship.assignModules(selected_modules)
+		if not ok:
+			pass
+	
+	var speedModule = selected_modules.find_custom(func(m): return m.type == SpaceshipModule.Type.Speed)
+	if speedModule != -1:
+		return "Reikia pergeneruoti maršrutą"
+		
+	return null
 
 func getRememberedNeededFuel():
 	pass

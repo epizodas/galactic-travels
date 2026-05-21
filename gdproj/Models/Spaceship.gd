@@ -13,6 +13,8 @@ var fuelCapacity: float
 var fuelConsumption: float
 var moduleCapacity: int
 
+var _assigned_modules: Array[SpaceshipModule] = []
+
 func _init(
 	p_name: String,
 	p_code: String,
@@ -114,3 +116,9 @@ static func addSpaceship(ship: Spaceship):
 
 static func deleteSpaceship(ship_code: String):
 	Database.db.delete_rows("spaceship", "code = '%s'" % [ship_code])
+
+func assignModules(modules: Array[SpaceshipModule]):
+	if len(modules) > moduleCapacity:
+		return false
+	_assigned_modules = modules
+	return true

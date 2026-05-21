@@ -11,9 +11,14 @@ func _init(
 	self.moduleCapacity = p_moduleCapacity
 
 static func getSpaceshipModuleByType(moduleType: SpaceshipModule.Type):
-	var module = SpaceshipModule.new('modulis', moduleType)
+	var moduleName = "modulis"
+	for typeName in SpaceshipModule.Type:
+		if SpaceshipModule.Type.get(typeName) == moduleType:
+			moduleName = str(typeName)
+			break
+
+	var module = SpaceshipModule.new(moduleName, moduleType)
 	return module
 	
 static func getHangarSpaceships():
-	
 	pass

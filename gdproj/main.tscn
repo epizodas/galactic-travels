@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://dubkw6fn2rh5c" path="res://addons/DatePickerFiles/CalendarPop/DatePickerPanel.tscn" id="7_5vw27"]
 [ext_resource type="Script" uid="uid://cj6vjaurr4500" path="res://Views/FlightView.gd" id="7_272bh"]
 [ext_resource type="Script" uid="uid://xexgyuwowjsv" path="res://Views/RouteView.gd" id="7_kek77"]
+[ext_resource type="Script" uid="uid://mfa3rapuegi5" path="res://Views/ModuleChooserList.gd" id="8_0m3d1"]
+[ext_resource type="Script" uid="uid://cgs8w1d62ss4i" path="res://Views/ToastLayer.gd" id="9_2xmvj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13
@@ -387,44 +389,135 @@ layout_mode = 2
 text = "Atšaukti"
 
 [node name="FlightView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=409853611 node_paths=PackedStringArray("DepartureSelection", "DestinationSelection")]
-visible = false
 layout_mode = 2
 script = ExtResource("7_272bh")
-DepartureSelection = NodePath("Layout/DeparturePlanet/Selection")
-DestinationSelection = NodePath("Layout/DestinationPlanet/Selection")
+DepartureSelection = NodePath("GenerateRoute/DeparturePlanet/Selection")
+DestinationSelection = NodePath("GenerateRoute/DestinationPlanet/Selection")
 
-[node name="Layout" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightView" unique_id=1757397092]
+[node name="GenerateRoute" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightView" unique_id=1757397092]
 layout_mode = 2
 
-[node name="DeparturePlanet" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/Layout" unique_id=479522661]
+[node name="DeparturePlanet" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=479522661]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightView/Layout/DeparturePlanet" unique_id=2020235784]
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/DeparturePlanet" unique_id=2020235784]
 layout_mode = 2
 text = "Išvykimo planeta"
 
-[node name="Selection" type="OptionButton" parent="MarginContainer/MainLayout/FlightView/Layout/DeparturePlanet" unique_id=1047510763]
+[node name="Selection" type="OptionButton" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/DeparturePlanet" unique_id=1047510763]
 layout_mode = 2
 
-[node name="DestinationPlanet" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/Layout" unique_id=501092354]
+[node name="DestinationPlanet" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=501092354]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightView/Layout/DestinationPlanet" unique_id=1773562921]
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/DestinationPlanet" unique_id=1773562921]
 layout_mode = 2
 text = "Atvykimo planeta"
 
-[node name="Selection" type="OptionButton" parent="MarginContainer/MainLayout/FlightView/Layout/DestinationPlanet" unique_id=1854808683]
+[node name="Selection" type="OptionButton" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/DestinationPlanet" unique_id=1854808683]
 layout_mode = 2
 
-[node name="ChangeModules" type="Button" parent="MarginContainer/MainLayout/FlightView/Layout" unique_id=188173267]
-layout_mode = 2
-text = "Pakeisti erdvelaivio modulius"
-
-[node name="FindRoute" type="Button" parent="MarginContainer/MainLayout/FlightView/Layout" unique_id=1131188409]
+[node name="FindRoute" type="Button" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=1131188409]
 layout_mode = 2
 text = "Sudaryti kelionei maršrutą"
 
+[node name="BottomNav" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=567449067]
+layout_mode = 2
+
+[node name="Next" type="Button" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/BottomNav" unique_id=636095998]
+layout_mode = 2
+text = "Kitas"
+
+[node name="ChooseModules" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightView" unique_id=1396887699]
+visible = false
+layout_mode = 2
+
+[node name="ChangeModules" type="Button" parent="MarginContainer/MainLayout/FlightView/ChooseModules" unique_id=188173267]
+layout_mode = 2
+text = "Pakeisti erdvelaivio modulius"
+
+[node name="SubmitModules" type="Button" parent="MarginContainer/MainLayout/FlightView/ChooseModules" unique_id=1085736227]
+layout_mode = 2
+text = "Išsaugoti"
+
+[node name="ModuleChooser" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/ChooseModules" unique_id=644849447]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="AvailableColumn" type="PanelContainer" parent="MarginContainer/MainLayout/FlightView/ChooseModules/ModuleChooser" unique_id=1452217198]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MainLayout/FlightView/ChooseModules/ModuleChooser/AvailableColumn" unique_id=1238220514]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightView/ChooseModules/ModuleChooser/AvailableColumn/MarginContainer" unique_id=1650130408]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightView/ChooseModules/ModuleChooser/AvailableColumn/MarginContainer/VBoxContainer" unique_id=210932828]
+layout_mode = 2
+text = "Galimi moduliai"
+
+[node name="AvailableModules" type="ItemList" parent="MarginContainer/MainLayout/FlightView/ChooseModules/ModuleChooser/AvailableColumn/MarginContainer/VBoxContainer" unique_id=1372735887]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("8_0m3d1")
+
+[node name="SelectedColumn" type="PanelContainer" parent="MarginContainer/MainLayout/FlightView/ChooseModules/ModuleChooser" unique_id=1969167264]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MainLayout/FlightView/ChooseModules/ModuleChooser/SelectedColumn" unique_id=1984730537]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightView/ChooseModules/ModuleChooser/SelectedColumn/MarginContainer" unique_id=1849110441]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightView/ChooseModules/ModuleChooser/SelectedColumn/MarginContainer/VBoxContainer" unique_id=1295470551]
+layout_mode = 2
+text = "Pasirinkti moduliai"
+
+[node name="SelectedModules" type="ItemList" parent="MarginContainer/MainLayout/FlightView/ChooseModules/ModuleChooser/SelectedColumn/MarginContainer/VBoxContainer" unique_id=2058198452]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("8_0m3d1")
+selected_list = true
+
+[node name="BottomNav" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/ChooseModules" unique_id=401636755]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav" unique_id=1738353552]
+layout_mode = 2
+text = "Atgal"
+
+[node name="Next" type="Button" parent="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav" unique_id=1227043146]
+layout_mode = 2
+text = "Kitas"
+
 [node name="RouteView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1849517016]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -466,6 +559,9 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
+[node name="ToastLayer" type="CanvasLayer" parent="." unique_id=2108574891]
+script = ExtResource("9_2xmvj")
+
 [connection signal="about_to_popup" from="MarginContainer/MainLayout/MainView/VBoxContainer/Navbar/UserAccountDropdown" to="MarginContainer/MainLayout/MainView" method="openUserDropdown"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer/Vykdyti kelionę" to="MarginContainer/MainLayout/MainView" method="openFlightView"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/HBoxContainer/ViewSpaceshipData" to="MarginContainer/MainLayout/MainView" method="openSpaceshipTable"]
@@ -480,7 +576,11 @@ layout_mode = 2
 [connection signal="pressed" from="MarginContainer/MainLayout/EditSpaceshipView/SpaceObjects/HBoxContainer/cancel" to="MarginContainer/MainLayout/EditSpaceshipView" method="cancel"]
 [connection signal="pressed" from="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer/save" to="MarginContainer/MainLayout/AddSpaceshipView" method="submitSpaceshipData"]
 [connection signal="pressed" from="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer/cancel" to="MarginContainer/MainLayout/AddSpaceshipView" method="cancel"]
-[connection signal="item_selected" from="MarginContainer/MainLayout/FlightView/Layout/DeparturePlanet/Selection" to="MarginContainer/MainLayout/FlightView" method="submitPlanets"]
-[connection signal="item_selected" from="MarginContainer/MainLayout/FlightView/Layout/DestinationPlanet/Selection" to="MarginContainer/MainLayout/FlightView" method="submitPlanets"]
-[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/Layout/ChangeModules" to="MarginContainer/MainLayout/FlightView" method="changeSpaceshipModules"]
+[connection signal="item_selected" from="MarginContainer/MainLayout/FlightView/GenerateRoute/DeparturePlanet/Selection" to="MarginContainer/MainLayout/FlightView" method="submitPlanets"]
+[connection signal="item_selected" from="MarginContainer/MainLayout/FlightView/GenerateRoute/DestinationPlanet/Selection" to="MarginContainer/MainLayout/FlightView" method="submitPlanets"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/BottomNav/Next" to="MarginContainer/MainLayout/FlightView" method="_generate_route_next"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/ChangeModules" to="MarginContainer/MainLayout/FlightView" method="changeSpaceshipModules"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/SubmitModules" to="MarginContainer/MainLayout/FlightView" method="submitModules"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav/Back" to="MarginContainer/MainLayout/FlightView" method="_choose_modules_back"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav/Next" to="MarginContainer/MainLayout/FlightView" method="_choose_modules_next"]
 [connection signal="dateSelected" from="MarginContainer/MainLayout/RouteView/VBoxContainer/HBoxContainer/DatePickerPanel" to="MarginContainer/MainLayout/RouteView" method="submitEndDate"]
