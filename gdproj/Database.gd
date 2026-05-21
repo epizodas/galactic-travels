@@ -7,7 +7,7 @@ static var db : SQLite:
 			_db = SQLite.new()
 			_db.path="res://galatic-travels.sqlite"
 			var hasDb = false
-			if ResourceLoader.exists(_db.path):
+			if FileAccess.file_exists(_db.path):
 				hasDb = true
 			_db.open_db()
 			if !hasDb:
