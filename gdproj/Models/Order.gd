@@ -12,19 +12,21 @@ var id: int
 var price: float
 var status: Status
 
+var cargo: Array[Cargo] = []
+
 func _init(
 	p_id: int,
 	p_price: float,
 	p_status: Status
-	,
 ) -> void:
 	id = p_id
 	price = p_price
 	status = p_status
 
-static func fetchOrder():
-	
-	pass
+static func fetchOrder(order_id: int) -> Order:
+	var output = Database.db.select_rows("orders", "id = '%s'" % [order_id], ["id", "price", "order_status"])
+	var orderData = output[0]
+	return new(orderData.id, orderData.price if orderData.price else 0, Status.get(orderData.order_status))
 
 static func updateOrder():
 	pass

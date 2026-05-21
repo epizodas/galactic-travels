@@ -13,11 +13,10 @@ func setup_table_columns():
 	table.hide_root = true
 	table.select_mode = Tree.SELECT_ROW
 	
-	table.set_column_title(0, "Id")
+	table.set_column_title(0, "Nr.")
 	table.set_column_title(1, "Kaina")
 	table.set_column_title(2, "Statusas")
-	table.set_column_title(3, "Edit")
-	table.set_column_title(4, "Remove")
+	table.set_column_title(3, "Atidaryti")
 
 
 func displayOrdersPage(orders: Array[Order]):
@@ -43,7 +42,7 @@ func openOrdersTable(orders: Array[Order]):
 		row.set_text(1, str(order.price))
 		row.set_text(2, status)
 		row.add_button(3, preload("res://edit.svg"), 0, false, "Edit")
-		row.add_button(4, preload("res://trash.svg"), 0, false, "Remove")
+		#row.add_button(4, preload("res://trash.svg"), 0, false, "Remove")
 		
 		row.set_metadata(0, order.id)
 
@@ -73,10 +72,6 @@ func openAddOrderPage():
 	
 	
 func _on_table_button_clicked(item: TreeItem, column: int, id: int, mouse_button: int):
-	var ship = item.get_metadata(0)
-	if column == 9:
-		#_spaceshipController.openSpaceshipEdit(ship)
-		pass
-	elif column == 10:
-		#_spaceshipController.removeSpaceship(ship)
-		pass
+	var order = item.get_metadata(0)
+	if column == 3:
+		_orderController.openSingleOrderPage(order)

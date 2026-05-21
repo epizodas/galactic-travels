@@ -1,11 +1,30 @@
-extends Node
+class_name Cargo
 
+var name: String
+var length: int
+var width: int
+var mass: int
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+var id: int
+var order_id: int
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _init(
+	p_name: String,
+	p_length: int,
+	p_width: int,
+	p_mass: int
+) -> void:
+	self.name = p_name
+	self.length = p_length
+	self.width = p_width
+	self.mass = p_mass
+	
+static func fetchOrderCargo(order_id: int):
+	var output = Database.db.select_rows("cargo", "order_id = '%s'" % [order_id], ["id", "name", "length", "width", "mass"])
+	var cargo: Array[Cargo] = []
+	for row in output:
+		print(row)
+		var item = new(row.name, row.length, row.width, row.mass)
+		item.id = row.id
+		cargo.append(item)
+	return cargo

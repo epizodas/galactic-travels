@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://mfa3rapuegi5" path="res://Views/ModuleChooserList.gd" id="8_0m3d1"]
 [ext_resource type="Script" uid="uid://cgs8w1d62ss4i" path="res://Views/ToastLayer.gd" id="9_2xmvj"]
 [ext_resource type="Script" uid="uid://bi5appc71lt2" path="res://Views/OrdersView.gd" id="10_efxa6"]
+[ext_resource type="Script" uid="uid://pa1cn3vbsc1i" path="res://Views/SingleOrderView.gd" id="11_dg77c"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13
@@ -40,7 +41,6 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 
 [node name="MainView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1666998233]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -515,6 +515,7 @@ layout_mode = 2
 text = "Kitas"
 
 [node name="RouteView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1849517016]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -618,6 +619,57 @@ layout_mode = 2
 [node name="SingleOrderView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=533651954]
 visible = false
 layout_mode = 2
+script = ExtResource("11_dg77c")
+
+[node name="OrderView" type="VBoxContainer" parent="MarginContainer/MainLayout/SingleOrderView" unique_id=1222961811]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/SingleOrderView/OrderView" unique_id=1152351736]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer" unique_id=1657176367]
+layout_mode = 2
+text = "Erdvėlaiviai"
+
+[node name="spacer" type="Control" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer" unique_id=423731337]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="OrderInfo" type="PanelContainer" parent="MarginContainer/MainLayout/SingleOrderView/OrderView" unique_id=1411439015]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="margin" type="MarginContainer" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/OrderInfo" unique_id=1960373663]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/OrderInfo/margin" unique_id=1873738028]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Left" type="VBoxContainer" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/OrderInfo/margin/HBoxContainer" unique_id=1973918765]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Right" type="VBoxContainer" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/OrderInfo/margin/HBoxContainer" unique_id=557083100]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="OrderCargo" type="PanelContainer" parent="MarginContainer/MainLayout/SingleOrderView/OrderView" unique_id=1052259607]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/OrderCargo" unique_id=1230218841]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/OrderCargo/ScrollContainer" unique_id=1785511582]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="PaymentView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=119849966]
 visible = false

@@ -111,6 +111,24 @@ static func _setup_database() -> void:
 		"order_id":{"data_type": "int"},
 	})
 	
+	db.insert_row("cargo", {
+		"name": "Cargo1",
+		"length": 10,
+		"width": 20,
+		"mass": 30,
+		
+		"order_id": 1,
+	})
+	
+	db.insert_row("cargo", {
+		"name": "Cargo2",
+		"length": 20,
+		"width": 5,
+		"mass": 15,
+		
+		"order_id": 1,
+	})
+	
 	db.create_table("spaceship", {
 		"code": {"data_type": "text", "primary_key": true},
 		"name": {"data_type": "text"},

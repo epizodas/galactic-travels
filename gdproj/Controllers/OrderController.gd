@@ -8,7 +8,20 @@ func openOrdersPage():
 	var OrdersViewRef = get_tree().current_scene.find_child("OrdersView") as OrdersView
 	OrdersViewRef.displayOrdersPage(orders)
 
-func openSingleOrderPage():
+func openSingleOrderPage(order_id: int):
+	var OrdersViewRef = get_tree().current_scene.find_child("OrdersView") as OrdersView
+	OrdersViewRef.visible = false
+	
+	var order = Order.fetchOrder(order_id)
+	var cargo = Cargo.fetchOrderCargo(order_id)
+	
+	print(cargo)
+	order.cargo = cargo
+	
+	var SingleOrderViewRef = get_tree().current_scene.find_child("SingleOrderView") as SingleOrderView
+	SingleOrderViewRef.visible = true
+	
+	SingleOrderViewRef.displaySingleOrderPage(order)
 	pass
 
 func validateOrderData():
