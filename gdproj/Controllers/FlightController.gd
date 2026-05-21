@@ -216,16 +216,44 @@ func checkForCollisions(departSim: SimulatedPlanet, destSim: SimulatedPlanet, al
 
 	return totalGraze
 
-func checkForAsteroidBelt():
-	
-	pass
+func checkForAsteroidBelt(beltRadius: float) -> bool:
+	var departSim: SimulatedPlanet
+	var destSim: SimulatedPlanet
+	for s in simulationPlanets:
+		if s.planet == departPlanet:
+			departSim = s
+		elif s.planet == destPlanet:
+			destSim = s
+	if departSim == null or destSim == null:
+		return false
 
-func findroute():
+	var ax = departSim.x
+	var ay = departSim.y
+	var bx = destSim.x
+	var by = destSim.y
+	var dx = bx - ax
+	var dy = by - ay
+	var segLenSq = dx * dx + dy * dy
+	if segLenSq == 0:
+		return false
+
+	var fx = ax
+	var fy = ay
+	var t = clamp((fx * dx + fy * dy) / segLenSq, 0.0, 1.0)
+	var closestX = ax + t * dx
+	var closestY = ay + t * dy
+	var distSq = closestX * closestX + closestY * closestY
+
+	return distSq < beltRadius * beltRadius
+
+
+func findRoute():
 	findShortestDistance()
 	var curDistDiff = -1
 	var lastDistDiff = -1
 	var lastDist = -1
 	while true:
+		flag = 0
 		simulationStep()
 		if currentTime > endTime:
 			return 0
@@ -256,10 +284,20 @@ func findroute():
 					if collisionResult > maxTemperature:
 						var RouteViewRef = get_tree().current_scene.find_child("RouteView") as RouteView
 						RouteViewRef.addWarning("Temperatūra viršyja erdvėlaivio leidžiamą ribą")
-
+					if checkForAsteroidBelt(1000):
+						var RouteViewRef = get_tree().current_scene.find_child("RouteView") as RouteView
+						RouteViewRef.addWarning("Erdvėlaivis kirs asteroidų žiedą")
+					setFlag()
 					pass
+				if flag == 2:
+					return currentTime
 			else:
 				calculateNewStep(curDistDiff, lastDistDiff)
 				
 				
 		lastDistDiff = curDistDiff
+
+func saveCurrentRoute():
+	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
+	FlightViewRef.displayFlightView(storedPlanets)
+	pass # TODO

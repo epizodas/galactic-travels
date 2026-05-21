@@ -2,12 +2,15 @@ extends MarginContainer
 class_name RouteView
 
 func submitEndDate(panel: DatePickerPanel, date):
+	$VBoxContainer/SaveRouteButton.disabled = true
 	var isValid = _flightController.validateEndDate(date)
 	if !isValid:
 		$VBoxContainer/VBoxContainer/error.text = "Išvykimo data negali būti ši diena arba anksčiau."
 		$VBoxContainer/FindRouteButton.disabled = true
+		
 		return
 	$VBoxContainer/VBoxContainer/error.text = ""
+	$VBoxContainer/FindRouteButton.text = "Rasti maršrutą"
 	unlockFindRouteButton()
 	
 func unlockFindRouteButton():
@@ -15,9 +18,14 @@ func unlockFindRouteButton():
 	pass
 
 func findNextRoute():
-	var result = _flightController.findroute()
-	if result == 0:
+	var result = _flightController.findRoute()
+	if result <= 0:
 		$VBoxContainer/error.text = "Nepavyko rasti išvykimo laiko"
+		return
+	$VBoxContainer/FindRouteButton.text = "Rasti kitą maršrutą"
+	var dict = Time.get_datetime_dict_from_unix_time(result)
+	$VBoxContainer/HBoxContainer/DepartDate.text = dict.to_string()
+	$VBoxContainer/SaveRouteButton.disabled = false
 	pass
 
 func displayWarning(message):
@@ -26,4 +34,8 @@ func displayWarning(message):
 
 func addWarning(message):
 	displayWarning(message)
+	pass
+
+func saveRoute():
+	_flightController.saveCurrentRoute()
 	pass

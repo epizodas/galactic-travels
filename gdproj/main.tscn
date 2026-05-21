@@ -551,6 +551,25 @@ text = "Rasti maršrutą"
 layout_mode = 2
 label_settings = SubResource("LabelSettings_h2yge")
 
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/RouteView/VBoxContainer" unique_id=1909086774]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/RouteView/VBoxContainer" unique_id=1425110384]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/RouteView/VBoxContainer/HBoxContainer" unique_id=1952261816]
+layout_mode = 2
+text = "Išvykimo laikas:"
+
+[node name="DepartDate" type="Label" parent="MarginContainer/MainLayout/RouteView/VBoxContainer/HBoxContainer" unique_id=1141816541]
+layout_mode = 2
+text = "Dar nerasta"
+
+[node name="SaveRouteButton" type="Button" parent="MarginContainer/MainLayout/RouteView/VBoxContainer" unique_id=741268804]
+layout_mode = 2
+disabled = true
+text = "Išsaugoti maršrutą"
+
 [node name="OrdersView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=503115512]
 visible = false
 layout_mode = 2
@@ -629,3 +648,4 @@ script = ExtResource("9_2xmvj")
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav/Next" to="MarginContainer/MainLayout/FlightView" method="_choose_modules_next"]
 [connection signal="dateSelected" from="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer/DatePickerPanel" to="MarginContainer/MainLayout/RouteView" method="submitEndDate"]
 [connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/FindRouteButton" to="MarginContainer/MainLayout/RouteView" method="findNextRoute"]
+[connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/SaveRouteButton" to="MarginContainer/MainLayout/RouteView" method="saveRoute"]
