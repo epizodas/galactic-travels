@@ -54,8 +54,19 @@ func changeSpaceshipModules():
 
 	for type in moduleTypes:
 		var mod_type = SpaceshipModule.Type.get(type)
+		
 		var module = Hangar.getSpaceshipModuleByType(mod_type)
 
+		if not module:
+			var trips = Trip.fetchTrips()
+			
+			for trip in trips:
+				var modIdx = trip.spaceship.modules.find_custom(func(mod): return mod.type == mod_type)
+				if modIdx == -1:
+					continue
+				
+				module = trip.spaceship.modules[modIdx]
+		
 		if not module:
 			continue
 
@@ -171,8 +182,8 @@ func validateEndDate(date):
 		currentTime = sysTime
 		for planet in storedPlanets:
 			var simPlanet = SimulatedPlanet.new(planet)
-			simPlanet.x = (sin((sysTime + planet.phase)*planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
-			simPlanet.y = (cos((sysTime + planet.phase)*planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
+			simPlanet.x = (sin((sysTime + planet.phase) * planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
+			simPlanet.y = (cos((sysTime + planet.phase) * planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
 			simulationPlanets.append(SimulatedPlanet.new(planet))
 	return comp
 
@@ -200,8 +211,8 @@ func simulationStep():
 func calculateBodyPositions():
 	for simPlanet in simulationPlanets:
 		var planet = simPlanet.planet
-		simPlanet.x = sin((currentTime + planet.phase)*planet.orbitalPeriod) + planet.orbitXOffset
-		simPlanet.y = cos((currentTime + planet.phase)*planet.orbitalPeriod) + planet.orbitYOffset
+		simPlanet.x = sin((currentTime + planet.phase) * planet.orbitalPeriod) + planet.orbitXOffset
+		simPlanet.y = cos((currentTime + planet.phase) * planet.orbitalPeriod) + planet.orbitYOffset
 
 func compareOrbitDistances():
 	var departSim: SimulatedPlanet
@@ -305,6 +316,8 @@ func findRoute():
 	var curDistDiff = -1
 	var lastDistDiff = -1
 	var lastDist = -1
+	var intersectPlanet = false
+	
 	while true:
 		flag = 0
 		simulationStep()
@@ -334,6 +347,8 @@ func findRoute():
 					var maxTemperature = 1 # TODO: ship
 					if collisionResult == -1:
 						continue # Collision with planet
+					if collisionResult > 0:
+						intersectPlanet = true
 					if collisionResult > maxTemperature:
 						var RouteViewRef = get_tree().current_scene.find_child("RouteView") as RouteView
 						RouteViewRef.addWarning("Temperatūra viršyja erdvėlaivio leidžiamą ribą")

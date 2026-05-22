@@ -256,3 +256,18 @@ static func _setup_database() -> void:
 		"spaceship_category_id": 1,
 		"hourly_wage": 67.69
 	})
+	
+	db.create_table("trip", {
+		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
+		"departureTime": {"data_type": "datetime"},
+		"arrivalTime": {"data_type": "datetime"},
+		"distance": {"data_type": "float"},
+		"requiredFuel": {"data_type": "float"},
+	})
+	
+	db.insert_row("trip", {
+		"departureTime": "2026-06-01",
+		"arrivalTime": "2026-08-01",
+		"distance": 10000,
+		"requiredFuel": 22222,
+	})
