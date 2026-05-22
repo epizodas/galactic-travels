@@ -10,6 +10,7 @@ static var db : SQLite:
 			if FileAccess.file_exists(_db.path):
 				hasDb = true
 			_db.open_db()
+			print("Opening db")
 			if !hasDb:
 				_setup_database()
 		return _db
@@ -199,7 +200,7 @@ static func _setup_database() -> void:
 		"orbitYOffset": {"data_type": "float"},
 		"orbitalPeriod": {"data_type": "float"},
 		"orbitalRadius": {"data_type": "float"},
-		"phase": {"data_type": "float"},
+		"phase": {"data_type": "float"}
 	})
 	
 	db.create_table("planets", {
@@ -208,6 +209,7 @@ static func _setup_database() -> void:
 		"hangar_id": {"data_type": "int", "not_null": true},
 		"atmHeight": {"data_type": "float"},
 		"atmDensity": {"data_type": "float"},
+		"fuelCost": {"data_type": "float"}
 	})
 	
 	db.insert_row("spacebodies", {
@@ -228,7 +230,8 @@ static func _setup_database() -> void:
 		"spaceBody_id": 0,
 		"hangar_id": 0,
 		"atmHeight": 10,
-		"atmDensity": 0.5
+		"atmDensity": 0.5,
+		"fuelCost": 0.0
 	})
 	
 	db.create_table("hangars", {

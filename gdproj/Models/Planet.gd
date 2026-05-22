@@ -42,13 +42,14 @@ static func fetchAllPlanets():
 	var output = Database.db.select_rows(
 	"planets",
 	"",
-	["id", "spaceBody_id", "hangar_id", "atmHeight", "atmDensity"])
+	["id", "spaceBody_id", "hangar_id", "atmHeight", "atmDensity", "fuelCost"])
 	
 	var retval: Array[Planet] = []
 	for pd in output:
 		var sb = Database.db.select_rows("spacebodies", "id = '%s'" % [pd.spaceBody_id], 
 			["id", "name", "mass", "temp", "radius", "color", 
-			"orbitXOffset", "orbitYOffset", "orbitalPeriod", "orbitalRadius", "phase", "fuelCost"])
+			"orbitXOffset", "orbitYOffset", "orbitalPeriod", "orbitalRadius", "phase"])
+		print(sb)
 		if(len(sb) == 0):
 			continue
 		sb = sb[0]

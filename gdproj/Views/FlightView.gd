@@ -10,11 +10,15 @@ class_name FlightView
 func displayFlightView(planets: Array[Planet]):
 	self.visible = true
 	for planet in planets:
+		print(planet)
 		DepartureSelection.add_item(planet.name)
 		DestinationSelection.add_item(planet.name)
 
+func openRouteCreation():
+	_flightController.displayRouteCreationPage()
+
 func submitPlanets():
-	_flightController.submitPlanets()
+	_flightController.submitPlanets(DepartureSelection.get_selected_id(), DestinationSelection.get_selected_id())
 
 func changeSpaceshipModules() -> void:
 	_flightController.changeSpaceshipModules()

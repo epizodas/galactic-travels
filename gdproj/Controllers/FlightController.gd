@@ -16,6 +16,8 @@ func openFlightView():
 	FlightViewRef.displayFlightView(planets)
 
 	storedPlanets = planets.duplicate_deep()
+	destPlanet = storedPlanets[0]
+	departPlanet = storedPlanets[0]
 
 var storedPlanets: Array[Planet]
 
@@ -27,15 +29,15 @@ func rememberPlanets(depart: Planet, dest: Planet):
 	destPlanet = dest
 	pass
 
-func submitPlanets():
-	rememberPlanets(null, null)
+func submitPlanets(id1, id2):
+	rememberPlanets(storedPlanets[id1], storedPlanets[id2])
+	
 	printerr("Sita tikrai matysit, TODO submitPlanets()")
 	#Planet.getPlanetHangar()
 	pass
 
 func getRoute():
-	return null
-
+	return currentRoute
 
 func selectModule(module: SpaceshipModule):
 	if not _selectedModules.has(module):
@@ -358,14 +360,21 @@ func findRoute():
 					setFlag()
 					pass
 				if flag == 2:
-					return currentTime
+					var _trip = Trip.new(currentTime, currentTime+1, curDist, fuelUsage)
+					_trip.intersectPlanet = intersectPlanet
+					return 
 			else:
 				calculateNewStep(curDistDiff, lastDistDiff)
 				
-				
 		lastDistDiff = curDistDiff
 
-func saveCurrentRoute():
+var currentRoute: Trip
+
+func saveCurrentRoute(route):
+	currentRoute = route
 	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
 	FlightViewRef.displayFlightView(storedPlanets)
-	pass # TODO
+	
+func displayRouteCreationPage():
+	var RouteViewRef = get_tree().current_scene.find_child("RouteView") as RouteView
+	RouteViewRef.openRouteView()

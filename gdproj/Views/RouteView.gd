@@ -16,17 +16,25 @@ func submitEndDate(panel: DatePickerPanel, date):
 func unlockFindRouteButton():
 	$VBoxContainer/FindRouteButton.disabled = false
 	pass
+	
+func openRouteView():
+	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
+	FlightViewRef.visible = false
+	visible = true
 
 func findNextRoute():
 	var result = _flightController.findRoute()
-	if result <= 0:
+	if result is not Trip:
 		$VBoxContainer/error.text = "Nepavyko rasti išvykimo laiko"
 		return
 	$VBoxContainer/FindRouteButton.text = "Rasti kitą maršrutą"
-	var dict = Time.get_datetime_dict_from_unix_time(result)
+	foundTrip = result
+	var dict = Time.get_datetime_dict_from_unix_time(result.departureTime)
 	$VBoxContainer/HBoxContainer/DepartDate.text = dict.to_string()
 	$VBoxContainer/SaveRouteButton.disabled = false
 	pass
+
+var foundTrip: Trip
 
 func displayWarning(message):
 	_toast.show_message(message)
@@ -37,5 +45,5 @@ func addWarning(message):
 	pass
 
 func saveRoute():
-	_flightController.saveCurrentRoute()
+	_flightController.saveCurrentRoute(foundTrip)
 	pass
