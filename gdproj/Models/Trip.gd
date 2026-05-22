@@ -41,7 +41,6 @@ static func fetchTrips() -> Array[Trip]:
 	var output = Database.db.select_rows("trip", "", ["id", "departureTime", "arrivalTime", "distance", "requiredFuel"])
 	var trips: Array[Trip] = []
 	for row in output:
-		#print(row)
 		var deptTime = Time.get_datetime_dict_from_datetime_string(row.departureTime, false)
 		var arrvTime = Time.get_datetime_dict_from_datetime_string(row.arrivalTime, false)
 		var item = new(deptTime, arrvTime, row.distance, row.requiredFuel)

@@ -66,9 +66,7 @@ func changeSpaceshipModules():
 			var trips = Trip.fetchTrips()
 			
 			for trip in trips:
-				var modIdx = trip.spaceship.modules.find_custom(func(mod): return mod.type == mod_type)
-				if modIdx != -1:
-					module = trip.spaceship.modules[modIdx]
+				module = trip.spaceship.getModulesByType(mod_type)
 		
 		if module:
 			availableModules.append(module)
