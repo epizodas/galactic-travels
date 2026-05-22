@@ -36,8 +36,12 @@ func submitPlanets(id1, id2):
 	#Planet.getPlanetHangar()
 	pass
 
-func getRoute():
-	return currentRoute
+func getRoute() -> Trip:
+	var trips = Trip.fetchTrips()
+	var trip = trips[0]
+	trip.intersectPlanet = true
+	return trip
+
 
 func selectModule(module: SpaceshipModule):
 	if not _selectedModules.has(module):
@@ -56,7 +60,6 @@ func changeSpaceshipModules():
 
 	for type in moduleTypes:
 		var mod_type = SpaceshipModule.Type.get(type)
-		
 		var module = Hangar.getSpaceshipModuleByType(mod_type)
 
 		if not module:
@@ -64,25 +67,20 @@ func changeSpaceshipModules():
 			
 			for trip in trips:
 				var modIdx = trip.spaceship.modules.find_custom(func(mod): return mod.type == mod_type)
-				if modIdx == -1:
-					continue
-				
-				module = trip.spaceship.modules[modIdx]
+				if modIdx != -1:
+					module = trip.spaceship.modules[modIdx]
 		
-		if not module:
-			continue
-
-		availableModules.append(module)
+		if module:
+			availableModules.append(module)
 
 	var route = getRoute()
 
-	if route:
-		var shieldModule = availableModules.find_custom(func(m): return m.type == SpaceshipModule.Type.Sheld)
-		if shieldModule:
-			selectModule(shieldModule)
+	if route and route.intersectPlanet:
+		var modIdx = availableModules.find_custom(func(m): return m.type == SpaceshipModule.Type.Sheld)
+		if modIdx != -1:
+			selectModule(availableModules[modIdx])
 
 	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
-	print(availableModules)
 	FlightViewRef.displayAvailableModules(availableModules)
 
 func submitModules():
@@ -90,8 +88,7 @@ func submitModules():
 	
 	if _spaceship:
 		var ok = _spaceship.assignModules(selected_modules)
-		if not ok:
-			pass
+		if not ok: pass
 	
 	var speedModule = selected_modules.find_custom(func(m): return m.type == SpaceshipModule.Type.Speed)
 	if speedModule != -1:
@@ -360,9 +357,9 @@ func findRoute():
 					setFlag()
 					pass
 				if flag == 2:
-					var _trip = Trip.new(currentTime, currentTime+1, curDist, fuelUsage)
+					var _trip = Trip.new(currentTime, currentTime + 1, curDist, fuelUsage)
 					_trip.intersectPlanet = intersectPlanet
-					return 
+					return
 			else:
 				calculateNewStep(curDistDiff, lastDistDiff)
 				

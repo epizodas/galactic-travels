@@ -22,15 +22,15 @@ func _init(
 	p_hangarId: int
 ) -> void:
 	super._init(
-		p_name, 
-		p_mass, 
-		p_temp, 
-		p_radius, 
-		p_color, 
-		p_orbitXOffset, 
-		p_orbitYOffset, 
-		p_orbitalPeriod, 
-		p_orbitalRadius, 
+		p_name,
+		p_mass,
+		p_temp,
+		p_radius,
+		p_color,
+		p_orbitXOffset,
+		p_orbitYOffset,
+		p_orbitalPeriod,
+		p_orbitalRadius,
 		p_phase,
 		p_fuelCost
 	)
@@ -46,15 +46,14 @@ static func fetchAllPlanets():
 	
 	var retval: Array[Planet] = []
 	for pd in output:
-		var sb = Database.db.select_rows("spacebodies", "id = '%s'" % [pd.spaceBody_id], 
-			["id", "name", "mass", "temp", "radius", "color", 
+		var sb = Database.db.select_rows("spacebodies", "id = '%s'" % [pd.spaceBody_id],
+			["id", "name", "mass", "temp", "radius", "color",
 			"orbitXOffset", "orbitYOffset", "orbitalPeriod", "orbitalRadius", "phase"])
-		print(sb)
-		if(len(sb) == 0):
+		if (len(sb) == 0):
 			continue
 		sb = sb[0]
-		retval.push_back(new(sb.name, sb.mass, sb.temp, sb.radius, sb.color, 
-			sb.orbitXOffset, sb.orbitYOffset, sb.orbitalPeriod, sb.orbitalRadius, 
+		retval.push_back(new(sb.name, sb.mass, sb.temp, sb.radius, sb.color,
+			sb.orbitXOffset, sb.orbitYOffset, sb.orbitalPeriod, sb.orbitalRadius,
 			sb.phase, pd.atmHeight, pd.atmDensity, pd.hangar_id, pd.fuelCost))
 
 	return retval
@@ -63,11 +62,11 @@ func fetchPlanet(planet_id: int) -> Planet:
 	var output = Database.db.select_rows(
 	"planets",
 	"id = '%s'" % [planet_id],
-	["id", "name", "mass", "temp", "radius", "color", 
+	["id", "name", "mass", "temp", "radius", "color",
 	"orbitXOffset", "orbitYOffset", "orbitalPeriod", "orbitalRadius",
 	 "phase", "fuelCost", "atmHeight", "atmDensity", "hangar_id"])
 	
-	var planetData = output[0]	
+	var planetData = output[0]
 	return new(
 		planetData.name,
 		planetData.mass,
@@ -85,7 +84,7 @@ func fetchPlanet(planet_id: int) -> Planet:
 		planetData.hangar_id
 	)
 
-func getPlanetHangar() -> Hangar :
+func getPlanetHangar() -> Hangar:
 	var output = Database.db.select_rows(
 	"hangars",
 	"id = '%s'" % [hangarId],

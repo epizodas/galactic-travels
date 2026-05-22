@@ -10,7 +10,6 @@ class_name FlightView
 func displayFlightView(planets: Array[Planet]):
 	self.visible = true
 	for planet in planets:
-		print(planet)
 		DepartureSelection.add_item(planet.name)
 		DestinationSelection.add_item(planet.name)
 
@@ -28,7 +27,7 @@ func displayAvailableModules(modules: Array[SpaceshipModule]):
 	selectedModulesList.clear()
 
 	var selectedModules: Array[SpaceshipModule] = _flightController.getSelectedModules()
-	
+		
 	for module in modules:
 		if selectedModules.has(module):
 			selectedModulesList.add_module(module)
