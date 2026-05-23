@@ -675,6 +675,10 @@ size_flags_vertical = 3
 visible = false
 layout_mode = 2
 
+[node name="FlightOptimalCargoView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=775018337]
+visible = false
+layout_mode = 2
+
 [node name="ToastLayer" type="CanvasLayer" parent="." unique_id=2108574891]
 script = ExtResource("9_2xmvj")
 

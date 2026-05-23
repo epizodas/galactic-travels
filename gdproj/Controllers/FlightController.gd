@@ -373,3 +373,8 @@ func saveCurrentRoute(route):
 func displayRouteCreationPage():
 	var RouteViewRef = get_tree().current_scene.find_child("RouteView") as RouteView
 	RouteViewRef.openRouteView()
+
+
+func displayFlightOptimalCargoView():
+	var optimalCargoView = get_tree().current_scene.find_child("FlightOptimalCargoView") as FlightOptimalCargoView
+	optimalCargoView.displayOrdersPage()

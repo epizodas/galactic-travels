@@ -16,6 +16,9 @@ func displayFlightView(planets: Array[Planet]):
 func openRouteCreation():
 	_flightController.displayRouteCreationPage()
 
+func openFlightOptimalCargoView():
+	_flightController.displayFlightOptimalCargoView()
+
 func submitPlanets():
 	_flightController.submitPlanets(DepartureSelection.get_selected_id(), DestinationSelection.get_selected_id())
 
