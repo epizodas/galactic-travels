@@ -36,6 +36,7 @@ func _init(
 	atmHeight = p_atmHeight
 	atmDensity = p_atmDensity
 	hangarId = p_hangarId
+	fuelCost = p_fuelCost
 	
 static func fetchAllPlanets():
 	var output = Database.db.select_rows(
@@ -54,6 +55,7 @@ static func fetchAllPlanets():
 		retval.push_back(new(sb.name, sb.mass, sb.temp, sb.radius, sb.color,
 			sb.orbitXOffset, sb.orbitYOffset, sb.orbitalPeriod, sb.orbitalRadius,
 			sb.phase, pd.atmHeight, pd.atmDensity, pd.hangar_id, pd.fuelCost))
+		retval.back().id = sb.id
 
 	return retval
 

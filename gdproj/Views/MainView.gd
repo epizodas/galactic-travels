@@ -64,3 +64,4 @@ func openOrdersPage():
 
 func openSpaceMapPage():
 	_spaceMapController.openSpaceMapPage();
+	
