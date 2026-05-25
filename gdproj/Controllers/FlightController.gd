@@ -117,7 +117,7 @@ func submitModules():
 
 var simulationPlanets: Array[SimulatedPlanet]
 var currentTime = 0
-var step = 0
+var step = 1
 var endTime = 0
 
 func validateEndDate(date):
@@ -268,7 +268,7 @@ func findRoute():
 	var lastDistDiff = -1
 	var lastDist = -1
 	var intersectPlanet = false
-	
+	step = 1
 	while true:
 		flag = 0
 		simulationStep()
@@ -309,9 +309,9 @@ func findRoute():
 					setFlag()
 					pass
 				if flag == 2:
-					var _trip = Trip.new(currentTime, currentTime + 1, curDist, fuelUsage)
+					var _trip = Trip.new(Time.get_date_dict_from_unix_time(currentTime), Time.get_date_dict_from_unix_time(currentTime + 1), curDist, fuelUsage)
 					_trip.intersectPlanet = intersectPlanet
-					return
+					return _trip
 			else:
 				calculateNewStep(curDistDiff, lastDistDiff)
 				
@@ -323,6 +323,8 @@ func saveCurrentRoute(route):
 	currentRoute = route
 	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
 	FlightViewRef.displayFlightView(storedPlanets)
+	var RouteViewRef = get_tree().current_scene.find_child("RouteView") as RouteView
+	RouteViewRef.visible = false
 	
 func displayRouteCreationPage():
 	var RouteViewRef = get_tree().current_scene.find_child("RouteView") as RouteView

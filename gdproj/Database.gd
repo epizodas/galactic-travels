@@ -157,7 +157,7 @@ static func _setup_database() -> void:
 		"fuelCapacity": 500,
 		"fuelConsumption": 1,
 		"moduleCapacity": 1,
-		"hangar_id": 1,
+		"hangar_id": 0,
 	})
 	print("Inserted spaceship row")
 	
@@ -181,14 +181,6 @@ static func _setup_database() -> void:
 		"spaceship_id": {"data_type": "int"},
 		"pilot_id": {"data_type": "int"},
 		"flight_coordinator_id": {"data_type": "int"}
-	})
-	
-	db.create_table("hangars", {
-		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
-		"spaceship_capacity": {"data_type": "int"},
-		"module_capacity": {"data_type": "int"}
-	
-		#planet id turi ig
 	})
 	
 	db.create_table("spacebodies", {
@@ -219,8 +211,8 @@ static func _setup_database() -> void:
 	
 	db.create_table("hangars", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
-		"shipCapacity": {"data_type": "int", "not_null": true},
-		"moduleCapacity": {"data_type": "int", "not_null": true},
+		"shipCapacity": {"data_type": "int" },
+		"moduleCapacity": {"data_type": "int"},
 	})
 
 	db.insert_row("hangars", {

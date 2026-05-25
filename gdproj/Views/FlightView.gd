@@ -29,7 +29,7 @@ func unlockSpaceshipSelect(spaceships: Array[Spaceship]):
 	$GenerateRoute/Spaceship/Selection.disabled = false
 	pass
 
-func submitPlanets():
+func submitPlanets(index):
 	var spaceships = _flightController.submitPlanets(DepartureSelection.get_selected_id(), DestinationSelection.get_selected_id())
 	if len(spaceships) <= 0:
 		_toast.show_message("Nėra erdvėlaivių planetoje")

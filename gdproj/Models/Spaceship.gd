@@ -119,12 +119,6 @@ static func addSpaceship(ship: Spaceship):
 static func deleteSpaceship(ship_code: String):
 	Database.db.delete_rows("spaceship", "code = '%s'" % [ship_code])
 
-func getModulesByType(mod_type: SpaceshipModule.Type):
-	var modIdx = modules.find_custom(func(mod): return mod.type == mod_type)
-	if modIdx != -1:
-		return modules[modIdx]
-	return null
-
 func assignModules(n_modules: Array[SpaceshipModule]):
 	if len(n_modules) > moduleCapacity:
 		return false

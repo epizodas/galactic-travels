@@ -54,7 +54,7 @@ static func fetchAllPlanets():
 		sb = sb[0]
 		retval.push_back(new(sb.name, sb.mass, sb.temp, sb.radius, sb.color,
 			sb.orbitXOffset, sb.orbitYOffset, sb.orbitalPeriod, sb.orbitalRadius,
-			sb.phase, pd.atmHeight, pd.atmDensity, pd.hangar_id, pd.fuelCost))
+			sb.phase, pd.fuelCost, pd.atmHeight, pd.atmDensity, pd.hangar_id))
 		retval.back().id = sb.id
 
 	return retval
@@ -91,4 +91,4 @@ func getPlanetHangar() -> Hangar:
 	"id = '%s'" % [hangarId],
 	["id", "shipCapacity", "moduleCapacity"])
 	var hData = output[0]
-	return Hangar.new(hData.shipCapacity, hData.moduleCapacity)
+	return Hangar.new(hData.id, hData.shipCapacity, hData.moduleCapacity)
