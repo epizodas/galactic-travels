@@ -30,6 +30,7 @@ func findNextRoute():
 	$VBoxContainer/FindRouteButton.text = "Rasti kitą maršrutą"
 	foundTrip = result
 	var dict = result.departureTime
+	print(dict)
 	$VBoxContainer/HBoxContainer/DepartDate.text = str(dict)
 	$VBoxContainer/SaveRouteButton.disabled = false
 	pass

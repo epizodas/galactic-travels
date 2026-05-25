@@ -12,9 +12,9 @@
 [ext_resource type="Script" uid="uid://cgs8w1d62ss4i" path="res://Views/ToastLayer.gd" id="9_2xmvj"]
 [ext_resource type="Script" uid="uid://bi5appc71lt2" path="res://Views/OrdersView.gd" id="10_efxa6"]
 [ext_resource type="Script" uid="uid://pa1cn3vbsc1i" path="res://Views/SingleOrderView.gd" id="11_dg77c"]
-[ext_resource type="Script" uid="uid://blmxwt88ahbf1" path="res://Views/AddOrderView.gd" id="11_vivmo"]
+[ext_resource type="Script" path="res://Views/AddOrderView.gd" id="11_vivmo"]
 [ext_resource type="Script" uid="uid://bdwmhqvswrfju" path="res://Views/SpaceMapView.gd" id="12_ycdy4"]
-[ext_resource type="Script" uid="uid://bn2md8x6ielps" path="res://Views/FlightOptimalCargoView.gd" id="13_2cqfq"]
+[ext_resource type="Script" path="res://Views/FlightOptimalCargoView.gd" id="13_2cqfq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13

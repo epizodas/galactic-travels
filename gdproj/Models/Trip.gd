@@ -28,10 +28,10 @@ func _init(
 	p_distance: float,
 	p_requiredFuel: float
 ) -> void:
-	var departureTime = p_departureTime
-	var arrivalTime = p_arrivalTime
-	var distance = p_distance
-	var requiredFuel = p_requiredFuel
+	departureTime = p_departureTime
+	arrivalTime = p_arrivalTime
+	distance = p_distance
+	requiredFuel = p_requiredFuel
 	
 	#spaceship.modules = [
 		#SpaceshipModule.new("Kuro bakas", SpaceshipModule.Type.Fuel)

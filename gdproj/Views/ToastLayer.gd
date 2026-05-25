@@ -15,7 +15,8 @@ func show_message(message: String, duration: float = 2.5) -> void:
 	if _toast_container == null:
 		_setup_ui()
 
-	while _toast_container.get_child_count() >= MAX_VISIBLE_TOASTS:
+	var cur_time = Time.get_unix_time_from_system()
+	while _toast_container.get_child_count() >= MAX_VISIBLE_TOASTS && (Time.get_unix_time_from_system() - cur_time < 5) :
 		_toast_container.get_child(0).queue_free()
 
 	var toast := _build_toast(message)

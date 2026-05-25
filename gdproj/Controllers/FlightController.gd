@@ -45,6 +45,7 @@ func submitPlanets(id1, id2) -> Array[Spaceship]:
 	var hangar = storedPlanets[id1].getPlanetHangar()
 	var spaceships = hangar.getHangarSpaceships()
 	if checkSpaceshipAmount(spaceships):
+		_spaceship = spaceships[0]
 		return spaceships
 	return []
 
@@ -133,8 +134,8 @@ func validateEndDate(date):
 		currentTime = sysTime
 		for planet in storedPlanets:
 			var simPlanet = SimulatedPlanet.new(planet)
-			simPlanet.x = (sin((sysTime + planet.phase) * planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
-			simPlanet.y = (cos((sysTime + planet.phase) * planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
+			simPlanet.x = (sin((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
+			simPlanet.y = (cos((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
 			simulationPlanets.append(SimulatedPlanet.new(planet))
 	return comp
 
@@ -162,8 +163,8 @@ func simulationStep():
 func calculateBodyPositions():
 	for simPlanet in simulationPlanets:
 		var planet = simPlanet.planet
-		simPlanet.x = sin((currentTime + planet.phase) * planet.orbitalPeriod) + planet.orbitXOffset
-		simPlanet.y = cos((currentTime + planet.phase) * planet.orbitalPeriod) + planet.orbitYOffset
+		simPlanet.x = sin((currentTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius + planet.orbitXOffset
+		simPlanet.y = cos((currentTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius + planet.orbitYOffset
 
 func compareOrbitDistances():
 	var departSim: SimulatedPlanet
@@ -182,7 +183,7 @@ func compareOrbitDistances():
 func calculateNewStep(curDistDiff: float, lastDistDiff: float) -> void:
 	if curDistDiff < 0:
 		step *= 0.9
-		step = max(step, 0.001)
+		step = max(step, 0.1)
 	elif curDistDiff > 0 and lastDistDiff > 0:
 		step *= 1.1
 		step = min(step, 1.0)
@@ -192,10 +193,8 @@ var flag = 0
 func setFlag():
 	flag += 1
 
-func calculateFuelUsage(distance, ship):
-	# TODO: Kai augis padarys erdvelaivio issaugojima,
-	# padaryti actual fuel usage calculation
-	return distance
+func calculateFuelUsage(distance):
+	return _spaceship.fuelConsumption * distance
 
 func checkForCollisions(departSim: SimulatedPlanet, destSim: SimulatedPlanet, allSims: Array[SimulatedPlanet]) -> float:
 	var ax = departSim.x
@@ -268,7 +267,9 @@ func findRoute():
 	var lastDistDiff = -1
 	var lastDist = -1
 	var intersectPlanet = false
-	step = 1
+	step = 2
+	print(currentTime)
+	print(endTime)
 	while true:
 		flag = 0
 		simulationStep()
@@ -279,13 +280,15 @@ func findRoute():
 		if lastDist == -1:
 			lastDist = curDist
 		curDistDiff = curDist - lastDist
+		lastDist = curDist
+	
 		if curDistDiff < 0:
 			calculateNewStep(curDistDiff, lastDistDiff)
 		elif curDistDiff > 0:
 			if lastDistDiff <= 0:
 				setFlag()
-				var fuelUsage = calculateFuelUsage(curDist, null) # TODO: ship
-				var fuelCapacity = 1000 # TODO: ship
+				var fuelUsage = calculateFuelUsage(curDist)
+				var fuelCapacity = _spaceship.fuelCapacity
 				if fuelUsage < fuelCapacity:
 					var departSim: SimulatedPlanet
 					var destSim: SimulatedPlanet
@@ -295,7 +298,7 @@ func findRoute():
 						elif s.planet == destPlanet:
 							destSim = s
 					var collisionResult = checkForCollisions(departSim, destSim, simulationPlanets)
-					var maxTemperature = 1 # TODO: ship
+					var maxTemperature = _spaceship.maxTemp
 					if collisionResult == -1:
 						continue # Collision with planet
 					if collisionResult > 0:
@@ -311,6 +314,8 @@ func findRoute():
 				if flag == 2:
 					var _trip = Trip.new(Time.get_date_dict_from_unix_time(currentTime), Time.get_date_dict_from_unix_time(currentTime + 1), curDist, fuelUsage)
 					_trip.intersectPlanet = intersectPlanet
+					print("Found trip")
+					print(_trip.departureTime)
 					return _trip
 			else:
 				calculateNewStep(curDistDiff, lastDistDiff)
