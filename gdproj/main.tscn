@@ -12,7 +12,8 @@
 [ext_resource type="Script" uid="uid://cgs8w1d62ss4i" path="res://Views/ToastLayer.gd" id="9_2xmvj"]
 [ext_resource type="Script" uid="uid://bi5appc71lt2" path="res://Views/OrdersView.gd" id="10_efxa6"]
 [ext_resource type="Script" uid="uid://pa1cn3vbsc1i" path="res://Views/SingleOrderView.gd" id="11_dg77c"]
-[ext_resource type="Script" uid="uid://bdwmhqvswrfju" path="res://Views/SpaceMapView.gd" id="12_ycdy4"]
+[ext_resource type="Script" path="res://Views/FlightOptimalCargoView.gd" id="12_w48qg"]
+[ext_resource type="Script" path="res://Views/SpaceMapView.gd" id="12_ycdy4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13
@@ -420,11 +421,35 @@ text = "Atvykimo planeta"
 [node name="Selection" type="OptionButton" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/DestinationPlanet" unique_id=1854808683]
 layout_mode = 2
 
+[node name="Spaceship" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=129914660]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/Spaceship" unique_id=2032402057]
+layout_mode = 2
+text = "Erdvėlaivis"
+
+[node name="Selection" type="OptionButton" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/Spaceship" unique_id=260957284]
+layout_mode = 2
+disabled = true
+
 [node name="FindRoute" type="Button" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=1131188409]
 layout_mode = 2
 text = "Sudaryti kelionei maršrutą"
 
+[node name="FindCargoLayout" type="Button" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=982560120]
+layout_mode = 2
+text = "Surasti optimalų krovinių pasirinkimą"
+
+[node name="SelectUpgrades" type="Button" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=409264294]
+layout_mode = 2
+text = "Parinkti papildomus modulius erdvėlaiviui"
+
+[node name="CalculatePrices" type="Button" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=685542617]
+layout_mode = 2
+text = "Apskaičiuoti užsakymų kainas"
+
 [node name="BottomNav" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=567449067]
+visible = false
 layout_mode = 2
 
 [node name="Next" type="Button" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/BottomNav" unique_id=636095998]
@@ -698,6 +723,7 @@ layout_mode = 2
 [node name="FlightOptimalCargoView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=775018337]
 visible = false
 layout_mode = 2
+script = ExtResource("12_w48qg")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightOptimalCargoView" unique_id=1573691982]
 layout_mode = 2
@@ -781,7 +807,11 @@ script = ExtResource("9_2xmvj")
 [connection signal="pressed" from="MarginContainer/MainLayout/AddSpaceshipView/SpaceObjects/HBoxContainer/cancel" to="MarginContainer/MainLayout/AddSpaceshipView" method="cancel"]
 [connection signal="item_selected" from="MarginContainer/MainLayout/FlightView/GenerateRoute/DeparturePlanet/Selection" to="MarginContainer/MainLayout/FlightView" method="submitPlanets"]
 [connection signal="item_selected" from="MarginContainer/MainLayout/FlightView/GenerateRoute/DestinationPlanet/Selection" to="MarginContainer/MainLayout/FlightView" method="submitPlanets"]
+[connection signal="item_selected" from="MarginContainer/MainLayout/FlightView/GenerateRoute/Spaceship/Selection" to="MarginContainer/MainLayout/FlightView" method="submitSpaceship"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/FindRoute" to="MarginContainer/MainLayout/FlightView" method="openRouteCreation"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/FindCargoLayout" to="MarginContainer/MainLayout/FlightView" method="openFlightOptimalCargoView"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/SelectUpgrades" to="MarginContainer/MainLayout/FlightView" method="changeSpaceshipModules"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/CalculatePrices" to="MarginContainer/MainLayout/FlightView" method="submit"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/BottomNav/Next" to="MarginContainer/MainLayout/FlightView" method="_generate_route_next"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/ChangeModules" to="MarginContainer/MainLayout/FlightView" method="changeSpaceshipModules"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/SubmitModules" to="MarginContainer/MainLayout/FlightView" method="submitModules"]

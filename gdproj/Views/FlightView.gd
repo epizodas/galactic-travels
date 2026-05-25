@@ -19,11 +19,29 @@ func openRouteCreation():
 func openFlightOptimalCargoView():
 	_flightController.displayFlightOptimalCargoView()
 
+var spaceships: Array[Spaceship]
+
+func unlockSpaceshipSelect(spaceships: Array[Spaceship]):
+	self.spaceships = spaceships
+	for spaceship in spaceships:
+		$GenerateRoute/Spaceship/Selection.add_item(spaceship.name)
+		
+	$GenerateRoute/Spaceship/Selection.disabled = false
+	pass
+
 func submitPlanets():
-	_flightController.submitPlanets(DepartureSelection.get_selected_id(), DestinationSelection.get_selected_id())
+	var spaceships = _flightController.submitPlanets(DepartureSelection.get_selected_id(), DestinationSelection.get_selected_id())
+	if len(spaceships) <= 0:
+		_toast.show_message("Nėra erdvėlaivių planetoje")
+		$GenerateRoute/Spaceship/Selection.disabled = true
+	else:
+		unlockSpaceshipSelect(spaceships)
 
 func changeSpaceshipModules() -> void:
 	_flightController.changeSpaceshipModules()
+
+func submit():
+	_flightController.submit()
 
 func displayAvailableModules(modules: Array[SpaceshipModule]):
 	availableModulesList.clear()
@@ -54,32 +72,40 @@ func submitModules() -> void:
 	_toast.show_message(message)
 	
   
-func openPage(page: int) -> void:
-	for child in self.get_children():
-		if child is CanvasItem:
-			child.visible = false
+#func openPage(page: int) -> void:
+	#for child in self.get_children():
+		#if child is CanvasItem:
+			#child.visible = false
+#
+	#match page:
+		#1:
+			#if has_node("GenerateRoute"):
+				#$GenerateRoute.visible = true
+		#2:
+			#if has_node("ChooseModules"):
+				#$ChooseModules.visible = true
+		#3:
+			#if has_node("RouteView"):
+				#$RouteView.visible = true
+		#_:
+			## fallback: show GenerateRoute if present
+			#if has_node("GenerateRoute"):
+				#$GenerateRoute.visible = true
+#
+#
+#func _generate_route_next() -> void:
+	#openPage(2)
+#
+#func _choose_modules_back() -> void:
+	#openPage(1)
+#
+#func _choose_modules_next() -> void:
+	#openPage(3)
 
-	match page:
-		1:
-			if has_node("GenerateRoute"):
-				$GenerateRoute.visible = true
-		2:
-			if has_node("ChooseModules"):
-				$ChooseModules.visible = true
-		3:
-			if has_node("RouteView"):
-				$RouteView.visible = true
-		_:
-			# fallback: show GenerateRoute if present
-			if has_node("GenerateRoute"):
-				$GenerateRoute.visible = true
+func unlockButtons():
+	pass
 
-
-func _generate_route_next() -> void:
-	openPage(2)
-
-func _choose_modules_back() -> void:
-	openPage(1)
-
-func _choose_modules_next() -> void:
-	openPage(3)
+func submitSpaceship(index: int) -> void:
+	if _flightController.submitSpaceship(spaceships[index]):
+		unlockButtons()
+	pass

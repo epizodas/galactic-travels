@@ -6,6 +6,9 @@ var _spaceship: Spaceship = null
 
 var _selectedModules: Array[SpaceshipModule] = []
 
+func submit():
+	pass
+
 func openFlightView():
 	var planets: Array[Planet] = Planet.fetchAllPlanets()
 
@@ -29,12 +32,26 @@ func rememberPlanets(depart: Planet, dest: Planet):
 	destPlanet = dest
 	pass
 
-func submitPlanets(id1, id2):
+func checkSpaceshipAmount(spaceships: Array[Spaceship]):
+	return len(spaceships) > 0
+
+func submitPlanets(id1, id2) -> Array[Spaceship]:
 	rememberPlanets(storedPlanets[id1], storedPlanets[id2])
 	
-	printerr("Sita tikrai matysit, TODO submitPlanets()")
-	#Planet.getPlanetHangar()
-	pass
+	var hangar = storedPlanets[id1].getPlanetHangar()
+	var spaceships = hangar.getHangarSpaceships()
+	if checkSpaceshipAmount(spaceships):
+		return spaceships
+	return []
+
+# Mistakes were made.
+var rememberedSpaceship: Spaceship
+func rememberSpaceship(spaceship: Spaceship):
+	rememberedSpaceship = spaceship
+	
+func submitSpaceship(spaceship: Spaceship):
+	rememberSpaceship(spaceship)
+	return true
 
 func getRoute() -> Trip:
 	var trips = Trip.fetchTrips()

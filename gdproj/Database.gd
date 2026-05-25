@@ -222,6 +222,7 @@ static func _setup_database() -> void:
 	})
 
 	db.insert_row("hangars", {
+		"id": 0,
 		"shipCapacity": 2,
 		"moduleCapacity": 4
 	})
