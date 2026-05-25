@@ -20,6 +20,10 @@ static func fetchOrder(order_id: int) -> Order:
 	var orderData = output[0]
 	return new(orderData.id, orderData.price if orderData.price else 0, orderData.order_status)
 
+static func updateOrderPrice(order_id: int, calculated_order_cost: float):
+	Database.db.update_rows("orders", "id = '%s'" % [order_id], {"price": calculated_order_cost})
+	return calculated_order_cost
+
 static func updateOrder():
 	pass
 

@@ -340,7 +340,12 @@ func displayFlightOptimalCargoView():
 # eriko funkcija
 # ======================================================================================================
 
-func validateCostValues() -> bool: #3
+func validateCostValues(price_per_kg: float, price_per_sqm: float, markup_percent: float) -> bool: #3
+	# Use self references instead of _flightController
+	if not departPlanet or not _spaceship or not _pilot:
+		return false
+	if price_per_kg < 0.0 or price_per_sqm < 0.0 or markup_percent < 0.0:
+		return false
 	return true
 
 func getDeparturePlanet() -> Planet: #4
@@ -390,59 +395,75 @@ func calculateOrderAreaPart(order_area: float, cargo_bay: float) -> float: #20
 		return 0.0
 	return order_area / cargo_bay
 
-func calculateOrderMassCost(order_mass: float, total_mass: float, total_base_cost: float) -> float: #21
-	if total_mass <= 0.0:
+func calculateOrderMassCost(order_mass: float, total_mass: float, price_per_kg: float) -> float: #21
+	if order_mass <= 0.0:
 		return 0.0
-	return (order_mass / total_mass) * (total_base_cost * 0.5)
+	return (order_mass / total_mass) * order_mass * price_per_kg
 
-func calculateOrderAreaCost(area_part: float, total_base_cost: float) -> float: #22
-	return area_part * (total_base_cost * 0.5)
+func calculateOrderAreaCost(area_part: float, cargo_bay: float, price_per_sqm: float) -> float: #22
+	return area_part * cargo_bay * price_per_sqm
 
-func calculateOrderTotalCost(mass_cost: float, area_cost: float, markup: float = 1.25) -> float: #23
-	return (mass_cost + area_cost) * markup
-
-#func updateOrder(order_id: int, calculated_price: float) -> void: #24
-	#Order.updateOrderPrice(order_id, calculated_price)
+func calculateOrderTotalCost(mass_cost: float, area_cost: float, markup_percent: float) -> float: #23
+	var markup_factor = 1.0 + (markup_percent / 100.0)
+	return (mass_cost + area_cost) * markup_factor
 
 func calculateProfit(total_revenue: float, total_base_cost: float) -> float: #26
 	return total_revenue - total_base_cost
 
-func calculateTotalCosts():
-	if not validateCostValues():
-		return
+func calculateTotalCosts(price_per_kg: float, price_per_sqm: float, markup_percent: float):
+	if not validateCostValues(price_per_kg, price_per_sqm, markup_percent):
+		return null
 
-	var total = 0.0
+	var base_cost = 0.0
 
-	var planet: Planet = getDeparturePlanet()
-	var spaceship: Spaceship = getTripSpaceship()
-	var needed_fuel = getNeededFuel()
+	var planet: Planet = getDeparturePlanet() #4
+	var spaceship: Spaceship = getTripSpaceship() #5
+	var needed_fuel = getNeededFuel() #6 
 
-	total += calculateFuelCost(planet.fuelCost, needed_fuel)
+	base_cost += calculateFuelCost(planet.fuelCost, needed_fuel) #7
 
-	var pilot = getTripPilot()
-	var duration = getTripDuration()
+	var pilot = getTripPilot() #8
+	var duration = getTripDuration() #9
 
-	total += calculatePilotCost(pilot.hourly_wage, duration)
+	base_cost += calculatePilotCost(pilot.hourly_wage, duration) #10
 
-	var modules = SpaceshipModule.fetchSpaceshipModules(spaceship.code)
+	var modules = SpaceshipModule.fetchSpaceshipModules(spaceship.code) #11
 	if modules and modules.size() > 0:
 		for module in modules:
-			total += calculateModuleRent(module.rent, duration)
+			base_cost += calculateModuleRent(module.rent, duration) #13
 
-	var cargo_bay = calculateSpaceshipCargoBay(spaceship.cargoLength, spaceship.cargoWidth)
+	var cargo_bay = calculateSpaceshipCargoBay(spaceship.cargoLength, spaceship.cargoWidth) #14
 
-	var orders = getTripOrders()
+	var orders = getTripOrders() #15
 
 	var orders_cargo_map = {}
 	var total_cargo_mass = 0.0
 
 	for order in orders:
-		var cargo_items = Cargo.fetchOrderCargo(order.id)
-		orders_cargo_map[order.id] = cargo_items
-		total_cargo_mass += calculateCargoMass(cargo_items)
+		var cargo_items = Cargo.fetchOrderCargo(order.id) #16
+		orders_cargo_map[order.id] = cargo_items 
+		total_cargo_mass += calculateCargoMass(cargo_items) #18
 
+	var total_revenue = 0.0
 
-	return total
+	for order in orders:
+		var cargo_items = orders_cargo_map[order.id]
+
+		var order_area = calculateCargoArea(cargo_items) #19
+		var area_part = calculateOrderAreaPart(order_area, cargo_bay) #20
+		
+		var order_mass = calculateCargoMass(cargo_items) #kadangi nesaugom tai tenka persiskaiciuot :)
+
+		var mass_cost = calculateOrderMassCost(order_mass, total_cargo_mass, price_per_kg) #21
+		var area_cost = calculateOrderAreaCost(area_part, cargo_bay, price_per_sqm) #22
+
+		var calculated_order_cost = calculateOrderTotalCost(mass_cost, area_cost, markup_percent) #23
+
+		Order.updateOrderPrice(order.id, calculated_order_cost) #24
+		order.price = calculated_order_cost
+		total_revenue += calculated_order_cost
+
+	return calculateProfit(total_revenue, base_cost) #26
 
 # ======================================================================================================
 # 
