@@ -212,27 +212,8 @@ static func _setup_database() -> void:
 		"fuelCost": {"data_type": "float"}
 	})
 	
-	db.insert_row("spacebodies", {
-		"id": 0,
-		"name": "Žemė",
-		"mass": 1500,
-		"temp": 273,
-		"radius": 10,
-		"color": "#FFF",
-		"orbitXOffset": 0,
-		"orbitYOffset": 0,
-		"orbitalPeriod": 10,
-		"orbitalRadius": 10,
-		"phase": 0
-	})
-	
-	db.insert_row("planets", {
-		"spaceBody_id": 0,
-		"hangar_id": 0,
-		"atmHeight": 10,
-		"atmDensity": 0.5,
-		"fuelCost": 0.0
-	})
+	# Helper function that adds all planets (no stars)
+	addPlanetsToDB();
 	
 	db.create_table("hangars", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
@@ -274,3 +255,158 @@ static func _setup_database() -> void:
 		"distance": 10000,
 		"requiredFuel": 22222,
 	})
+	
+static func addPlanetsToDB():
+	var planets = [
+		{
+			"id": 0,
+			"name": "Mercury",
+			"mass": 330,
+			"temp": 440,
+			"radius": 4,
+			"color": "#8C7853",
+			"orbitXOffset": 80,
+			"orbitYOffset": 0,
+			"orbitalPeriod": 88,
+			"orbitalRadius": 80,
+			"phase": 0,
+			"atmHeight": 1,
+			"atmDensity": 0.01,
+			"fuelCost": 1.0
+		},
+		{
+			"id": 1,
+			"name": "Venus",
+			"mass": 4868,
+			"temp": 737,
+			"radius": 9,
+			"color": "#E6C27A",
+			"orbitXOffset": 120,
+			"orbitYOffset": 0,
+			"orbitalPeriod": 225,
+			"orbitalRadius": 120,
+			"phase": 0,
+			"atmHeight": 15,
+			"atmDensity": 0.9,
+			"fuelCost": 2.0
+		},
+		{
+			"id": 2,
+			"name": "Earth",
+			"mass": 5972,
+			"temp": 288,
+			"radius": 10,
+			"color": "#4B7BEC",
+			"orbitXOffset": 160,
+			"orbitYOffset": 0,
+			"orbitalPeriod": 365,
+			"orbitalRadius": 160,
+			"phase": 0,
+			"atmHeight": 10,
+			"atmDensity": 0.5,
+			"fuelCost": 1.5
+		},
+		{
+			"id": 3,
+			"name": "Mars",
+			"mass": 642,
+			"temp": 210,
+			"radius": 6,
+			"color": "#C1440E",
+			"orbitXOffset": 210,
+			"orbitYOffset": 0,
+			"orbitalPeriod": 687,
+			"orbitalRadius": 210,
+			"phase": 0,
+			"atmHeight": 5,
+			"atmDensity": 0.1,
+			"fuelCost": 1.2
+		},
+		{
+			"id": 4,
+			"name": "Jupiter",
+			"mass": 1898000,
+			"temp": 165,
+			"radius": 30,
+			"color": "#D9A066",
+			"orbitXOffset": 320,
+			"orbitYOffset": 0,
+			"orbitalPeriod": 4333,
+			"orbitalRadius": 320,
+			"phase": 0,
+			"atmHeight": 40,
+			"atmDensity": 1.5,
+			"fuelCost": 5.0
+		},
+		{
+			"id": 5,
+			"name": "Saturn",
+			"mass": 568000,
+			"temp": 134,
+			"radius": 26,
+			"color": "#E3C565",
+			"orbitXOffset": 420,
+			"orbitYOffset": 0,
+			"orbitalPeriod": 10759,
+			"orbitalRadius": 420,
+			"phase": 0,
+			"atmHeight": 35,
+			"atmDensity": 1.2,
+			"fuelCost": 4.5
+		},
+		{
+			"id": 6,
+			"name": "Uranus",
+			"mass": 86800,
+			"temp": 76,
+			"radius": 18,
+			"color": "#7FDBFF",
+			"orbitXOffset": 520,
+			"orbitYOffset": 0,
+			"orbitalPeriod": 30687,
+			"orbitalRadius": 520,
+			"phase": 0,
+			"atmHeight": 25,
+			"atmDensity": 0.8,
+			"fuelCost": 4.0
+		},
+		{
+			"id": 7,
+			"name": "Neptune",
+			"mass": 102000,
+			"temp": 72,
+			"radius": 18,
+			"color": "#4169E1",
+			"orbitXOffset": 620,
+			"orbitYOffset": 0,
+			"orbitalPeriod": 60190,
+			"orbitalRadius": 620,
+			"phase": 0,
+			"atmHeight": 25,
+			"atmDensity": 0.9,
+			"fuelCost": 4.2
+		}
+	]
+
+	for p in planets:
+		db.insert_row("spacebodies", {
+			"id": p.id,
+			"name": p.name,
+			"mass": p.mass,
+			"temp": p.temp,
+			"radius": p.radius,
+			"color": p.color,
+			"orbitXOffset": p.orbitXOffset,
+			"orbitYOffset": p.orbitYOffset,
+			"orbitalPeriod": p.orbitalPeriod,
+			"orbitalRadius": p.orbitalRadius,
+			"phase": p.phase
+		})
+
+		db.insert_row("planets", {
+			"spaceBody_id": p.id,
+			"hangar_id": 0,
+			"atmHeight": p.atmHeight,
+			"atmDensity": p.atmDensity,
+			"fuelCost": p.fuelCost
+		})

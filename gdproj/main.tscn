@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://cgs8w1d62ss4i" path="res://Views/ToastLayer.gd" id="9_2xmvj"]
 [ext_resource type="Script" uid="uid://bi5appc71lt2" path="res://Views/OrdersView.gd" id="10_efxa6"]
 [ext_resource type="Script" uid="uid://pa1cn3vbsc1i" path="res://Views/SingleOrderView.gd" id="11_dg77c"]
+[ext_resource type="Script" uid="uid://bdwmhqvswrfju" path="res://Views/SpaceMapView.gd" id="12_ycdy4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13
@@ -176,6 +177,10 @@ text = "Prisijungti	"
 layout_mode = 2
 text = "Registruotis
 "
+
+[node name="viewSpaceMap" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar" unique_id=1389767518]
+layout_mode = 2
+text = "Peržiūrti kosmoso žemėlapį"
 
 [node name="LoginView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1013348188]
 visible = false
@@ -514,6 +519,21 @@ text = "Atgal"
 layout_mode = 2
 text = "Kitas"
 
+[node name="FindOptimalCargo" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightView" unique_id=998419601]
+visible = false
+layout_mode = 2
+
+[node name="BottomNav" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/FindOptimalCargo" unique_id=1695842656]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="MarginContainer/MainLayout/FlightView/FindOptimalCargo/BottomNav" unique_id=1511294927]
+layout_mode = 2
+text = "Atgal"
+
+[node name="Next" type="Button" parent="MarginContainer/MainLayout/FlightView/FindOptimalCargo/BottomNav" unique_id=1323393141]
+layout_mode = 2
+text = "Kitas"
+
 [node name="RouteView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1849517016]
 visible = false
 layout_mode = 2
@@ -679,6 +699,69 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightOptimalCargoView" unique_id=1573691982]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer" unique_id=2338390]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/VBoxContainer" unique_id=1137789707]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=746785927]
+layout_mode = 2
+text = " Išvykimo data: "
+
+[node name="DatePickerPanel" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1321921424 instance=ExtResource("7_5vw27")]
+layout_mode = 2
+
+[node name="error" type="Label" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/VBoxContainer" unique_id=1767040258]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_h2yge")
+
+[node name="FindRouteButton" type="Button" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer" unique_id=2107971535]
+layout_mode = 2
+disabled = true
+text = "Rasti maršrutą"
+
+[node name="error" type="Label" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer" unique_id=1927705766]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_h2yge")
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer" unique_id=889905426]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer" unique_id=465005618]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/HBoxContainer" unique_id=1242147715]
+layout_mode = 2
+text = "Išvykimo laikas:"
+
+[node name="DepartDate" type="Label" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/HBoxContainer" unique_id=62921217]
+layout_mode = 2
+text = "Dar nerasta"
+
+[node name="SaveRouteButton" type="Button" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer" unique_id=1756075129]
+layout_mode = 2
+disabled = true
+text = "Išsaugoti maršrutą"
+
+[node name="SpaceMapView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1107569398]
+visible = false
+layout_mode = 2
+script = ExtResource("12_ycdy4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/SpaceMapView" unique_id=1730555001]
+layout_mode = 2
+
+[node name="Bar" type="HBoxContainer" parent="MarginContainer/MainLayout/SpaceMapView/VBoxContainer" unique_id=906727955]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="MarginContainer/MainLayout/SpaceMapView/VBoxContainer/Bar" unique_id=1996661452]
+layout_mode = 2
+text = "Atgal"
+
 [node name="ToastLayer" type="CanvasLayer" parent="." unique_id=2108574891]
 script = ExtResource("9_2xmvj")
 
@@ -688,6 +771,7 @@ script = ExtResource("9_2xmvj")
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/CoordinatorView/MarginContainer/VBoxContainer/SpaceObjects/HBoxContainer/AddPlanet" to="." method="_on_add_planet_pressed"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/Placeholder/ClientView/MarginContainer/VBoxContainer/HBoxContainer/ViewOrders" to="MarginContainer/MainLayout/MainView" method="openOrdersPage"]
 [connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar/login" to="MarginContainer/MainLayout/MainView" method="openLoginPage"]
+[connection signal="pressed" from="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar/viewSpaceMap" to="MarginContainer/MainLayout/MainView" method="openSpaceMapPage"]
 [connection signal="pressed" from="MarginContainer/MainLayout/LoginView/VBoxContainer/Control/LoginButton" to="MarginContainer/MainLayout/LoginView" method="submit"]
 [connection signal="pressed" from="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/HBoxContainer/AddSpaceship" to="MarginContainer/MainLayout/SpaceshipView" method="openAddSpaceshipPage"]
 [connection signal="item_activated" from="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/container/ScrollContainer/Tree" to="MarginContainer/MainLayout/SpaceshipView" method="editSpaceship"]
@@ -706,3 +790,4 @@ script = ExtResource("9_2xmvj")
 [connection signal="dateSelected" from="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer/DatePickerPanel" to="MarginContainer/MainLayout/RouteView" method="submitEndDate"]
 [connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/FindRouteButton" to="MarginContainer/MainLayout/RouteView" method="findNextRoute"]
 [connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/SaveRouteButton" to="MarginContainer/MainLayout/RouteView" method="saveRoute"]
+[connection signal="pressed" from="MarginContainer/MainLayout/SpaceMapView/VBoxContainer/Bar/Back" to="MarginContainer/MainLayout/SpaceMapView" method="exitSpaceMap"]

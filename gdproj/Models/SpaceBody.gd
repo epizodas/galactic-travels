@@ -1,5 +1,6 @@
 class_name SpaceBody
 
+var id: int
 var name: String
 var mass: float
 var temp: float
@@ -23,7 +24,6 @@ func _init(
 	p_orbitalPeriod: float,
 	p_orbitalRadius: float,
 	p_phase: float,
-	p_fuelCost: float
 ) -> void:
 	name = p_name
 	mass = p_mass
@@ -35,4 +35,19 @@ func _init(
 	orbitalPeriod = p_orbitalPeriod
 	orbitalRadius = p_orbitalRadius
 	phase = p_phase
-	fuelCost = p_fuelCost
+	
+static func fetchAllSpaceBodies() -> Array[SpaceBody]:
+	var output = Database.db.select_rows("spacebodies", "", ["id", "name", "mass", "temp", "radius", "color",
+		"orbitXOffset","orbitYOffset","orbitalPeriod","orbitalRadius","phase"])
+	var bodies: Array[SpaceBody] = [];
+	for row in output:
+		var body = SpaceBody.new(
+			row.name, row.mass, row.temp, row.radius, row.color,
+			row.orbitXOffset, row.orbitYOffset, row.orbitalPeriod, row.orbitalRadius, 
+			row.phase
+		)
+		body.id = row.id
+		bodies.append(body)
+
+	return bodies
+	

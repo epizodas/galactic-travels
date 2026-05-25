@@ -374,7 +374,7 @@ func displayRouteCreationPage():
 	var RouteViewRef = get_tree().current_scene.find_child("RouteView") as RouteView
 	RouteViewRef.openRouteView()
 
-
+# Optimal cargo subsystem
 func displayFlightOptimalCargoView():
 	var optimalCargoView = get_tree().current_scene.find_child("FlightOptimalCargoView") as FlightOptimalCargoView
-	optimalCargoView.displayOrdersPage()
+	optimalCargoView.displayFlightOptimalCargoView()

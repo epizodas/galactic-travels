@@ -32,7 +32,6 @@ func _init(
 		p_orbitalPeriod,
 		p_orbitalRadius,
 		p_phase,
-		p_fuelCost
 	)
 	atmHeight = p_atmHeight
 	atmDensity = p_atmDensity

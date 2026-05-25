@@ -58,7 +58,9 @@ func displayMainPage() -> void:
 		
 	pass
 
-
 func openOrdersPage():
 	_orderController.openOrdersPage()
 	pass
+
+func openSpaceMapPage():
+	_spaceMapController.openSpaceMapPage();
