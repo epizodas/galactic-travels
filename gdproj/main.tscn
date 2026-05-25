@@ -562,6 +562,10 @@ text = " Išvykimo data: "
 [node name="DatePickerPanel" parent="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=512119500 instance=ExtResource("7_5vw27")]
 layout_mode = 2
 
+[node name="Back" type="Button" parent="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=352795738]
+layout_mode = 2
+text = "Atgal"
+
 [node name="error" type="Label" parent="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer" unique_id=1471192889]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_h2yge")
@@ -820,6 +824,7 @@ script = ExtResource("9_2xmvj")
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/CalculatePrices" to="MarginContainer/MainLayout/FlightView" method="submit"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/SubmitModules" to="MarginContainer/MainLayout/FlightView" method="submitModules"]
 [connection signal="dateSelected" from="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer/DatePickerPanel" to="MarginContainer/MainLayout/RouteView" method="submitEndDate"]
+[connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer/Back" to="MarginContainer/MainLayout/RouteView" method="_back"]
 [connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/FindRouteButton" to="MarginContainer/MainLayout/RouteView" method="findNextRoute"]
 [connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/SaveRouteButton" to="MarginContainer/MainLayout/RouteView" method="saveRoute"]
 [connection signal="pressed" from="MarginContainer/MainLayout/OrdersView/Orders/HBoxContainer/Add order" to="MarginContainer/MainLayout/OrdersView" method="openAddOrderPage"]

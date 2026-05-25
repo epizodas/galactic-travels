@@ -48,3 +48,8 @@ func addWarning(message):
 func saveRoute():
 	_flightController.saveCurrentRoute(foundTrip)
 	pass
+
+func _back():
+	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
+	FlightViewRef.visible = true
+	visible = false

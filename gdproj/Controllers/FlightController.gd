@@ -357,8 +357,6 @@ func calculateOptimalCargo():
 	for order in order_arr:
 		var cargo = Cargo.fetchOrderCargo(order.id)
 		cargo_arr.append_array(cargo)
-		for c in cargo:
-			print(c.order_id)
 	
 	var foundOrders: Array[Order] = findOrdersForSpaceship(free_space, order_arr, cargo_arr);
 	
