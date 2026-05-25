@@ -1,7 +1,8 @@
 extends Node
 class_name FlightController
 
-var _planets: Array[SpaceBody] = []
+var _departPlanet: Planet = null
+var _destPlanet: Planet = null
 var _spaceship: Spaceship = null
 var _neededFuel: float = 0.0
 var _pilot: Pilot = null
@@ -15,6 +16,9 @@ func submit():
 
 func openFlightView():
 	var planets: Array[Planet] = Planet.fetchAllPlanets()
+	if planets.is_empty():
+		printerr("Error: fetchAllPlanets() returned an empty array.")
+		return
 
 	var MainViewRef = get_tree().current_scene.find_child("MainView") as MainView
 	MainViewRef.visible = false
@@ -32,14 +36,18 @@ var departPlanet: Planet
 var destPlanet: Planet
 
 func rememberPlanets(depart: Planet, dest: Planet):
-	departPlanet = depart
-	destPlanet = dest
+	_departPlanet = depart
+	_destPlanet = dest
 	pass
 
 func checkSpaceshipAmount(spaceships: Array[Spaceship]):
 	return len(spaceships) > 0
 
 func submitPlanets(id1, id2) -> Array[Spaceship]:
+	if id1 < 0 or id1 >= storedPlanets.size() or id2 < 0 or id2 >= storedPlanets.size():
+		printerr("Error: Planet selection index out of bounds.")
+		return []
+
 	rememberPlanets(storedPlanets[id1], storedPlanets[id2])
 	
 	var hangar = storedPlanets[id1].getPlanetHangar()
@@ -49,17 +57,19 @@ func submitPlanets(id1, id2) -> Array[Spaceship]:
 		return spaceships
 	return []
 
-# Mistakes were made.
-var rememberedSpaceship: Spaceship
-func rememberSpaceship(spaceship: Spaceship):
-	rememberedSpaceship = spaceship
+func rememberSpaceship(spaceship: Spaceship) -> void
+	_spaceship = spaceship
 	
-func submitSpaceship(spaceship: Spaceship):
+func submitSpaceship(spaceship: Spaceship) -> bool:
 	rememberSpaceship(spaceship)
 	return true
 
 func getRoute() -> Trip:
 	var trips = Trip.fetchTrips()
+	if trips.is_empty():
+		printerr("Error: fetchTrips() returned an empty array.")
+		return null
+
 	var trip = trips[0]
 	trip.intersectPlanet = true
 	return trip
@@ -77,7 +87,6 @@ func getSelectedModules() -> Array[SpaceshipModule]:
 
 func changeSpaceshipModules():
 	var moduleTypes = SpaceshipModule.Type
-
 	var availableModules: Array[SpaceshipModule] = []
 
 	for type in moduleTypes:
@@ -86,7 +95,6 @@ func changeSpaceshipModules():
 
 		if not module:
 			var trips = Trip.fetchTrips()
-			
 			for trip in trips:
 				module = trip.spaceship.getModulesByType(mod_type)
 		
@@ -94,7 +102,6 @@ func changeSpaceshipModules():
 			availableModules.append(module)
 
 	var route = getRoute()
-
 	if route and route.intersectPlanet:
 		var modIdx = availableModules.find_custom(func(m): return m.type == SpaceshipModule.Type.Sheld)
 		if modIdx != -1:
@@ -472,33 +479,32 @@ func rememberOrders():
 
 # ======================================================================================================
 # eriko funkcija
-# ======================================================================================================
 
 func validateCostValues(price_per_kg: float, price_per_sqm: float, markup_percent: float) -> bool: #3
 	# Use self references instead of _flightController
-	if not departPlanet or not _spaceship or not _pilot:
+	if not _departPlanet or not _spaceship or not _pilot:
 		return false
 	if price_per_kg < 0.0 or price_per_sqm < 0.0 or markup_percent < 0.0:
 		return false
 	return true
 
 func getDeparturePlanet() -> Planet: #4
-	return _flightController.departPlanet
+	return _departPlanet
 
 func getTripSpaceship() -> Spaceship: #5
-	return _flightController._spaceship
+	return _spaceship
 
 func getNeededFuel() -> float: #6
-	return _flightController._neededFuel
+	return _neededFuel
 
 func calculateFuelCost(planet_fuel_cost: float, needed_fuel: float) -> float: #7
 	return planet_fuel_cost * needed_fuel
 
 func getTripPilot() -> Pilot: #8
-	return _flightController._pilot
+	return _pilot
 
-func getTripDuration() -> float: #9
-	return _flightController._tripDurationHours
+func getTripDuration() -> int: #9
+	return _tripDurationHours
 
 func calculatePilotCost(pilot_hourly_wage: float, duration: int) -> float: #10
 	return pilot_hourly_wage * float(duration)
@@ -510,7 +516,7 @@ func calculateSpaceshipCargoBay(cargoLength: int, cargoWidth: int) -> int: #14
 	return cargoLength * cargoWidth
 
 func getTripOrders() -> Array[Order]: #15
-	return _flightController._orders
+	return _orders
 
 func calculateCargoArea(cargo_items: Array[Cargo]) -> float: #18
 	var total_area = 0.0
@@ -529,10 +535,10 @@ func calculateOrderAreaPart(order_area: float, cargo_bay: float) -> float: #20
 		return 0.0
 	return order_area / cargo_bay
 
-func calculateOrderMassCost(order_mass: float, total_mass: float, price_per_kg: float) -> float: #21
+func calculateOrderMassCost(order_mass: float, price_per_kg: float) -> float: #21
 	if order_mass <= 0.0:
 		return 0.0
-	return (order_mass / total_mass) * order_mass * price_per_kg
+	return order_mass * price_per_kg
 
 func calculateOrderAreaCost(area_part: float, cargo_bay: float, price_per_sqm: float) -> float: #22
 	return area_part * cargo_bay * price_per_sqm
@@ -588,7 +594,7 @@ func calculateTotalCosts(price_per_kg: float, price_per_sqm: float, markup_perce
 		
 		var order_mass = calculateCargoMass(cargo_items) #kadangi nesaugom tai tenka persiskaiciuot :)
 
-		var mass_cost = calculateOrderMassCost(order_mass, total_cargo_mass, price_per_kg) #21
+		var mass_cost = calculateOrderMassCost(order_mass, price_per_kg) #21
 		var area_cost = calculateOrderAreaCost(area_part, cargo_bay, price_per_sqm) #22
 
 		var calculated_order_cost = calculateOrderTotalCost(mass_cost, area_cost, markup_percent) #23
@@ -598,7 +604,3 @@ func calculateTotalCosts(price_per_kg: float, price_per_sqm: float, markup_perce
 		total_revenue += calculated_order_cost
 
 	return calculateProfit(total_revenue, base_cost) #26
-
-# ======================================================================================================
-# 
-# ======================================================================================================
