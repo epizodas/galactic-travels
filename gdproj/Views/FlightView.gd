@@ -44,6 +44,9 @@ func submit():
 	_flightController.submit()
 
 func displayAvailableModules(modules: Array[SpaceshipModule]):
+	$ChooseModules.visible = true
+	$GenerateRoute.visible = false
+	
 	availableModulesList.clear()
 	selectedModulesList.clear()
 
@@ -64,6 +67,9 @@ func deselectModule(module: SpaceshipModule) -> void:
 func submitModules() -> void:
 	var message = _flightController.submitModules()
 	
+	$ChooseModules.visible = false
+	$GenerateRoute.visible = true
+	
 	print(message)
 	
 	if not message:
@@ -71,37 +77,6 @@ func submitModules() -> void:
 	
 	_toast.show_message(message)
 	
-  
-#func openPage(page: int) -> void:
-	#for child in self.get_children():
-		#if child is CanvasItem:
-			#child.visible = false
-#
-	#match page:
-		#1:
-			#if has_node("GenerateRoute"):
-				#$GenerateRoute.visible = true
-		#2:
-			#if has_node("ChooseModules"):
-				#$ChooseModules.visible = true
-		#3:
-			#if has_node("RouteView"):
-				#$RouteView.visible = true
-		#_:
-			## fallback: show GenerateRoute if present
-			#if has_node("GenerateRoute"):
-				#$GenerateRoute.visible = true
-#
-#
-#func _generate_route_next() -> void:
-	#openPage(2)
-#
-#func _choose_modules_back() -> void:
-	#openPage(1)
-#
-#func _choose_modules_next() -> void:
-	#openPage(3)
-
 func unlockButtons():
 	pass
 

@@ -124,3 +124,9 @@ func assignModules(n_modules: Array[SpaceshipModule]):
 		return false
 	modules = n_modules
 	return true
+	
+func getModulesByType(mod_type: SpaceshipModule.Type):
+	var modIdx = modules.find_custom(func(mod): return mod.type == mod_type)
+	if modIdx != -1:
+		return modules[modIdx]
+	return null

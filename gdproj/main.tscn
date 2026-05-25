@@ -12,9 +12,9 @@
 [ext_resource type="Script" uid="uid://cgs8w1d62ss4i" path="res://Views/ToastLayer.gd" id="9_2xmvj"]
 [ext_resource type="Script" uid="uid://bi5appc71lt2" path="res://Views/OrdersView.gd" id="10_efxa6"]
 [ext_resource type="Script" uid="uid://pa1cn3vbsc1i" path="res://Views/SingleOrderView.gd" id="11_dg77c"]
-[ext_resource type="Script" path="res://Views/AddOrderView.gd" id="11_vivmo"]
+[ext_resource type="Script" uid="uid://blmxwt88ahbf1" path="res://Views/AddOrderView.gd" id="11_vivmo"]
 [ext_resource type="Script" uid="uid://bdwmhqvswrfju" path="res://Views/SpaceMapView.gd" id="12_ycdy4"]
-[ext_resource type="Script" path="res://Views/FlightOptimalCargoView.gd" id="13_2cqfq"]
+[ext_resource type="Script" uid="uid://bn2md8x6ielps" path="res://Views/FlightOptimalCargoView.gd" id="13_2cqfq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13
@@ -449,25 +449,9 @@ text = "Parinkti papildomus modulius erdvėlaiviui"
 layout_mode = 2
 text = "Apskaičiuoti užsakymų kainas"
 
-[node name="BottomNav" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=567449067]
-visible = false
-layout_mode = 2
-
-[node name="Next" type="Button" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/BottomNav" unique_id=636095998]
-layout_mode = 2
-text = "Kitas"
-
 [node name="ChooseModules" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightView" unique_id=1396887699]
 visible = false
 layout_mode = 2
-
-[node name="ChangeModules" type="Button" parent="MarginContainer/MainLayout/FlightView/ChooseModules" unique_id=188173267]
-layout_mode = 2
-text = "Pakeisti erdvelaivio modulius"
-
-[node name="SubmitModules" type="Button" parent="MarginContainer/MainLayout/FlightView/ChooseModules" unique_id=1085736227]
-layout_mode = 2
-text = "Išsaugoti"
 
 [node name="ModuleChooser" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/ChooseModules" unique_id=644849447]
 layout_mode = 2
@@ -534,16 +518,9 @@ size_flags_vertical = 3
 script = ExtResource("8_0m3d1")
 selected_list = true
 
-[node name="BottomNav" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/ChooseModules" unique_id=401636755]
+[node name="SubmitModules" type="Button" parent="MarginContainer/MainLayout/FlightView/ChooseModules" unique_id=1085736227]
 layout_mode = 2
-
-[node name="Back" type="Button" parent="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav" unique_id=1738353552]
-layout_mode = 2
-text = "Atgal"
-
-[node name="Next" type="Button" parent="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav" unique_id=1227043146]
-layout_mode = 2
-text = "Kitas"
+text = "Išsaugoti"
 
 [node name="FindOptimalCargo" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightView" unique_id=998419601]
 visible = false
@@ -865,11 +842,7 @@ script = ExtResource("9_2xmvj")
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/FindCargoLayout" to="MarginContainer/MainLayout/FlightView" method="openFlightOptimalCargoView"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/SelectUpgrades" to="MarginContainer/MainLayout/FlightView" method="changeSpaceshipModules"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/CalculatePrices" to="MarginContainer/MainLayout/FlightView" method="submit"]
-[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/BottomNav/Next" to="MarginContainer/MainLayout/FlightView" method="_generate_route_next"]
-[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/ChangeModules" to="MarginContainer/MainLayout/FlightView" method="changeSpaceshipModules"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/SubmitModules" to="MarginContainer/MainLayout/FlightView" method="submitModules"]
-[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav/Back" to="MarginContainer/MainLayout/FlightView" method="_choose_modules_back"]
-[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav/Next" to="MarginContainer/MainLayout/FlightView" method="_choose_modules_next"]
 [connection signal="dateSelected" from="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer/DatePickerPanel" to="MarginContainer/MainLayout/RouteView" method="submitEndDate"]
 [connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/FindRouteButton" to="MarginContainer/MainLayout/RouteView" method="findNextRoute"]
 [connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/SaveRouteButton" to="MarginContainer/MainLayout/RouteView" method="saveRoute"]

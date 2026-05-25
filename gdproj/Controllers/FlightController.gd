@@ -57,7 +57,7 @@ func submitPlanets(id1, id2) -> Array[Spaceship]:
 		return spaceships
 	return []
 
-func rememberSpaceship(spaceship: Spaceship) -> void
+func rememberSpaceship(spaceship: Spaceship) -> void:
 	_spaceship = spaceship
 	
 func submitSpaceship(spaceship: Spaceship) -> bool:
