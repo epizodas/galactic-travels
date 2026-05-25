@@ -59,13 +59,20 @@ func selectSpaceBody(body: SpaceBody, planet: Planet = null) -> void:
 		_info_details.text = _formatSpaceBodyInfo(body)
 
 func selectPlanet(planet: Planet):
-	selectSpaceBody(planet, planet)
-
-func selectSun() -> void:
+	#selectSpaceBody(planet, planet)
+	var planetData = _spaceMapController.getSpaceBodyInfo(planet)
+	
 	_ensure_map_layout()
 	_info_panel.visible = true
-	_info_title.text = "Sun"
-	_info_details.text = _formatSunInfo()
+	_info_title.text = planet.name
+	_info_details.text = _formatPlanetInfo(planet)
+
+func selectSun() -> void:
+	#_ensure_map_layout()
+	#_info_panel.visible = true
+	#_info_title.text = "Sun"
+	#_info_details.text = _formatSunInfo()
+	pass
 
 func _on_map_area_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:

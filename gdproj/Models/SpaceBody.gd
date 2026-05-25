@@ -51,3 +51,5 @@ static func fetchAllSpaceBodies() -> Array[SpaceBody]:
 
 	return bodies
 	
+static func fetchSpaceBody(body):
+	return body

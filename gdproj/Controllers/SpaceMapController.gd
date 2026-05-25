@@ -43,11 +43,13 @@ func createSpaceMap(allBodies: Array[SpaceBody], planets_by_body_id: Dictionary)
 
 		var body_ref := body
 		var planet_ref: Planet = planets_by_body_id.get(body.id)
-		planet.pressed.connect(func():
-			var SpaceMapRef = get_tree().current_scene.find_child("SpaceMapView") as SpaceMapView
-			if SpaceMapRef:
-				SpaceMapRef.selectSpaceBody(body_ref, planet_ref)
-		)
+		
+		if body.name != 'Sun':
+			planet.pressed.connect(func():
+				var SpaceMapRef = get_tree().current_scene.find_child("SpaceMapView") as SpaceMapView
+				if SpaceMapRef:
+					SpaceMapRef.selectPlanet(planet_ref)
+			)
 
 		nodes.append(planet)
 	
@@ -60,5 +62,6 @@ func exitSpaceMap():
 	var MainViewRef = get_tree().current_scene.find_child("MainView") as MainView
 	MainViewRef.displayMainPage()
 	
-func getSpaceBodyInfo():
-	pass
+func getSpaceBodyInfo(planet):
+	var planetData = SpaceBody.fetchSpaceBody(planet)
+	return planetData
