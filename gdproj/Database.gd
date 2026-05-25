@@ -51,6 +51,17 @@ static func _setup_database() -> void:
 	db.insert_row("spaceship_categories", {"id": 3, "value": "B"})
 	db.insert_row("spaceship_categories", {"id": 4, "value": "C"})
 	db.insert_row("spaceship_categories", {"id": 5, "value": "D"})
+	
+	db.create_table("order_status", {
+		"id": {"data_type": "int", "primary_key": true},
+		"value": {"data_type": "text", "not_null": true, "unique": true}
+	})
+	
+	db.insert_row("order_status", {"id": 1, "value":"Užsakytas"})
+	db.insert_row("order_status", {"id": 2, "value":"Patvirtintas"})
+	db.insert_row("order_status", {"id": 3, "value":"Sumokėtas"})
+	db.insert_row("order_status", {"id": 4, "value":"Užbaigtas"})
+	db.insert_row("order_status", {"id": 5, "value":"Atšauktas"})
 
 	db.create_table("pilots", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
@@ -92,7 +103,7 @@ static func _setup_database() -> void:
 	db.create_table("orders", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
 		"price": {"data_type": "real"},
-		"order_status": {"data_type": "text"},
+		"order_status": {"data_type": "int"},
 		"user_id": {"data_type": "int"}
 	
 		#departure planet id
@@ -100,7 +111,7 @@ static func _setup_database() -> void:
 	})
 	
 	db.insert_row("orders", {
-		"order_status": "Placed",
+		"order_status": "1",
 		"user_id": 3
 	})
 	

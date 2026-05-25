@@ -644,6 +644,10 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Pridėti užsakymą"
 
+[node name="Back" type="Button" parent="MarginContainer/MainLayout/OrdersView/Orders/HBoxContainer" unique_id=1005433874]
+layout_mode = 2
+text = "Atgal"
+
 [node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/OrdersView/Orders" unique_id=1119649634]
 layout_mode = 2
 size_flags_vertical = 3
@@ -660,6 +664,42 @@ size_flags_vertical = 3
 [node name="AddOrderView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1265306326]
 visible = false
 layout_mode = 2
+script = ExtResource("11_w48qg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/AddOrderView" unique_id=396136308]
+layout_mode = 2
+
+[node name="Bar" type="HBoxContainer" parent="MarginContainer/MainLayout/AddOrderView/VBoxContainer" unique_id=196807342]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar" unique_id=1627406967]
+layout_mode = 2
+text = "Atgal"
+
+[node name="Add" type="Button" parent="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar" unique_id=970205901]
+layout_mode = 2
+text = "Pridėti užsakymą"
+
+[node name="PlusButton" type="Button" parent="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar" unique_id=636496388]
+layout_mode = 2
+text = "Pridėti krovinį"
+
+[node name="MinusButton" type="Button" parent="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar" unique_id=1067086515]
+layout_mode = 2
+text = "Išimti krovinį"
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar" unique_id=1111728798]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MainLayout/AddOrderView/VBoxContainer" unique_id=1750629966]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/AddOrderView/VBoxContainer/ScrollContainer" unique_id=186932983]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="SingleOrderView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=533651954]
 visible = false
@@ -676,9 +716,20 @@ layout_mode = 2
 layout_mode = 2
 text = "Erdvėlaiviai"
 
+[node name="spacer2" type="Control" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer" unique_id=2063071702]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer" unique_id=2129392343]
+layout_mode = 2
+
 [node name="spacer" type="Control" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer" unique_id=423731337]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Back" type="Button" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer" unique_id=529298923]
+layout_mode = 2
+text = "Atgal"
 
 [node name="OrderInfo" type="PanelContainer" parent="MarginContainer/MainLayout/SingleOrderView/OrderView" unique_id=1411439015]
 layout_mode = 2
@@ -820,4 +871,11 @@ script = ExtResource("9_2xmvj")
 [connection signal="dateSelected" from="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer/DatePickerPanel" to="MarginContainer/MainLayout/RouteView" method="submitEndDate"]
 [connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/FindRouteButton" to="MarginContainer/MainLayout/RouteView" method="findNextRoute"]
 [connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/SaveRouteButton" to="MarginContainer/MainLayout/RouteView" method="saveRoute"]
+[connection signal="pressed" from="MarginContainer/MainLayout/OrdersView/Orders/HBoxContainer/Add order" to="MarginContainer/MainLayout/OrdersView" method="openAddOrderPage"]
+[connection signal="pressed" from="MarginContainer/MainLayout/OrdersView/Orders/HBoxContainer/Back" to="MarginContainer/MainLayout/OrdersView" method="_back"]
+[connection signal="pressed" from="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar/Back" to="MarginContainer/MainLayout/AddOrderView" method="_back"]
+[connection signal="pressed" from="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar/Add" to="MarginContainer/MainLayout/AddOrderView" method="submitOrderAdd"]
+[connection signal="pressed" from="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar/PlusButton" to="MarginContainer/MainLayout/AddOrderView" method="addCargo"]
+[connection signal="pressed" from="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar/MinusButton" to="MarginContainer/MainLayout/AddOrderView" method="removeCargo"]
+[connection signal="pressed" from="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer/Back" to="MarginContainer/MainLayout/SingleOrderView" method="_back"]
 [connection signal="pressed" from="MarginContainer/MainLayout/SpaceMapView/VBoxContainer/Bar/Back" to="MarginContainer/MainLayout/SpaceMapView" method="exitSpaceMap"]

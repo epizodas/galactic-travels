@@ -19,6 +19,18 @@ func _init(
 	self.width = p_width
 	self.mass = p_mass
 	
+static func addCargo(orderId, cargoList: Array[Cargo]):
+	for cargo in cargoList:
+		var cargo_dict = {
+			"name": cargo.name,
+			"length": cargo.length,
+			"width": cargo.width,
+			"mass": cargo.mass,
+			"order_id": orderId
+		}
+
+		Database.db.insert_row("cargo", cargo_dict)
+
 static func fetchOrderCargo(order_id: int):
 	var output = Database.db.select_rows("cargo", "order_id = '%s'" % [order_id], ["id", "name", "length", "width", "mass"])
 	var cargo: Array[Cargo] = []
