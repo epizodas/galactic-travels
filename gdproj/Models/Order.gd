@@ -42,8 +42,24 @@ static func addOrder(userId):
 	return Database.db.last_insert_rowid;
 	
 
-static func fetchAllOrderedOrders():
-	pass
+static func fetchAllOrderedOrders() -> Array[Order]:
+	var output = Database.db.select_rows(
+		"orders",
+		"order_status = 1",
+		["id", "price", "order_status"]
+	)
+
+	var orders: Array[Order] = []
+
+	for row in output:
+		orders.append(
+			Order.new(
+				row["id"],
+				row["price"] if row["price"] != null else 0,
+				row["order_status"]
+			)
+		)
+	return orders
 
 static func fetchUserOrders(user: User) -> Array[Order]:
 	var output = Database.db.select_rows("orders", "user_id = %s" % user.id, ["id", "price", "order_status"])

@@ -335,10 +335,139 @@ func displayRouteCreationPage():
 	var RouteViewRef = get_tree().current_scene.find_child("RouteView") as RouteView
 	RouteViewRef.openRouteView()
 
-# Optimal cargo subsystem
+# ======================================================================================================
+# domanto funkcija
+# ======================================================================================================
 func displayFlightOptimalCargoView():
 	var optimalCargoView = get_tree().current_scene.find_child("FlightOptimalCargoView") as FlightOptimalCargoView
 	optimalCargoView.displayFlightOptimalCargoView()
+
+func calculateOptimalCargo():
+	
+	var free_space = calculateSpaceshipSize();
+	
+	var order_arr: Array[Order] = Order.fetchAllOrderedOrders();
+	var cargo_arr: Array[Cargo];
+	
+	for order in order_arr:
+		var cargo = Cargo.fetchOrderCargo(order.id)
+		cargo_arr.append(cargo)
+	
+	findOrdersForSpaceship(free_space, order_arr, cargo_arr);
+	
+	#var num = checkFoundOrderCount(order_arr)
+	#if num > 0:
+	#	return;
+	
+	#var takenCapacity: int = checkSpaceshipCapacity();
+	#if takenCapacity > 30:
+	#	return
+	
+	#rememberOrders()
+	pass
+
+func calculateSpaceshipSize() -> Array:
+	var cargoLength = _spaceship.cargoLength
+	var cargoWidth = _spaceship.cargoWidth
+
+	var space_grid: Array = []
+	space_grid.clear()
+
+	for y in range(cargoLength):
+		var row: Array = []
+		for x in range(cargoWidth):
+			row.append(false)
+		space_grid.append(row)
+	return space_grid
+
+#--
+func groupCargoByOrder(cargo: Array[Cargo]) -> Dictionary:
+	var map = {}
+
+	for c in cargo:
+		if not map.has(c.order_id):
+			map[c.order_id] = []
+		map[c.order_id].append(c)
+
+	return map
+#--
+
+func findOrdersForSpaceship(free_space: Array, orders: Array[Order], cargo: Array[Cargo]) -> Array[Order]:
+	var accepted_orders: Array[Order] = []
+	var working_space = free_space.duplicate(true)
+
+	var cargo_by_order = {}
+
+	for c in cargo:
+		if not cargo_by_order.has(c.order_id):
+			cargo_by_order[c.order_id] = []
+		cargo_by_order[c.order_id].append(c)
+	
+	for order in orders:
+		if not cargo_by_order.has(order.id):
+			continue
+
+		var order_cargo = cargo_by_order[order.id]
+
+		var test_space = working_space.duplicate(true)
+
+		if tryPackOrderIntoSpace(test_space, order_cargo):
+			working_space = test_space
+			accepted_orders.append(order)
+
+	return accepted_orders
+	
+func tryPackOrderIntoSpace(free_space: Array, cargo_list: Array[Cargo]) -> bool:
+	cargo_list.sort_custom(func(a, b):
+		return a.width * a.height > b.width * b.height
+	)
+
+	for cargo in cargo_list:
+		var placed = false
+
+		for i in range(free_space.size()):
+			var rect = free_space[i]
+
+			if cargo.width <= rect.width and cargo.height <= rect.height:
+				split_free_rect(free_space, i, cargo)
+				placed = true
+				break
+
+		if not placed:
+			return false
+
+	return true
+	
+func split_free_rect(free_space: Array, index: int, cargo: Cargo) -> void:
+	var rect = free_space[index]
+	free_space.remove_at(index)
+
+	# right rectangle
+	if rect.width > cargo.width:
+		free_space.append({
+			"x": rect.x + cargo.width,
+			"y": rect.y,
+			"width": rect.width - cargo.width,
+			"height": cargo.height
+		})
+
+	# bottom rectangle
+	if rect.height > cargo.height:
+		free_space.append({
+			"x": rect.x,
+			"y": rect.y + cargo.height,
+			"width": rect.width,
+			"height": rect.height - cargo.height
+		})
+
+func checkFoundOrderCount(foundOrders: Array[Order]) -> int:
+	return 0
+	
+func checkSpaceshipCapacity():
+	pass
+	
+func rememberOrders():
+	pass
 
 
 # ======================================================================================================
