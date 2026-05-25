@@ -12,8 +12,9 @@
 [ext_resource type="Script" uid="uid://cgs8w1d62ss4i" path="res://Views/ToastLayer.gd" id="9_2xmvj"]
 [ext_resource type="Script" uid="uid://bi5appc71lt2" path="res://Views/OrdersView.gd" id="10_efxa6"]
 [ext_resource type="Script" uid="uid://pa1cn3vbsc1i" path="res://Views/SingleOrderView.gd" id="11_dg77c"]
-[ext_resource type="Script" path="res://Views/FlightOptimalCargoView.gd" id="12_w48qg"]
+[ext_resource type="Script" uid="uid://blmxwt88ahbf1" path="res://Views/AddOrderView.gd" id="11_vivmo"]
 [ext_resource type="Script" uid="uid://bdwmhqvswrfju" path="res://Views/SpaceMapView.gd" id="12_ycdy4"]
+[ext_resource type="Script" uid="uid://bn2md8x6ielps" path="res://Views/FlightOptimalCargoView.gd" id="13_2cqfq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
 font_size = 13
@@ -664,7 +665,7 @@ size_flags_vertical = 3
 [node name="AddOrderView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1265306326]
 visible = false
 layout_mode = 2
-script = ExtResource("11_w48qg")
+script = ExtResource("11_vivmo")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/AddOrderView" unique_id=396136308]
 layout_mode = 2
@@ -720,8 +721,9 @@ text = "Erdvėlaiviai"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer" unique_id=2129392343]
+[node name="PaymentButton" type="Button" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer" unique_id=2129392343]
 layout_mode = 2
+text = "Apmokėti"
 
 [node name="spacer" type="Control" parent="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer" unique_id=423731337]
 layout_mode = 2
@@ -774,7 +776,7 @@ layout_mode = 2
 [node name="FlightOptimalCargoView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=775018337]
 visible = false
 layout_mode = 2
-script = ExtResource("12_w48qg")
+script = ExtResource("13_2cqfq")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightOptimalCargoView" unique_id=1573691982]
 layout_mode = 2

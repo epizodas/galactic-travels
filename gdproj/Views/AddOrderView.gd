@@ -14,6 +14,8 @@ func displayAddOrderPage():
 		orders_view.visible = false
 
 	self.visible = true
+	
+	error_field.text = ""
 
 	# clear cargo rows
 	for child in cargo_rows.get_children():
