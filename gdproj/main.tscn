@@ -13,7 +13,9 @@
 [ext_resource type="Script" uid="uid://bi5appc71lt2" path="res://Views/OrdersView.gd" id="10_efxa6"]
 [ext_resource type="Script" uid="uid://pa1cn3vbsc1i" path="res://Views/SingleOrderView.gd" id="11_dg77c"]
 [ext_resource type="Script" uid="uid://blmxwt88ahbf1" path="res://Views/AddOrderView.gd" id="11_vivmo"]
+[ext_resource type="Script" uid="uid://blmxwt88ahbf1" path="res://Views/AddOrderView.gd" id="11_vivmo"]
 [ext_resource type="Script" uid="uid://bdwmhqvswrfju" path="res://Views/SpaceMapView.gd" id="12_ycdy4"]
+[ext_resource type="Script" uid="uid://bn2md8x6ielps" path="res://Views/FlightOptimalCargoView.gd" id="13_2cqfq"]
 [ext_resource type="Script" uid="uid://bn2md8x6ielps" path="res://Views/FlightOptimalCargoView.gd" id="13_2cqfq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
@@ -33,6 +35,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 16.0
+offset_right = 4.0
+offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 16
@@ -412,6 +418,9 @@ text = "Išvykimo planeta"
 [node name="Selection" type="OptionButton" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/DeparturePlanet" unique_id=1047510763]
 layout_mode = 2
 
+[node name="Label2" type="Label" parent="MarginContainer/MainLayout/FlightView/GenerateRoute/DeparturePlanet" unique_id=750068364]
+layout_mode = 2
+
 [node name="DestinationPlanet" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/GenerateRoute" unique_id=501092354]
 layout_mode = 2
 
@@ -536,6 +545,45 @@ text = "Atgal"
 [node name="Next" type="Button" parent="MarginContainer/MainLayout/FlightView/FindOptimalCargo/BottomNav" unique_id=1323393141]
 layout_mode = 2
 text = "Kitas"
+
+[node name="CalcOrderCosts" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightView" unique_id=1355781985]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MainLayout/FlightView/CalcOrderCosts" unique_id=561877066]
+layout_mode = 2
+text = "1kg kaina:"
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/MainLayout/FlightView/CalcOrderCosts" unique_id=1352318170]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/MainLayout/FlightView/CalcOrderCosts" unique_id=219339183]
+layout_mode = 2
+text = "1kv. m kaina:"
+
+[node name="LineEdit2" type="LineEdit" parent="MarginContainer/MainLayout/FlightView/CalcOrderCosts" unique_id=1164704907]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="MarginContainer/MainLayout/FlightView/CalcOrderCosts" unique_id=1213343163]
+layout_mode = 2
+text = "Antkainio procentas:"
+
+[node name="LineEdit3" type="LineEdit" parent="MarginContainer/MainLayout/FlightView/CalcOrderCosts" unique_id=1539602376]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightView/CalcOrderCosts" unique_id=191705925]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/MainLayout/FlightView/CalcOrderCosts/HBoxContainer" unique_id=489520040]
+layout_mode = 2
+text = "Pateikti"
+
+[node name="Button2" type="Button" parent="MarginContainer/MainLayout/FlightView/CalcOrderCosts/HBoxContainer" unique_id=997356836]
+layout_mode = 2
+text = "Atsaukti"
+
+[node name="Label4" type="Label" parent="MarginContainer/MainLayout/FlightView/CalcOrderCosts" unique_id=1660614318]
+layout_mode = 2
 
 [node name="RouteView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1849517016]
 visible = false
@@ -822,7 +870,11 @@ script = ExtResource("9_2xmvj")
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/FindCargoLayout" to="MarginContainer/MainLayout/FlightView" method="openFlightOptimalCargoView"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/SelectUpgrades" to="MarginContainer/MainLayout/FlightView" method="changeSpaceshipModules"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/CalculatePrices" to="MarginContainer/MainLayout/FlightView" method="submit"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/BottomNav/Next" to="MarginContainer/MainLayout/FlightView" method="_generate_route_next"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/ChangeModules" to="MarginContainer/MainLayout/FlightView" method="changeSpaceshipModules"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/SubmitModules" to="MarginContainer/MainLayout/FlightView" method="submitModules"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav/Back" to="MarginContainer/MainLayout/FlightView" method="_choose_modules_back"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/BottomNav/Next" to="MarginContainer/MainLayout/FlightView" method="_choose_modules_next"]
 [connection signal="dateSelected" from="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer/DatePickerPanel" to="MarginContainer/MainLayout/RouteView" method="submitEndDate"]
 [connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/VBoxContainer/HBoxContainer/Back" to="MarginContainer/MainLayout/RouteView" method="_back"]
 [connection signal="pressed" from="MarginContainer/MainLayout/RouteView/VBoxContainer/FindRouteButton" to="MarginContainer/MainLayout/RouteView" method="findNextRoute"]

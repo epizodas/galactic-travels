@@ -1,6 +1,5 @@
 extends MarginContainer
 class_name FlightView
-
 @export var DepartureSelection: OptionButton
 @export var DestinationSelection: OptionButton
 
@@ -84,3 +83,22 @@ func submitSpaceship(index: int) -> void:
 	if _flightController.submitSpaceship(spaceships[index]):
 		unlockButtons()
 	pass
+
+func displayFlightCostView() -> void:
+	$GenerateRoute.visible = false
+	$CalcOrderCosts.visible = true
+
+func openFlightCostView() -> void:
+	_flightController.openFlightCostView()
+
+func _back_from_costs() -> void:
+	$GenerateRoute.visible = true
+	$CalcOrderCosts.visible = false
+	pass
+
+func submitCostInfo() -> void:
+	var kg = $CalcOrderCosts/LineEdit.text.to_float()
+	var sqm = $CalcOrderCosts/LineEdit2.text.to_float()
+	var mrg = $CalcOrderCosts/LineEdit3.text.to_float()
+	_flightController.submitCostInfo(kg, sqm, mrg)
+	

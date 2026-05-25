@@ -62,14 +62,6 @@ static func _setup_database() -> void:
 	db.insert_row("order_status", {"id": 3, "value":"Sumokėtas"})
 	db.insert_row("order_status", {"id": 4, "value":"Užbaigtas"})
 	db.insert_row("order_status", {"id": 5, "value":"Atšauktas"})
-
-	db.create_table("pilots", {
-		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
-		"name": {"data_type": "text", "not_null": true},
-		"surname": {"data_type": "text", "not_null": true},
-		"license_category_id": {"data_type": "int"},
-		"hourly_wage": {"data_type": "real"}
-	})
 	
 	db.create_table("users", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
@@ -280,7 +272,7 @@ static func _migrate_spacebody_orbits() -> void:
 			"phase": 0
 		})
 
-	db.update_rows("spacebodies", "", {
+	db.update_rows("spacebodies", "1", {
 		"orbitXOffset": 0,
 		"orbitYOffset": 0
 	})

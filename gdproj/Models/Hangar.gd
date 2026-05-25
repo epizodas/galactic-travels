@@ -6,7 +6,7 @@ var id: int
 
 static var modules: Array[SpaceshipModule] = [
 	SpaceshipModule.new("Greitis", SpaceshipModule.Type.Speed),
-	SpaceshipModule.new("Skydas", SpaceshipModule.Type.Sheld)
+	SpaceshipModule.new("Skydas", SpaceshipModule.Type.Shield)
 ]
 
 func _init(

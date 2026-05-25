@@ -13,13 +13,13 @@ func _init(name: String, surname: String, category: int, hourly_wage: float) -> 
 	pass
 
 static func fetchPilot(id: int):
-	var output = Database.db.select_rows("Pilots", "id = %d" % [id], ["id", "name", "surname", "spaceship_category_id", "hourly_wage"])
+	var output = Database.db.select_rows("pilots", "id = %d" % [id], ["id", "name", "surname", "spaceship_category_id", "hourly_wage"])
 	var pilotData = output[0]
 	return new(pilotData.name, pilotData.surname, pilotData.spaceship_category_id, pilotData.hourly_wage)
 	pass
 
 static func fetchPilots() -> Array[Pilot]:
-	var output = Database.db.select_rows("Pilots", "", ["id", "name", "surname", "spaceship_category_id", "hourly_wage"])
+	var output = Database.db.select_rows("pilots", "", ["id", "name", "surname", "spaceship_category_id", "hourly_wage"])
 	var retval: Array[Pilot] = []
 	for pilotData in output:
 		retval.push_back(new(pilotData.name, pilotData.surname, pilotData.spaceship_category_id, pilotData.hourly_wage))

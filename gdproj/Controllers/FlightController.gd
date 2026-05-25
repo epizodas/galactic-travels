@@ -1,12 +1,7 @@
 extends Node
 class_name FlightController
 
-var _departPlanet: Planet = null
-var _destPlanet: Planet = null
 var _spaceship: Spaceship = null
-var _neededFuel: float = 0.0
-var _pilot: Pilot = null
-var _tripDurationHours: int = 0
 var _orders: Array[Order] = []
 
 var _selectedModules: Array[SpaceshipModule] = []
@@ -26,7 +21,7 @@ func openFlightView():
 	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
 	FlightViewRef.displayFlightView(planets)
 
-	storedPlanets = planets.duplicate_deep()
+	storedPlanets = planets.duplicate(true)
 	destPlanet = storedPlanets[0]
 	departPlanet = storedPlanets[0]
 
@@ -36,8 +31,8 @@ var departPlanet: Planet
 var destPlanet: Planet
 
 func rememberPlanets(depart: Planet, dest: Planet):
-	_departPlanet = depart
-	_destPlanet = dest
+	departPlanet = depart
+	destPlanet = dest
 	pass
 
 func checkSpaceshipAmount(spaceships: Array[Spaceship]):
@@ -103,7 +98,7 @@ func changeSpaceshipModules():
 
 	var route = getRoute()
 	if route and route.intersectPlanet:
-		var modIdx = availableModules.find_custom(func(m): return m.type == SpaceshipModule.Type.Sheld)
+		var modIdx = availableModules.find_custom(func(m): return m.type == SpaceshipModule.Type.Shield)
 		if modIdx != -1:
 			selectModule(availableModules[modIdx])
 
@@ -143,7 +138,7 @@ func validateEndDate(date):
 			var simPlanet = SimulatedPlanet.new(planet)
 			simPlanet.x = (sin((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
 			simPlanet.y = (cos((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
-			simulationPlanets.append(SimulatedPlanet.new(planet))
+			simulationPlanets.append(simPlanet)
 	return comp
 
 func findShortestDistance():
@@ -258,8 +253,8 @@ func checkForAsteroidBelt(beltRadius: float) -> bool:
 	if segLenSq == 0:
 		return false
 
-	var fx = ax
-	var fy = ay
+	var fx = -ax
+	var fy = -ay
 	var t = clamp((fx * dx + fy * dy) / segLenSq, 0.0, 1.0)
 	var closestX = ax + t * dx
 	var closestY = ay + t * dy
@@ -421,127 +416,131 @@ func rememberOrders(foundOrders: Array[Order]) -> void:
 # ======================================================================================================
 # eriko funkcija
 
-func validateCostValues(price_per_kg: float, price_per_sqm: float, markup_percent: float) -> bool: #3
-	# Use self references instead of _flightController
-	if not _departPlanet or not _spaceship or not _pilot:
-		return false
+func validateCostValues(price_per_kg: float, price_per_sqm: float, markup_percent: float) -> bool: #6
 	if price_per_kg < 0.0 or price_per_sqm < 0.0 or markup_percent < 0.0:
 		return false
 	return true
 
-func getDeparturePlanet() -> Planet: #4
-	return _departPlanet
+func getDeparturePlanet() -> Planet: #7
+	return departPlanet
 
-func getTripSpaceship() -> Spaceship: #5
+func getTripSpaceship() -> Spaceship: #8
 	return _spaceship
 
-func getNeededFuel() -> float: #6
-	return _neededFuel
+func getNeededFuel() -> float: #9
+	return currentRoute.requiredFuel
 
-func calculateFuelCost(planet_fuel_cost: float, needed_fuel: float) -> float: #7
+func calculateFuelCost(planet_fuel_cost: float, needed_fuel: float) -> float: #10
 	return planet_fuel_cost * needed_fuel
 
-func getTripPilot() -> Pilot: #8
-	return _pilot
+func getTripPilot() -> Pilot: #11
+	return Pilot.fetchPilot(1)
 
-func getTripDuration() -> int: #9
-	return _tripDurationHours
+func getTripDuration() -> float: #12
+	return currentRoute.distance / _spaceship.speed
 
-func calculatePilotCost(pilot_hourly_wage: float, duration: int) -> float: #10
-	return pilot_hourly_wage * float(duration)
+func calculatePilotCost(pilot_hourly_wage: float, duration: float) -> float: #13
+	return pilot_hourly_wage * duration
 
-func calculateModuleRent(module_rent: float, duration: int) -> float: #13
+func calculateModuleRent(module_rent: float, duration: int) -> float: #16
 	return module_rent * float(duration)
 
-func calculateSpaceshipCargoBay(cargoLength: int, cargoWidth: int) -> int: #14
+func calculateSpaceshipCargoBay(cargoLength: int, cargoWidth: int) -> int: #17
 	return cargoLength * cargoWidth
 
-func getTripOrders() -> Array[Order]: #15
+func getTripOrders() -> Array[Order]: #18
 	return _orders
 
-func calculateCargoArea(cargo_items: Array[Cargo]) -> float: #18
+func calculateCargoArea(cargo_items: Array[Cargo]) -> float: #21
 	var total_area = 0.0
 	for item in cargo_items:
 		total_area += float(item.length * item.width)
 	return total_area
 
-func calculateCargoMass(cargo_items: Array[Cargo]) -> float: #19
+func calculateOrderAreaPart(order_area: float, cargo_bay: float) -> float: #22
+	if cargo_bay <= 0.0 or order_area <= 0.0:
+		return 1.0
+	return order_area / cargo_bay
+
+func calculateCargoMass(cargo_items: Array[Cargo]) -> float: #23
 	var total_mass = 0.0
 	for item in cargo_items:
 		total_mass += float(item.mass)
 	return total_mass
 
-func calculateOrderAreaPart(order_area: float, cargo_bay: float) -> float: #20
-	if cargo_bay <= 0.0:
-		return 0.0
-	return order_area / cargo_bay
-
-func calculateOrderMassCost(order_mass: float, price_per_kg: float) -> float: #21
+func calculateOrderMassCost(order_mass: float, price_per_kg: float) -> float: #24
 	if order_mass <= 0.0:
 		return 0.0
 	return order_mass * price_per_kg
 
-func calculateOrderAreaCost(area_part: float, cargo_bay: float, price_per_sqm: float) -> float: #22
+func calculateOrderAreaCost(area_part: float, cargo_bay: float, price_per_sqm: float) -> float: #25
 	return area_part * cargo_bay * price_per_sqm
 
-func calculateOrderTotalCost(mass_cost: float, area_cost: float, markup_percent: float) -> float: #23
-	var markup_factor = 1.0 + (markup_percent / 100.0)
+func calculateOrderTotalCost(mass_cost: float, area_cost: float, markup_percent: float) -> float: #26
+	var markup_factor = 1.0
+	if markup_percent > 0.0:
+		markup_factor += (markup_percent / 100.0)
 	return (mass_cost + area_cost) * markup_factor
 
-func calculateProfit(total_revenue: float, total_base_cost: float) -> float: #26
+func calculateProfit(total_revenue: float, total_base_cost: float) -> float: #29
 	return total_revenue - total_base_cost
 
-func calculateTotalCosts(price_per_kg: float, price_per_sqm: float, markup_percent: float):
+func submitCostInfo(price_per_kg: float, price_per_sqm: float, markup_percent: float):
 	if not validateCostValues(price_per_kg, price_per_sqm, markup_percent):
 		return null
 
 	var base_cost = 0.0
 
-	var planet: Planet = getDeparturePlanet() #4
-	var spaceship: Spaceship = getTripSpaceship() #5
-	var needed_fuel = getNeededFuel() #6 
+	var planet: Planet = getDeparturePlanet() #7
+	var spaceship: Spaceship = getTripSpaceship() #8
+	var needed_fuel = getNeededFuel() #9
 
-	base_cost += calculateFuelCost(planet.fuelCost, needed_fuel) #7
+	base_cost += calculateFuelCost(planet.fuelCost, needed_fuel) #10 
 
-	var pilot = getTripPilot() #8
-	var duration = getTripDuration() #9
+	var pilot = getTripPilot() #11
+	var duration = getTripDuration() #12 
 
-	base_cost += calculatePilotCost(pilot.hourly_wage, duration) #10
+	base_cost += calculatePilotCost(pilot.hourly_wage, duration) #13
 
-	var modules = SpaceshipModule.fetchSpaceshipModules(spaceship.code) #11
+	var modules = SpaceshipModule.fetchSpaceshipModules(spaceship.code) #14
 	if modules and modules.size() > 0:
 		for module in modules:
-			base_cost += calculateModuleRent(module.rent, duration) #13
+			base_cost += calculateModuleRent(module.rent, duration) #16
 
-	var cargo_bay = calculateSpaceshipCargoBay(spaceship.cargoLength, spaceship.cargoWidth) #14
+	var cargo_bay = calculateSpaceshipCargoBay(spaceship.cargoLength, spaceship.cargoWidth) #17
 
-	var orders = getTripOrders() #15
-
-	var orders_cargo_map = {}
-	var total_cargo_mass = 0.0
-
-	for order in orders:
-		var cargo_items = Cargo.fetchOrderCargo(order.id) #16
-		orders_cargo_map[order.id] = cargo_items 
-		total_cargo_mass += calculateCargoMass(cargo_items) #18
+	var orders = getTripOrders() #18
 
 	var total_revenue = 0.0
 
 	for order in orders:
-		var cargo_items = orders_cargo_map[order.id]
+		var cargo_items =  Cargo.fetchOrderCargo(order.id) #19
 
-		var order_area = calculateCargoArea(cargo_items) #19
-		var area_part = calculateOrderAreaPart(order_area, cargo_bay) #20
+		var order_area = calculateCargoArea(cargo_items) #21
+		var area_part = calculateOrderAreaPart(order_area, cargo_bay) #22
 		
-		var order_mass = calculateCargoMass(cargo_items) #kadangi nesaugom tai tenka persiskaiciuot :)
+		var order_mass = calculateCargoMass(cargo_items) #23
 
-		var mass_cost = calculateOrderMassCost(order_mass, price_per_kg) #21
-		var area_cost = calculateOrderAreaCost(area_part, cargo_bay, price_per_sqm) #22
+		var mass_cost = calculateOrderMassCost(order_mass, price_per_kg) #24
+		var area_cost = calculateOrderAreaCost(area_part, cargo_bay, price_per_sqm) #25
 
-		var calculated_order_cost = calculateOrderTotalCost(mass_cost, area_cost, markup_percent) #23
+		var calculated_order_cost = calculateOrderTotalCost(mass_cost, area_cost, markup_percent) #26
 
-		Order.updateOrderPrice(order.id, calculated_order_cost) #24
+		#Order.updateOrderPrice(order.id, calculated_order_cost) #27
 		order.price = calculated_order_cost
 		total_revenue += calculated_order_cost
 
-	return calculateProfit(total_revenue, base_cost) #26
+	print("=== Cost Breakdown ===")
+	print("Fuel cost:    ", calculateFuelCost(planet.fuelCost, needed_fuel))
+	print("Pilot cost:   ", calculatePilotCost(pilot.hourly_wage, duration))
+	print("Duration:     ", duration)
+	print("Total base_cost: ", base_cost)
+	print("Total revenue:   ", total_revenue)
+	print("Profit:          ", total_revenue - base_cost)
+	
+	return calculateProfit(total_revenue, base_cost) #28
+
+func openFlightCostView():
+	var flightCostView = get_tree().current_scene.find_child("FlightView") as FlightView
+	if flightCostView:
+		flightCostView.displayFlightCostView()

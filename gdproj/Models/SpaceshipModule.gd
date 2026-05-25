@@ -2,7 +2,7 @@ class_name SpaceshipModule
 
 enum Type {
 	Temperature,
-	Sheld,
+	Shield,
 	Fuel,
 	Speed
 }
