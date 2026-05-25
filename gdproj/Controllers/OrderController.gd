@@ -54,7 +54,8 @@ func validateOrderData(cargos):
 			c["name"],
 			int(c["length"]),
 			int(c["width"]),
-			int(c["mass"])
+			int(c["mass"]),
+			0 #order_id
 		)
 		cargo_objects.append(cargo)
 	

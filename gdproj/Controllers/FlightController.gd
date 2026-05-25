@@ -350,28 +350,34 @@ func displayFlightOptimalCargoView():
 	optimalCargoView.displayFlightOptimalCargoView()
 
 func calculateOptimalCargo():
-	
 	var free_space = calculateSpaceshipSize();
 	
 	var order_arr: Array[Order] = Order.fetchAllOrderedOrders();
-	var cargo_arr: Array[Cargo];
-	
+	var cargo_arr: Array[Cargo] = [];
 	for order in order_arr:
 		var cargo = Cargo.fetchOrderCargo(order.id)
-		cargo_arr.append(cargo)
+		cargo_arr.append_array(cargo)
+		for c in cargo:
+			print(c.order_id)
 	
-	findOrdersForSpaceship(free_space, order_arr, cargo_arr);
+	var foundOrders: Array[Order] = findOrdersForSpaceship(free_space, order_arr, cargo_arr);
 	
-	#var num = checkFoundOrderCount(order_arr)
-	#if num > 0:
-	#	return;
+	var num = checkFoundOrderCount(foundOrders)
+	if num <= 0:
+		return "Nerasta užsakymų";
 	
-	#var takenCapacity: int = checkSpaceshipCapacity();
-	#if takenCapacity > 30:
-	#	return
+	var foundCargo: Array[Cargo] = []
+	for order in foundOrders:
+		for cargo in cargo_arr:
+			if order.id == cargo.order_id:
+				foundCargo.append(cargo)
 	
-	#rememberOrders()
-	pass
+	var takenCapacity: int = checkSpaceshipCapacity(foundCargo);
+	if takenCapacity <= 30:
+		return "Rasti užsakymai užema mažiau nei 30% erdvėlaivio vietos";
+	
+	rememberOrders(foundOrders)
+	return foundCargo
 
 func calculateSpaceshipSize() -> Array:
 	var cargoLength = _spaceship.cargoLength
@@ -387,94 +393,31 @@ func calculateSpaceshipSize() -> Array:
 		space_grid.append(row)
 	return space_grid
 
-#--
-func groupCargoByOrder(cargo: Array[Cargo]) -> Dictionary:
-	var map = {}
-
-	for c in cargo:
-		if not map.has(c.order_id):
-			map[c.order_id] = []
-		map[c.order_id].append(c)
-
-	return map
-#--
-
 func findOrdersForSpaceship(free_space: Array, orders: Array[Order], cargo: Array[Cargo]) -> Array[Order]:
-	var accepted_orders: Array[Order] = []
-	var working_space = free_space.duplicate(true)
+	#var accepted_orders: Array[Order] = []
+	#var working_space = free_space.duplicate(true)
 
-	var cargo_by_order = {}
-
-	for c in cargo:
-		if not cargo_by_order.has(c.order_id):
-			cargo_by_order[c.order_id] = []
-		cargo_by_order[c.order_id].append(c)
-	
-	for order in orders:
-		if not cargo_by_order.has(order.id):
-			continue
-
-		var order_cargo = cargo_by_order[order.id]
-
-		var test_space = working_space.duplicate(true)
-
-		if tryPackOrderIntoSpace(test_space, order_cargo):
-			working_space = test_space
-			accepted_orders.append(order)
-
-	return accepted_orders
-	
-func tryPackOrderIntoSpace(free_space: Array, cargo_list: Array[Cargo]) -> bool:
-	cargo_list.sort_custom(func(a, b):
-		return a.width * a.height > b.width * b.height
-	)
-
-	for cargo in cargo_list:
-		var placed = false
-
-		for i in range(free_space.size()):
-			var rect = free_space[i]
-
-			if cargo.width <= rect.width and cargo.height <= rect.height:
-				split_free_rect(free_space, i, cargo)
-				placed = true
-				break
-
-		if not placed:
-			return false
-
-	return true
-	
-func split_free_rect(free_space: Array, index: int, cargo: Cargo) -> void:
-	var rect = free_space[index]
-	free_space.remove_at(index)
-
-	# right rectangle
-	if rect.width > cargo.width:
-		free_space.append({
-			"x": rect.x + cargo.width,
-			"y": rect.y,
-			"width": rect.width - cargo.width,
-			"height": cargo.height
-		})
-
-	# bottom rectangle
-	if rect.height > cargo.height:
-		free_space.append({
-			"x": rect.x,
-			"y": rect.y + cargo.height,
-			"width": rect.width,
-			"height": rect.height - cargo.height
-		})
+	return orders
 
 func checkFoundOrderCount(foundOrders: Array[Order]) -> int:
-	return 0
+	return foundOrders.size();
 	
-func checkSpaceshipCapacity():
-	pass
+func checkSpaceshipCapacity(cargo: Array[Cargo]) -> float:
+	var total_area := 0
+
+
+	for c in cargo:
+		total_area += c.width * c.length
+	print(total_area)
+	var spaceship_area = _spaceship.cargoWidth * _spaceship.cargoLength
+
+	if spaceship_area <= 0:
+		return 0
+
+	return (float(total_area) / float(spaceship_area)) * 100.0
 	
-func rememberOrders():
-	pass
+func rememberOrders(foundOrders: Array[Order]) -> void:
+	_orders = foundOrders;
 
 
 # ======================================================================================================

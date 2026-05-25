@@ -12,12 +12,14 @@ func _init(
 	p_name: String,
 	p_length: int,
 	p_width: int,
-	p_mass: int
+	p_mass: int,
+	p_order_id
 ) -> void:
 	self.name = p_name
 	self.length = p_length
 	self.width = p_width
 	self.mass = p_mass
+	self.order_id = p_order_id
 	
 static func addCargo(orderId, cargoList: Array[Cargo]):
 	for cargo in cargoList:
@@ -32,11 +34,10 @@ static func addCargo(orderId, cargoList: Array[Cargo]):
 		Database.db.insert_row("cargo", cargo_dict)
 
 static func fetchOrderCargo(order_id: int):
-	var output = Database.db.select_rows("cargo", "order_id = '%s'" % [order_id], ["id", "name", "length", "width", "mass"])
+	var output = Database.db.select_rows("cargo", "order_id = '%s'" % [order_id], ["id", "name", "length", "width", "mass", "order_id"])
 	var cargo: Array[Cargo] = []
 	for row in output:
-		print(row)
-		var item = new(row.name, row.length, row.width, row.mass)
+		var item = new(row.name, row.length, row.width, row.mass, row.order_id)
 		item.id = row.id
 		cargo.append(item)
 	return cargo

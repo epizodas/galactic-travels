@@ -111,6 +111,7 @@ static func _setup_database() -> void:
 	})
 	
 	db.insert_row("orders", {
+		"id": 1,
 		"order_status": "1",
 		"user_id": 3
 	})
@@ -127,8 +128,8 @@ static func _setup_database() -> void:
 	
 	db.insert_row("cargo", {
 		"name": "Cargo1",
-		"length": 10,
-		"width": 20,
+		"length": 2,
+		"width": 2,
 		"mass": 30,
 		
 		"order_id": 1,
@@ -136,8 +137,8 @@ static func _setup_database() -> void:
 	
 	db.insert_row("cargo", {
 		"name": "Cargo2",
-		"length": 20,
-		"width": 5,
+		"length": 2,
+		"width": 2,
 		"mass": 15,
 		
 		"order_id": 1,
