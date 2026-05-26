@@ -87,6 +87,8 @@ func displaySingleOrderPage(p_order: Order):
 
 
 func _back():
+	_orderController.openOrdersPage()
+
 	var orders_view = get_tree().current_scene.find_child("OrdersView", true, false)
 
 	if orders_view:

@@ -16,7 +16,6 @@ func displayPaymentView(order: Order):
 	
 	var initial_price = find_child("price", true, false) as Label
 	initial_price.text = "Užsakymo kaina: " + str(order.price) + " EUR"
-
 	
 	var option_button = find_child("currency", true, false)
 	if option_button:
@@ -44,8 +43,11 @@ func submitProcessPayment():
 	pass
 
 func _back():
-	var orders_view = get_tree().current_scene.find_child("SingleOrderView", true, false)
+	_orderController.openSingleOrderPage(_currentOrder.id)
+	var orders_view = get_tree().current_scene.find_child("SingleOrderView", true, false) as SingleOrderView
 	if orders_view:
 		orders_view.visible = true
+		
+	#orders_view.displaySingleOrderPage()
 
 	self.visible = false

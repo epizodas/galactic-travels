@@ -62,6 +62,9 @@ func selectPlanet(planet: Planet):
 	#selectSpaceBody(planet, planet)
 	var planetData = _spaceMapController.getSpaceBodyInfo(planet)
 	
+	if not planet or planet.name == 'Sun':
+		return
+	
 	_ensure_map_layout()
 	_info_panel.visible = true
 	_info_title.text = planet.name

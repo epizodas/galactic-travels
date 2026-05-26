@@ -73,3 +73,6 @@ static func fetchUserOrders(user: User) -> Array[Order]:
 
 func updateOrderStatus(status: int):
 	order_status = status
+	Database.db.update_rows("orders", "id = %s" % self.id, {
+		"order_status": status
+	})

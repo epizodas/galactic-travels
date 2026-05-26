@@ -96,12 +96,11 @@ func confirmCancellation():
 func openAddOrderPage():
 	var addOrderPage = get_tree().current_scene.find_child("AddOrderView") as AddOrderView
 	addOrderPage.displayAddOrderPage()
-
+	
 func openOrderPaymentPage(order_id: int) -> void:
 	var currentOrder = Order.fetchOrder(order_id)
-
 	var PaymentViewRef = get_tree().current_scene.find_child("PaymentView") as PaymentView
-	PaymentViewRef.displayPaymentView(currentOrder);
+	PaymentViewRef.displayPaymentView(currentOrder)
 
 func convertPrice(price: float, currency: String) -> float:
 	var new_price = ExchangeService.convertPrice(price, currency)
