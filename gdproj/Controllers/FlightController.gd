@@ -30,6 +30,21 @@ var destPlanet: Planet
 func rememberPlanets(depart: Planet, dest: Planet):
 	departPlanet = depart
 	destPlanet = dest
+	
+	simulationPlanets.clear()
+	var curDate = Time.get_date_dict_from_system()
+	curDate.hour = 0
+	curDate.minute = 0
+	curDate.second = 0
+
+	var sysTime = Time.get_unix_time_from_datetime_dict(curDate)
+
+	currentTime = sysTime
+	for planet in storedPlanets:
+		var simPlanet = SimulatedPlanet.new(planet)
+		simPlanet.x = (sin((sysTime + planet.phase) * 2 * PI / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
+		simPlanet.y = (cos((sysTime + planet.phase) * 2 * PI / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
+		simulationPlanets.append(simPlanet)
 	pass
 
 func checkSpaceshipAmount(spaceships: Array[Spaceship]):
@@ -134,8 +149,8 @@ func validateEndDate(date):
 		currentTime = sysTime
 		for planet in storedPlanets:
 			var simPlanet = SimulatedPlanet.new(planet)
-			simPlanet.x = (sin((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
-			simPlanet.y = (cos((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
+			simPlanet.x = (sin((sysTime + planet.phase) * 2 * PI / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
+			simPlanet.y = (cos((sysTime + planet.phase) * 2 * PI / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
 			simulationPlanets.append(simPlanet)
 	return comp
 

@@ -21,12 +21,17 @@ func openRouteView():
 	var FlightViewRef = get_tree().current_scene.find_child("FlightView") as FlightView
 	FlightViewRef.visible = false
 	visible = true
+	$VBoxContainer/SaveRouteButton.disabled = true
+	$VBoxContainer/FindRouteButton.disabled = true
+	$VBoxContainer/FindRouteButton.text = "Rasti maršrutą"
+
 
 func findNextRoute():
 	var result = _flightController.findRoute()
 	if result is not Trip:
 		$VBoxContainer/error.text = "Nepavyko rasti išvykimo laiko"
 		return
+	$VBoxContainer/error.text = ""
 	$VBoxContainer/FindRouteButton.text = "Rasti kitą maršrutą"
 	foundTrip = result
 	var dict = result.departureTime
