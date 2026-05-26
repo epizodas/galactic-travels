@@ -68,3 +68,10 @@ func _on_table_button_clicked(item: TreeItem, column: int, id: int, mouse_button
 		_spaceshipController.openSpaceshipEdit(ship)
 	elif column == 10:
 		_spaceshipController.removeSpaceship(ship)
+		
+func _back():
+	var view = get_tree().current_scene.find_child("MainView", true, false) as Control
+	if view:
+		view.visible = true
+	self.visible = false
+	

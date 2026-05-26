@@ -95,9 +95,6 @@ static func _setup_database() -> void:
 		"price": {"data_type": "real"},
 		"order_status": {"data_type": "int"},
 		"user_id": {"data_type": "int"}
-	
-		#departure planet id
-		#arrival planet id
 	})
 	
 	db.insert_row("orders", {
@@ -112,6 +109,21 @@ static func _setup_database() -> void:
 		"user_id": 3
 	})
 	
+	db.insert_row("orders", {
+		"id": 3,
+		"price": 20.5,
+		"order_status": 2,
+		"user_id": 3
+	})
+	
+	db.insert_row("orders", {
+		"id": 4,
+		"price": 269,
+		"order_status": 4,
+		"user_id": 3
+	})
+	
+	
 	db.create_table("cargo", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},
 		"name": {"data_type": "text"},
@@ -123,7 +135,7 @@ static func _setup_database() -> void:
 	})
 	
 	db.insert_row("cargo", {
-		"name": "Cargo1",
+		"name": "Kava",
 		"length": 2,
 		"width": 2,
 		"mass": 30,
@@ -132,7 +144,7 @@ static func _setup_database() -> void:
 	})
 	
 	db.insert_row("cargo", {
-		"name": "Cargo2",
+		"name": "Kakava",
 		"length": 2,
 		"width": 2,
 		"mass": 15,
@@ -141,7 +153,7 @@ static func _setup_database() -> void:
 	})
 	
 	db.insert_row("cargo", {
-		"name": "Cargo3",
+		"name": "Arbata",
 		"length": 2,
 		"width": 2,
 		"mass": 20,
@@ -150,7 +162,7 @@ static func _setup_database() -> void:
 	})
 
 	db.insert_row("cargo", {
-		"name": "Cargo4",
+		"name": "Sumuštinis",
 		"length": 1,
 		"width": 2,
 		"mass": 55,
@@ -159,7 +171,7 @@ static func _setup_database() -> void:
 	})
 
 	db.insert_row("cargo", {
-		"name": "Cargo5",
+		"name": "Kupranugariai",
 		"length": 2,
 		"width": 2,
 		"mass": 25,
@@ -168,7 +180,7 @@ static func _setup_database() -> void:
 	})
 
 	db.insert_row("cargo", {
-		"name": "Cargo6",
+		"name": "Petražolės",
 		"length": 1,
 		"width": 3,
 		"mass": 33,
@@ -177,12 +189,39 @@ static func _setup_database() -> void:
 	})
 
 	db.insert_row("cargo", {
-		"name": "Cargo7",
+		"name": "Pingvinai",
 		"length": 2,
 		"width": 3,
 		"mass": 14,
 		
 		"order_id": 1,
+	})
+	
+	db.insert_row("cargo", {
+		"name": "Tabakas",
+		"length": 2,
+		"width": 2,
+		"mass": 30,
+		
+		"order_id": 3,
+	})
+	
+	db.insert_row("cargo", {
+		"name": "Agurkai",
+		"length": 2,
+		"width": 2,
+		"mass": 30,
+		
+		"order_id": 4,
+	})
+	
+	db.insert_row("cargo", {
+		"name": "Vazelinas",
+		"length": 2,
+		"width": 2,
+		"mass": 30,
+		
+		"order_id": 4,
 	})
 
 	db.create_table("spaceship", {
@@ -342,7 +381,7 @@ static func addPlanetsToDB():
 	var planets = [
 		{
 			"id": 0,
-			"name": "Mercury",
+			"name": "Merkurijus",
 			"mass": 330,
 			"temp": 440,
 			"radius": 4,
@@ -358,7 +397,7 @@ static func addPlanetsToDB():
 		},
 		{
 			"id": 1,
-			"name": "Venus",
+			"name": "Venera",
 			"mass": 4868,
 			"temp": 737,
 			"radius": 9,
@@ -374,7 +413,7 @@ static func addPlanetsToDB():
 		},
 		{
 			"id": 2,
-			"name": "Earth",
+			"name": "Žemė",
 			"mass": 5972,
 			"temp": 288,
 			"radius": 10,
@@ -390,7 +429,7 @@ static func addPlanetsToDB():
 		},
 		{
 			"id": 3,
-			"name": "Mars",
+			"name": "Marsas",
 			"mass": 642,
 			"temp": 210,
 			"radius": 6,
@@ -406,7 +445,7 @@ static func addPlanetsToDB():
 		},
 		{
 			"id": 4,
-			"name": "Jupiter",
+			"name": "Jupiteris",
 			"mass": 1898000,
 			"temp": 165,
 			"radius": 30,
@@ -422,7 +461,7 @@ static func addPlanetsToDB():
 		},
 		{
 			"id": 5,
-			"name": "Saturn",
+			"name": "Saturnas",
 			"mass": 568000,
 			"temp": 134,
 			"radius": 26,
@@ -438,7 +477,7 @@ static func addPlanetsToDB():
 		},
 		{
 			"id": 6,
-			"name": "Uranus",
+			"name": "Uranas",
 			"mass": 86800,
 			"temp": 76,
 			"radius": 18,
@@ -454,7 +493,7 @@ static func addPlanetsToDB():
 		},
 		{
 			"id": 7,
-			"name": "Neptune",
+			"name": "Neptūnas",
 			"mass": 102000,
 			"temp": 72,
 			"radius": 18,
@@ -472,7 +511,7 @@ static func addPlanetsToDB():
 
 	db.insert_row("spacebodies", {
 		"id": 8,
-		"name": "Sun",
+		"name": "Saulė",
 		"mass": 1989000,
 		"temp": 5778,
 		"radius": 70,

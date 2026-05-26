@@ -24,8 +24,11 @@ static func updateOrderPrice(order_id: int, calculated_order_cost: float):
 	Database.db.update_rows("orders", "id = '%s'" % [order_id], {"price": calculated_order_cost})
 	return calculated_order_cost
 
-static func updateOrder():
-	pass
+static func updateOrder(order: Order) -> void:
+	Database.db.update_rows("orders", "id = '%s'" % [order.id], {
+		"order_status": order.order_status,
+		"price": order.price
+	})
 
 static func fetchAllOrders():
 	pass

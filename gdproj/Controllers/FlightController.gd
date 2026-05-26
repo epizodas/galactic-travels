@@ -30,21 +30,6 @@ var destPlanet: Planet
 func rememberPlanets(depart: Planet, dest: Planet):
 	departPlanet = depart
 	destPlanet = dest
-	
-	simulationPlanets.clear()
-	var curDate = Time.get_date_dict_from_system()
-	curDate.hour = 0
-	curDate.minute = 0
-	curDate.second = 0
-
-	var sysTime = Time.get_unix_time_from_datetime_dict(curDate)
-
-	currentTime = sysTime
-	for planet in storedPlanets:
-		var simPlanet = SimulatedPlanet.new(planet)
-		simPlanet.x = (sin((sysTime + planet.phase) * 2 * PI / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
-		simPlanet.y = (cos((sysTime + planet.phase) * 2 * PI / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
-		simulationPlanets.append(simPlanet)
 	pass
 
 func checkSpaceshipAmount(spaceships: Array[Spaceship]):
@@ -149,8 +134,8 @@ func validateEndDate(date):
 		currentTime = sysTime
 		for planet in storedPlanets:
 			var simPlanet = SimulatedPlanet.new(planet)
-			simPlanet.x = (sin((sysTime + planet.phase) * 2 * PI / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
-			simPlanet.y = (cos((sysTime + planet.phase) * 2 * PI / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
+			simPlanet.x = (sin((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
+			simPlanet.y = (cos((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
 			simulationPlanets.append(simPlanet)
 	return comp
 
@@ -354,10 +339,9 @@ func displayRouteCreationPage():
 # ======================================================================================================
 # domanto funkcija
 # ======================================================================================================
-static var _step := false
-static func _get_debug_vis() -> Control:
+func _get_debug_vis() -> Control:
 	return Engine.get_main_loop().current_scene.get_node_or_null(
-		"MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/VBoxContainer/Panel"
+        "MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/VBoxContainer/Panel"
 	)
 
 func displayFlightOptimalCargoView():
@@ -489,7 +473,6 @@ func findOrdersForSpaceship(freeSpace: Array, orders: Array[Order], cargo: Array
 	var _debug_vis := _get_debug_vis()
 	if _debug_vis:
 		_debug_vis.update_state(grid_w, grid_h, free_rects, placed_items)
-		await _debug_vis.step_pressed
 
 	return accepted_orders
 
@@ -627,8 +610,8 @@ func submitCostInfo(price_per_kg: float, price_per_sqm: float, markup_percent: f
 
 		var calculated_order_cost = calculateOrderTotalCost(mass_cost, area_cost, markup_percent) #26
 
-		#Order.updateOrderPrice(order.id, calculated_order_cost) #27
 		order.price = calculated_order_cost
+		Order.updateOrder( Order.new(order.id, calculated_order_cost, 2)) #27
 		total_revenue += calculated_order_cost
 
 	print("=== Cost Breakdown ===")

@@ -1,6 +1,8 @@
 extends Node
 class_name OrderController
 
+var _pendingCurrency: String = ""
+
 func openOrdersPage():
 	var user = _userController.getCurrentUser()
 	var orders = Order.fetchUserOrders(user)
@@ -97,39 +99,34 @@ func openAddOrderPage():
 	var addOrderPage = get_tree().current_scene.find_child("AddOrderView") as AddOrderView
 	addOrderPage.displayAddOrderPage()
 
+func openOrderPaymentPage(order_id: int) -> void:
+	var currentOrder = Order.fetchOrder(order_id)
 
-# # ── State ────────────────────────────────────────────────────────────────────
-# var _currentOrder: Order = null
-# var _convertedPrice: float = 0.0
-# var _selectedCurrency: String = "EUR"
+	var PaymentViewRef = get_tree().current_scene.find_child("PaymentView") as PaymentView
+	PaymentViewRef.displayPaymentView(currentOrder);
 
-# # ── Step 1–3: Open payment page ───────────────────────────────────────────────
-# func openOrderPaymentPage(order_id: int) -> void:
-# 	_currentOrder = Order.fetchOrder(order_id)
-# 	if not _currentOrder:
-# 		printerr("openOrderPaymentPage: order not found — id ", order_id)
-# 		return
+func convertPrice(price: float, currency: String) -> void:
+	_pendingCurrency = currency
+	var url = "https://api.exchangerate.host/convert?from=EUR&to=%s&amount=%s" % [currency, str(price)]
+	var http = HTTPRequest.new()
+	add_child(http)
+	http.request_completed.connect(_on_convert_response)
+	http.request(url)
 
-# 	_convertedPrice = _currentOrder.price
-# 	_selectedCurrency = "EUR"
-
-# 	var PaymentViewRef = get_tree().current_scene.find_child("PaymentView") as PaymentView
-# 	if PaymentViewRef:
-# 		PaymentViewRef.displayPaymentView(_currentOrder)
-
-# # ── Steps 4–13: Currency conversion (opt block) ───────────────────────────────
-# func submitCurrencyChange(currency: String) -> void:
-# 	if not _currentOrder:
-# 		printerr("submitCurrencyChange: no current order")
-# 		return
-
-# 	_selectedCurrency = currency
-# 	var result = convertPrice(_currentOrder.price, currency)
-
-# 	var PaymentViewRef = get_tree().current_scene.find_child("PaymentView") as PaymentView
-# 	if not PaymentViewRef:
-# 		return
-
+func _on_convert_response(result, response_code, headers, body) -> void:
+	if response_code == 200:
+		var json = JSON.parse_string(body.get_string_from_utf8())
+		var converted = json["result"]
+		emit_signal("price_converted", converted, _pendingCurrency)
+	else:
+		print("API error: ", response_code)
+	
+func validatePayment():
+	pass
+	
+func updateOrderStatus():
+	pass
+	
 # 	if result.has("price"):                        # steps 10–11: success
 # 		_convertedPrice = result.price
 # 		PaymentViewRef.displayConvertedPrice(result.price, currency)

@@ -95,4 +95,5 @@ func _back():
 	self.visible = false
 
 func openOrderPaymentPage():
+	_orderController.openOrderPaymentPage(order.id)
 	pass

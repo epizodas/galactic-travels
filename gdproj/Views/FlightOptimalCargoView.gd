@@ -2,7 +2,7 @@ extends Node
 class_name FlightOptimalCargoView
 
 @onready var error_field = $VBoxContainer/HBoxContainer/Error
-@onready var results_container = $VBoxContainer/VBoxContainer
+@onready var results_container = $VBoxContainer/Orders/VBoxContainer
 
 
 func displayFlightOptimalCargoView():
@@ -28,8 +28,12 @@ func pressCalculateButton():
 	# ---- HEADER ROW ----
 	var header = HBoxContainer.new()
 
+	var order_header = Label.new()
+	order_header.text = "Užsakymo id"
+	order_header.custom_minimum_size.x = 100
+
 	var id_header = Label.new()
-	id_header.text = "ID"
+	id_header.text = "Krovinio id"
 	id_header.custom_minimum_size.x = 100
 
 	var length_header = Label.new()
@@ -40,6 +44,7 @@ func pressCalculateButton():
 	width_header.text = "Krovinio plotis"
 	width_header.custom_minimum_size.x = 150
 
+	header.add_child(order_header)
 	header.add_child(id_header)
 	header.add_child(length_header)
 	header.add_child(width_header)
@@ -48,6 +53,10 @@ func pressCalculateButton():
 
 	for cargo in ret:
 		var row = HBoxContainer.new()
+		
+		var order_label = Label.new()
+		order_label.text = str(cargo.order_id)
+		order_label.custom_minimum_size.x = 100
 
 		var id_label = Label.new()
 		id_label.text = str(cargo.id)
@@ -61,6 +70,7 @@ func pressCalculateButton():
 		width_label.text = str(cargo.width)
 		width_label.custom_minimum_size.x = 150
 
+		row.add_child(order_label)
 		row.add_child(id_label)
 		row.add_child(length_label)
 		row.add_child(width_label)

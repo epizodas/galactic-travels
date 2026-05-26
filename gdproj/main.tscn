@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://blmxwt88ahbf1" path="res://Views/AddOrderView.gd" id="11_vivmo"]
 [ext_resource type="Script" uid="uid://bdwmhqvswrfju" path="res://Views/SpaceMapView.gd" id="12_ycdy4"]
 [ext_resource type="Script" uid="uid://bn2md8x6ielps" path="res://Views/FlightOptimalCargoView.gd" id="13_2cqfq"]
+[ext_resource type="Script" uid="uid://dcfapewljbgdl" path="res://Views/PaymentView.gd" id="13_yaehf"]
 [ext_resource type="Script" uid="uid://u7p14fg26nsp" path="res://debuggingOptimalcargo.gd" id="14_2cqfq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
@@ -188,7 +189,7 @@ text = "Registruotis
 
 [node name="viewSpaceMap" type="Button" parent="MarginContainer/MainLayout/MainView/VBoxContainer/LoginBar" unique_id=1389767518]
 layout_mode = 2
-text = "Peržiūrti kosmoso žemėlapį"
+text = "Peržiūrėti kosmoso žemėlapį"
 
 [node name="LoginView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1013348188]
 visible = false
@@ -282,6 +283,10 @@ size_flags_horizontal = 3
 [node name="AddSpaceship" type="Button" parent="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/HBoxContainer" unique_id=1897165717]
 layout_mode = 2
 text = "Pridėti erdvėlaivį"
+
+[node name="Back" type="Button" parent="MarginContainer/MainLayout/SpaceshipView/SpaceObjects/HBoxContainer" unique_id=1822393707]
+layout_mode = 2
+text = "Atgal"
 
 [node name="container" type="PanelContainer" parent="MarginContainer/MainLayout/SpaceshipView/SpaceObjects" unique_id=1324012666]
 layout_mode = 2
@@ -805,6 +810,30 @@ size_flags_vertical = 3
 [node name="PaymentView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=119849966]
 visible = false
 layout_mode = 2
+script = ExtResource("13_yaehf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/PaymentView" unique_id=1780186281]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainLayout/PaymentView/VBoxContainer" unique_id=133540502]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="MarginContainer/MainLayout/PaymentView/VBoxContainer/HBoxContainer" unique_id=190920145]
+layout_mode = 2
+text = "Atgal"
+
+[node name="price" type="Label" parent="MarginContainer/MainLayout/PaymentView/VBoxContainer" unique_id=89914979]
+layout_mode = 2
+
+[node name="currency" type="OptionButton" parent="MarginContainer/MainLayout/PaymentView/VBoxContainer" unique_id=1379782221]
+layout_mode = 2
+
+[node name="submitCurrencyChange" type="Button" parent="MarginContainer/MainLayout/PaymentView/VBoxContainer" unique_id=1537592549]
+layout_mode = 2
+text = "Keisti valiutą"
+
+[node name="newPrice" type="Label" parent="MarginContainer/MainLayout/PaymentView/VBoxContainer" unique_id=740332926]
+layout_mode = 2
 
 [node name="FlightOptimalCargoView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=775018337]
 visible = false
@@ -830,15 +859,19 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "Erroras"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer" unique_id=1445045697]
+[node name="Orders" type="HBoxContainer" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer" unique_id=775545164]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/Orders" unique_id=1057952305]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("14_2cqfq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/Orders" unique_id=1445045697]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="Panel" type="Panel" parent="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/VBoxContainer" unique_id=1057952305]
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("14_2cqfq")
 
 [node name="SpaceMapView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=1107569398]
 visible = false
@@ -893,7 +926,10 @@ script = ExtResource("9_2xmvj")
 [connection signal="pressed" from="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar/Add" to="MarginContainer/MainLayout/AddOrderView" method="submitOrderAdd"]
 [connection signal="pressed" from="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar/PlusButton" to="MarginContainer/MainLayout/AddOrderView" method="addCargo"]
 [connection signal="pressed" from="MarginContainer/MainLayout/AddOrderView/VBoxContainer/Bar/MinusButton" to="MarginContainer/MainLayout/AddOrderView" method="removeCargo"]
+[connection signal="pressed" from="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer/PaymentButton" to="MarginContainer/MainLayout/SingleOrderView" method="openOrderPaymentPage"]
 [connection signal="pressed" from="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer/Back" to="MarginContainer/MainLayout/SingleOrderView" method="_back"]
+[connection signal="pressed" from="MarginContainer/MainLayout/PaymentView/VBoxContainer/HBoxContainer/Back" to="MarginContainer/MainLayout/PaymentView" method="_back"]
+[connection signal="pressed" from="MarginContainer/MainLayout/PaymentView/VBoxContainer/submitCurrencyChange" to="MarginContainer/MainLayout/PaymentView" method="submitCurrencyChange"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/HBoxContainer/Calculate" to="MarginContainer/MainLayout/FlightOptimalCargoView" method="pressCalculateButton"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/HBoxContainer/Back" to="MarginContainer/MainLayout/FlightOptimalCargoView" method="_back"]
 [connection signal="pressed" from="MarginContainer/MainLayout/SpaceMapView/VBoxContainer/Bar/Back" to="MarginContainer/MainLayout/SpaceMapView" method="exitSpaceMap"]

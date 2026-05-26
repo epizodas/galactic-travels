@@ -7,13 +7,14 @@ var _placed_items: Array = []
 var _grid_w: int = 0
 var _grid_h: int = 0
 
-signal step_pressed
-
 func _ready() -> void:
-	var btn := Button.new()
-	btn.text = "Next step"
-	btn.pressed.connect(func(): step_pressed.emit())
-	add_child(btn)
+	_grid_w = 10
+	_grid_h = 10
+	queue_redraw()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED:
+		queue_redraw()
 
 const COLORS = {
 	"empty": Color(0.945, 0.937, 0.910),
@@ -42,15 +43,21 @@ func update_state(grid_w: int, grid_h: int, free_rects: Array, placed_items: Arr
 	queue_redraw()
 
 func _draw() -> void:
-	if _grid_w <= 0 or _grid_h <= 0:
+	if _grid_w <= 0 or _grid_h <= 0 or size.x <= 0 or size.y <= 0:
 		return
 
 	var pad := 30.0
 	var available_w := size.x - pad * 2
 	var available_h := size.y - pad * 2
-	var cell := minf(available_w / _grid_w, available_h / _grid_h)
+	var cell := minf(available_w / float(_grid_w), available_h / float(_grid_h))
 
-	var origin := Vector2(pad, pad)
+	# Center the grid in the panel
+	var grid_px_w := cell * _grid_w
+	var grid_px_h := cell * _grid_h
+	var origin := Vector2(
+		pad + (available_w - grid_px_w) * 0.5,
+		pad + (available_h - grid_px_h) * 0.5
+	)
 
 	# Empty background
 	draw_rect(Rect2(origin, Vector2(cell * _grid_w, cell * _grid_h)), COLORS["empty"])
