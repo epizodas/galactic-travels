@@ -100,5 +100,12 @@ func submitCostInfo() -> void:
 	var kg = $CalcOrderCosts/LineEdit.text.to_float()
 	var sqm = $CalcOrderCosts/LineEdit2.text.to_float()
 	var mrg = $CalcOrderCosts/LineEdit3.text.to_float()
-	_flightController.submitCostInfo(kg, sqm, mrg)
-	
+
+	var result = null
+	result = _flightController.submitCostInfo(kg, sqm, mrg)
+
+	if result == null:
+		$CalcOrderCosts/Label4.text = "Neteisingi įvesties duomenys"
+		return
+
+	$CalcOrderCosts/Label4.text = "Pelnas: " + str(result)

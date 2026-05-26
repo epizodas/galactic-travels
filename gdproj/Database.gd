@@ -104,7 +104,13 @@ static func _setup_database() -> void:
 	
 	db.insert_row("orders", {
 		"id": 1,
-		"order_status": "1",
+		"order_status": 1,
+		"user_id": 3
+	})
+
+	db.insert_row("orders", {
+		"id": 2,
+		"order_status": 1,
 		"user_id": 3
 	})
 	
@@ -136,6 +142,51 @@ static func _setup_database() -> void:
 		"order_id": 1,
 	})
 	
+	db.insert_row("cargo", {
+		"name": "Cargo3",
+		"length": 2,
+		"width": 2,
+		"mass": 20,
+		
+		"order_id": 2,
+	})
+
+	db.insert_row("cargo", {
+		"name": "Cargo4",
+		"length": 1,
+		"width": 2,
+		"mass": 55,
+		
+		"order_id": 2,
+	})
+
+	db.insert_row("cargo", {
+		"name": "Cargo5",
+		"length": 2,
+		"width": 2,
+		"mass": 25,
+		
+		"order_id": 2,
+	})
+
+	db.insert_row("cargo", {
+		"name": "Cargo6",
+		"length": 1,
+		"width": 3,
+		"mass": 33,
+		
+		"order_id": 2,
+	})
+
+	db.insert_row("cargo", {
+		"name": "Cargo7",
+		"length": 2,
+		"width": 3,
+		"mass": 14,
+		
+		"order_id": 1,
+	})
+
 	db.create_table("spaceship", {
 		"code": {"data_type": "text", "primary_key": true},
 		"name": {"data_type": "text"},
@@ -155,8 +206,8 @@ static func _setup_database() -> void:
 		"name": "spaceship 1",
 		"speed": 200.3,
 		"maxTemp": 2000.3,
-		"cargoLength": 5,
-		"cargoWidth": 5,
+		"cargoLength": 10,
+		"cargoWidth": 10,
 		"category": 5,
 		"fuelCapacity": 500,
 		"fuelConsumption": 1,
@@ -251,8 +302,8 @@ static func _setup_database() -> void:
 	db.insert_row("trip", {
 		"departureTime": "2026-06-01",
 		"arrivalTime": "2026-08-01",
-		"distance": 10000,
-		"requiredFuel": 22222,
+		"distance": 55000,
+		"requiredFuel": 489,
 	})
 
 static func _migrate_spacebody_orbits() -> void:

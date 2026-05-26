@@ -6,9 +6,6 @@ var _orders: Array[Order] = []
 
 var _selectedModules: Array[SpaceshipModule] = []
 
-func submit():
-	pass
-
 func openFlightView():
 	var planets: Array[Planet] = Planet.fetchAllPlanets()
 	if planets.is_empty():
@@ -138,7 +135,7 @@ func validateEndDate(date):
 			var simPlanet = SimulatedPlanet.new(planet)
 			simPlanet.x = (sin((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
 			simPlanet.y = (cos((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
-			simulationPlanets.append(simPlanet)
+			simulationPlanets.append(SimulatedPlanet.new(planet))
 	return comp
 
 func findShortestDistance():
@@ -253,8 +250,8 @@ func checkForAsteroidBelt(beltRadius: float) -> bool:
 	if segLenSq == 0:
 		return false
 
-	var fx = -ax
-	var fy = -ay
+	var fx = ax
+	var fy = ay
 	var t = clamp((fx * dx + fy * dy) / segLenSq, 0.0, 1.0)
 	var closestX = ax + t * dx
 	var closestY = ay + t * dy
@@ -353,7 +350,7 @@ func calculateOptimalCargo():
 		var cargo = Cargo.fetchOrderCargo(order.id)
 		cargo_arr.append_array(cargo)
 	
-	var foundOrders: Array[Order] = findOrdersForSpaceship(free_space, order_arr, cargo_arr);
+	var foundOrders: Array[Order] = findOrdersForSpaceship(order_arr, cargo_arr)
 	
 	var num = checkFoundOrderCount(foundOrders)
 	if num <= 0:
@@ -365,7 +362,7 @@ func calculateOptimalCargo():
 			if order.id == cargo.order_id:
 				foundCargo.append(cargo)
 	
-	var takenCapacity: int = checkSpaceshipCapacity(foundCargo);
+	var takenCapacity: float = checkSpaceshipCapacity(foundCargo);
 	if takenCapacity <= 30:
 		return "Rasti užsakymai užema mažiau nei 30% erdvėlaivio vietos";
 	
@@ -386,11 +383,20 @@ func calculateSpaceshipSize() -> Array:
 		space_grid.append(row)
 	return space_grid
 
-func findOrdersForSpaceship(free_space: Array, orders: Array[Order], cargo: Array[Cargo]) -> Array[Order]:
-	#var accepted_orders: Array[Order] = []
-	#var working_space = free_space.duplicate(true)
+func findOrdersForSpaceship(orders: Array[Order], cargo: Array[Cargo]) -> Array[Order]:
+	var accepted_orders: Array[Order] = []
 
-	return orders
+	var cargo_by_order = {}
+	for c in cargo:
+		if not cargo_by_order.has(c.order_id):
+			cargo_by_order[c.order_id] = []
+		cargo_by_order[c.order_id].append(c)
+
+	for order in orders:
+		if cargo_by_order.has(order.id):
+			accepted_orders.append(order)
+
+	return accepted_orders
 
 func checkFoundOrderCount(foundOrders: Array[Order]) -> int:
 	return foundOrders.size();
@@ -449,7 +455,8 @@ func calculateSpaceshipCargoBay(cargoLength: int, cargoWidth: int) -> int: #17
 	return cargoLength * cargoWidth
 
 func getTripOrders() -> Array[Order]: #18
-	return _orders
+	return Order.fetchAllOrderedOrders()
+	#return _orders
 
 func calculateCargoArea(cargo_items: Array[Cargo]) -> float: #21
 	var total_area = 0.0
