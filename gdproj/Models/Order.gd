@@ -71,5 +71,5 @@ static func fetchUserOrders(user: User) -> Array[Order]:
 		orders.append(new(row.id, row.price if row.price else 0, row.order_status))
 	return orders
 
-static func updateOrderStatus():
-	pass
+func updateOrderStatus(status: int):
+	order_status = status

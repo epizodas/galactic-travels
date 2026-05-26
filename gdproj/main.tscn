@@ -835,6 +835,10 @@ text = "Keisti valiutą"
 [node name="newPrice" type="Label" parent="MarginContainer/MainLayout/PaymentView/VBoxContainer" unique_id=740332926]
 layout_mode = 2
 
+[node name="Pay" type="Button" parent="MarginContainer/MainLayout/PaymentView/VBoxContainer" unique_id=155979660]
+layout_mode = 2
+text = "Apmokėti"
+
 [node name="FlightOptimalCargoView" type="MarginContainer" parent="MarginContainer/MainLayout" unique_id=775018337]
 visible = false
 layout_mode = 2
@@ -930,6 +934,7 @@ script = ExtResource("9_2xmvj")
 [connection signal="pressed" from="MarginContainer/MainLayout/SingleOrderView/OrderView/HBoxContainer/Back" to="MarginContainer/MainLayout/SingleOrderView" method="_back"]
 [connection signal="pressed" from="MarginContainer/MainLayout/PaymentView/VBoxContainer/HBoxContainer/Back" to="MarginContainer/MainLayout/PaymentView" method="_back"]
 [connection signal="pressed" from="MarginContainer/MainLayout/PaymentView/VBoxContainer/submitCurrencyChange" to="MarginContainer/MainLayout/PaymentView" method="submitCurrencyChange"]
+[connection signal="pressed" from="MarginContainer/MainLayout/PaymentView/VBoxContainer/Pay" to="MarginContainer/MainLayout/PaymentView" method="submitProcessPayment"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/HBoxContainer/Calculate" to="MarginContainer/MainLayout/FlightOptimalCargoView" method="pressCalculateButton"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/HBoxContainer/Back" to="MarginContainer/MainLayout/FlightOptimalCargoView" method="_back"]
 [connection signal="pressed" from="MarginContainer/MainLayout/SpaceMapView/VBoxContainer/Bar/Back" to="MarginContainer/MainLayout/SpaceMapView" method="exitSpaceMap"]

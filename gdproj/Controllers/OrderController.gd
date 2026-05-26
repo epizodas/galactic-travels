@@ -28,7 +28,6 @@ func openSingleOrderPage(order_id: int):
 
 func validateOrderData(cargos):
 	for c in cargos:
-
 		if c["name"].strip_edges().is_empty():
 			return "Nenurodytas pavadinimas"
 
@@ -57,7 +56,7 @@ func validateOrderData(cargos):
 			int(c["length"]),
 			int(c["width"]),
 			int(c["mass"]),
-			0 #order_id
+			0 # order_id
 		)
 		cargo_objects.append(cargo)
 	
@@ -75,7 +74,6 @@ func validateOrderData(cargos):
 	var orderView = get_tree().current_scene.find_child("OrdersView", true, false) as OrdersView
 	orderView.displayOrdersPage(allCargo)
 	
-
 
 func submitEditOrder():
 	pass
@@ -105,27 +103,26 @@ func openOrderPaymentPage(order_id: int) -> void:
 	var PaymentViewRef = get_tree().current_scene.find_child("PaymentView") as PaymentView
 	PaymentViewRef.displayPaymentView(currentOrder);
 
-func convertPrice(price: float, currency: String) -> void:
-	_pendingCurrency = currency
-	var url = "https://api.exchangerate.host/convert?from=EUR&to=%s&amount=%s" % [currency, str(price)]
-	var http = HTTPRequest.new()
-	add_child(http)
-	http.request_completed.connect(_on_convert_response)
-	http.request(url)
-
-func _on_convert_response(result, response_code, headers, body) -> void:
-	if response_code == 200:
-		var json = JSON.parse_string(body.get_string_from_utf8())
-		var converted = json["result"]
-		emit_signal("price_converted", converted, _pendingCurrency)
-	else:
-		print("API error: ", response_code)
+func convertPrice(price: float, currency: String) -> float:
+	var new_price = ExchangeService.convertPrice(price, currency)
+	return new_price
 	
 func validatePayment():
-	pass
+	return true
 	
-func updateOrderStatus():
-	pass
+func processPayment(order: Order):
+	var ok = validatePayment()
+	if not ok:
+		return "Mokėjimas nepavyko"
+	
+	ok = PaymentService.processPayment()
+	
+	if not ok:
+		return "Mokėjimas nepavyko"
+		
+	order.updateOrderStatus(3)
+	return "Apmokėjimas sėkmingas"
+
 	
 # 	if result.has("price"):                        # steps 10–11: success
 # 		_convertedPrice = result.price

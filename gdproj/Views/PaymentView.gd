@@ -2,17 +2,6 @@ extends Node
 class_name PaymentView
 var _currentOrder = null
 
-var _orderController: OrderController = null
-
-func _ready():
-	_orderController = get_tree().current_scene.find_child("OrderController", true, false) as OrderController
-	
-	if _orderController == null:
-		print("ERROR: OrderController not found!")
-		return
-	
-	_orderController.price_converted.connect(_on_price_converted)
-
 func _on_price_converted(converted_price: float, currency: String) -> void:
 	var price_label = find_child("price", true, false) as Label
 	price_label.text = "Užsakymo kaina: " + str(converted_price) + " " + currency
@@ -22,6 +11,8 @@ func displayPaymentView(order: Order):
 	if orders_view:
 		orders_view.visible = false
 	self.visible = true
+	
+	_currentOrder = order
 	
 	var initial_price = find_child("price", true, false) as Label
 	initial_price.text = "Užsakymo kaina: " + str(order.price) + " EUR"
@@ -36,17 +27,20 @@ func displayPaymentView(order: Order):
 
 func submitCurrencyChange() -> void:
 	var option_button = find_child("currency", true, false)
+	
 	if option_button == null or _currentOrder == null:
 		return
 
 	var selected_currency = option_button.get_item_text(option_button.selected)
 
-	_orderController.convertPrice(_currentOrder.price, selected_currency)
-	var newCurrency = find_child("newCurrency", true, false) as Label
+	var newPrice = _orderController.convertPrice(_currentOrder.price, selected_currency)
 	
+	$VBoxContainer/newPrice.text = "Nauja užsakymo kaina: " + str(newPrice) + " " + selected_currency
 
 
 func submitProcessPayment():
+	var msg = _orderController.processPayment(_currentOrder)
+	_toast.show(msg)
 	pass
 
 func _back():
