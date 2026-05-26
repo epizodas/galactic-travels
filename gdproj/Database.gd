@@ -16,8 +16,6 @@ static var db: SQLite:
 			else:
 				_migrate_spacebody_orbits()
 		return _db
-# good intro to the plugin
-# https://www.youtube.com/watch?v=j-BRiTrw_F0
 #static func init():
 	#db = SQLite.new()
 	#db.path="res://data.db"
@@ -214,8 +212,20 @@ static func _setup_database() -> void:
 		"moduleCapacity": 1,
 		"hangar_id": 0,
 	})
-	print("Inserted spaceship row")
 	
+	db.insert_row("spaceship", {
+		"code": "SHP-" + str(randi_range(1, 1000)),
+		"name": "spaceship 2",
+		"speed": 200.3,
+		"maxTemp": 2000.3,
+		"cargoLength": 5,
+		"cargoWidth": 5,
+		"category": 4,
+		"fuelCapacity": 300,
+		"fuelConsumption": 0.5,
+		"moduleCapacity": 1,
+		"hangar_id": 0,
+	})
 	
 	db.create_table("spaceship_modules", {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true},

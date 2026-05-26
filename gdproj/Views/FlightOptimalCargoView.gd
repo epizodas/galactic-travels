@@ -13,7 +13,7 @@ func displayFlightOptimalCargoView():
 	error_field.text = ""
 
 func pressCalculateButton():
-	var ret = _flightController.calculateOptimalCargo()
+	var ret = await _flightController.calculateOptimalCargo()
 
 	if typeof(ret) == TYPE_STRING:
 		error_field.text = ret

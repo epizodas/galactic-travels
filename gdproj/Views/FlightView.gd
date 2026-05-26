@@ -109,3 +109,10 @@ func submitCostInfo() -> void:
 		return
 
 	$CalcOrderCosts/Label4.text = "Pelnas: " + str(result)
+	
+func _back():
+	var view = get_tree().current_scene.find_child("MainView", true, false) as Control
+	if view:
+		view.visible = true
+	self.visible = false
+	

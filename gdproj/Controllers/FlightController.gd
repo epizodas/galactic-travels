@@ -354,6 +354,12 @@ func displayRouteCreationPage():
 # ======================================================================================================
 # domanto funkcija
 # ======================================================================================================
+static var _step := false
+static func _get_debug_vis() -> Control:
+	return Engine.get_main_loop().current_scene.get_node_or_null(
+		"MarginContainer/MainLayout/FlightOptimalCargoView/VBoxContainer/VBoxContainer/Panel"
+	)
+
 func displayFlightOptimalCargoView():
 	var optimalCargoView = get_tree().current_scene.find_child("FlightOptimalCargoView") as FlightOptimalCargoView
 	optimalCargoView.displayFlightOptimalCargoView()
@@ -367,7 +373,7 @@ func calculateOptimalCargo():
 		var cargo = Cargo.fetchOrderCargo(order.id)
 		cargo_arr.append_array(cargo)
 	
-	var foundOrders: Array[Order] = findOrdersForSpaceship(order_arr, cargo_arr)
+	var foundOrders: Array[Order] = await findOrdersForSpaceship(free_space, order_arr, cargo_arr)
 	
 	var num = checkFoundOrderCount(foundOrders)
 	if num <= 0:
@@ -400,18 +406,90 @@ func calculateSpaceshipSize() -> Array:
 		space_grid.append(row)
 	return space_grid
 
-func findOrdersForSpaceship(orders: Array[Order], cargo: Array[Cargo]) -> Array[Order]:
+func findOrdersForSpaceship(freeSpace: Array, orders: Array[Order], cargo: Array[Cargo]) -> Array[Order]:
+	var grid_h: int = freeSpace.size()
+	var grid_w: int = freeSpace[0].size() if grid_h > 0 else 0
+	var free_rects: Array = [{"x": 0, "y": 0, "w": grid_w, "h": grid_h}]
+	var placed_items: Array = []
+	var cargo_by_order: Dictionary = {}
+	for c in cargo:
+		var key: int = int(c.order_id)
+		if not cargo_by_order.has(key):
+			cargo_by_order[key] = []
+		cargo_by_order[key].append(c)
+
 	var accepted_orders: Array[Order] = []
 
-	var cargo_by_order = {}
-	for c in cargo:
-		if not cargo_by_order.has(c.order_id):
-			cargo_by_order[c.order_id] = []
-		cargo_by_order[c.order_id].append(c)
-
 	for order in orders:
-		if cargo_by_order.has(order.id):
+		print("--- trying order: ", order.id)
+		if not cargo_by_order.has(int(order.id)):
+			print("SKIP: no cargo found for order ", order.id)
+			print("cargo_by_order keys: ", cargo_by_order.keys())
+			continue
+
+		var order_cargo: Array = cargo_by_order[int(order.id)]
+		print("order cargo count: ", order_cargo.size())
+
+		var temp_free_rects: Array = []
+		for rect in free_rects:
+			temp_free_rects.append(rect.duplicate())
+		var temp_placed: Array = []
+		var order_fits: bool = true
+
+		for item in order_cargo:
+			var best_rect_idx: int = -1
+			var best_area: int = 999999999
+
+			for i in range(temp_free_rects.size()):
+				var rect = temp_free_rects[i]
+				print("  checking rect ", rect, " fits? w:", rect["w"] >= item.width, " h:", rect["h"] >= item.length)
+				if rect["w"] >= item.width and rect["h"] >= item.length:
+					var area = rect["w"] * rect["h"]
+					if area < best_area:
+						best_area = area
+						best_rect_idx = i
+
+			print("  best_rect_idx: ", best_rect_idx)
+			if best_rect_idx == -1:
+				print("  FAIL: item doesnt fit anywhere")
+				order_fits = false
+				break
+
+			var chosen = temp_free_rects[best_rect_idx].duplicate()
+			temp_free_rects.remove_at(best_rect_idx)
+
+			temp_placed.append({
+				"x": chosen["x"],
+				"y": chosen["y"],
+				"w": item.width,
+				"h": item.length,
+				"label": str(order.id)
+			})
+
+			if chosen["w"] - item.width > 0:
+				temp_free_rects.append({
+					"x": chosen["x"] + item.width,
+					"y": chosen["y"],
+					"w": chosen["w"] - item.width,
+					"h": item.length
+				})
+			if chosen["h"] - item.length > 0:
+				temp_free_rects.append({
+					"x": chosen["x"],
+					"y": chosen["y"] + item.length,
+					"w": chosen["w"],
+					"h": chosen["h"] - item.length
+				})
+
+		if order_fits:
 			accepted_orders.append(order)
+			free_rects = temp_free_rects
+			placed_items.append_array(temp_placed)
+
+	var _debug_vis := _get_debug_vis()
+	if _debug_vis:
+		_debug_vis.update_state(grid_w, grid_h, free_rects, placed_items)
+		await _debug_vis.step_pressed
 
 	return accepted_orders
 
@@ -420,7 +498,6 @@ func checkFoundOrderCount(foundOrders: Array[Order]) -> int:
 	
 func checkSpaceshipCapacity(cargo: Array[Cargo]) -> float:
 	var total_area := 0
-
 
 	for c in cargo:
 		total_area += c.width * c.length
