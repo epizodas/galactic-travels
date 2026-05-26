@@ -405,14 +405,10 @@ func findOrdersForSpaceship(freeSpace: Array, orders: Array[Order], cargo: Array
 	var accepted_orders: Array[Order] = []
 
 	for order in orders:
-		print("--- trying order: ", order.id)
 		if not cargo_by_order.has(int(order.id)):
-			print("SKIP: no cargo found for order ", order.id)
-			print("cargo_by_order keys: ", cargo_by_order.keys())
 			continue
 
 		var order_cargo: Array = cargo_by_order[int(order.id)]
-		print("order cargo count: ", order_cargo.size())
 
 		var temp_free_rects: Array = []
 		for rect in free_rects:
@@ -426,14 +422,12 @@ func findOrdersForSpaceship(freeSpace: Array, orders: Array[Order], cargo: Array
 
 			for i in range(temp_free_rects.size()):
 				var rect = temp_free_rects[i]
-				print("  checking rect ", rect, " fits? w:", rect["w"] >= item.width, " h:", rect["h"] >= item.length)
 				if rect["w"] >= item.width and rect["h"] >= item.length:
 					var area = rect["w"] * rect["h"]
 					if area < best_area:
 						best_area = area
 						best_rect_idx = i
 
-			print("  best_rect_idx: ", best_rect_idx)
 			if best_rect_idx == -1:
 				print("  FAIL: item doesnt fit anywhere")
 				order_fits = false
@@ -441,7 +435,7 @@ func findOrdersForSpaceship(freeSpace: Array, orders: Array[Order], cargo: Array
 
 			var chosen = temp_free_rects[best_rect_idx].duplicate()
 			temp_free_rects.remove_at(best_rect_idx)
-
+			
 			temp_placed.append({
 				"x": chosen["x"],
 				"y": chosen["y"],
@@ -449,7 +443,7 @@ func findOrdersForSpaceship(freeSpace: Array, orders: Array[Order], cargo: Array
 				"h": item.length,
 				"label": str(order.id)
 			})
-
+			
 			if chosen["w"] - item.width > 0:
 				temp_free_rects.append({
 					"x": chosen["x"] + item.width,
@@ -625,6 +619,8 @@ func submitCostInfo(price_per_kg: float, price_per_sqm: float, markup_percent: f
 	return calculateProfit(total_revenue, base_cost) #28
 
 func openFlightCostView():
+	if _spaceship == null or _orders.size() == 0 or _selectedModules.size() == 0 or currentRoute == null:
+		return
 	var flightCostView = get_tree().current_scene.find_child("FlightView") as FlightView
 	if flightCostView:
 		flightCostView.displayFlightCostView()

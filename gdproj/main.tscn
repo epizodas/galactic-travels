@@ -915,7 +915,7 @@ script = ExtResource("9_2xmvj")
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/FindRoute" to="MarginContainer/MainLayout/FlightView" method="openRouteCreation"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/FindCargoLayout" to="MarginContainer/MainLayout/FlightView" method="openFlightOptimalCargoView"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/SelectUpgrades" to="MarginContainer/MainLayout/FlightView" method="changeSpaceshipModules"]
-[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/CalculatePrices" to="MarginContainer/MainLayout/FlightView" method="displayFlightCostView"]
+[connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/CalculatePrices" to="MarginContainer/MainLayout/FlightView" method="openFlightCostView"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/GenerateRoute/Back" to="MarginContainer/MainLayout/FlightView" method="_back"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/ChooseModules/SubmitModules" to="MarginContainer/MainLayout/FlightView" method="submitModules"]
 [connection signal="pressed" from="MarginContainer/MainLayout/FlightView/CalcOrderCosts/HBoxContainer/Button" to="MarginContainer/MainLayout/FlightView" method="submitCostInfo"]
