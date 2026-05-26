@@ -97,17 +97,91 @@ func openAddOrderPage():
 	var addOrderPage = get_tree().current_scene.find_child("AddOrderView") as AddOrderView
 	addOrderPage.displayAddOrderPage()
 
-func submitOrderAdd():
-	pass
 
-func cancelCancellation():
-	pass
+# # ── State ────────────────────────────────────────────────────────────────────
+# var _currentOrder: Order = null
+# var _convertedPrice: float = 0.0
+# var _selectedCurrency: String = "EUR"
 
-func openOrderPaymentPage():
-	pass
+# # ── Step 1–3: Open payment page ───────────────────────────────────────────────
+# func openOrderPaymentPage(order_id: int) -> void:
+# 	_currentOrder = Order.fetchOrder(order_id)
+# 	if not _currentOrder:
+# 		printerr("openOrderPaymentPage: order not found — id ", order_id)
+# 		return
 
-func convertPrice():
-	pass
+# 	_convertedPrice = _currentOrder.price
+# 	_selectedCurrency = "EUR"
 
-func validatePayment():
-	pass
+# 	var PaymentViewRef = get_tree().current_scene.find_child("PaymentView") as PaymentView
+# 	if PaymentViewRef:
+# 		PaymentViewRef.displayPaymentView(_currentOrder)
+
+# # ── Steps 4–13: Currency conversion (opt block) ───────────────────────────────
+# func submitCurrencyChange(currency: String) -> void:
+# 	if not _currentOrder:
+# 		printerr("submitCurrencyChange: no current order")
+# 		return
+
+# 	_selectedCurrency = currency
+# 	var result = convertPrice(_currentOrder.price, currency)
+
+# 	var PaymentViewRef = get_tree().current_scene.find_child("PaymentView") as PaymentView
+# 	if not PaymentViewRef:
+# 		return
+
+# 	if result.has("price"):                        # steps 10–11: success
+# 		_convertedPrice = result.price
+# 		PaymentViewRef.displayConvertedPrice(result.price, currency)
+# 	else:                                          # steps 12–13: error
+# 		PaymentViewRef.displayCurrencyError(result.get("error", "Klaida konvertuojant valiutą"))
+
+# func convertPrice(price: float, currency: String) -> Dictionary:
+# 	# Calls ExchangeService → ExchangeAPI (steps 5–9)
+# 	var converted = ExchangeService.convertPrice(price, currency)
+# 	if converted < 0:
+# 		return {"error": "Nepavyko gauti valiutos kurso"}
+# 	return {"price": converted}
+
+# # ── Steps 14–28: Process payment (alt block) ──────────────────────────────────
+# func submitProcessPayment(payment_info: Dictionary) -> void:
+# 	if not _currentOrder:
+# 		printerr("submitProcessPayment: no current order")
+# 		return
+
+# 	var PaymentViewRef = get_tree().current_scene.find_child("PaymentView") as PaymentView
+
+# 	# Steps 15–16: validate locally first
+# 	var validation_error = validatePayment(payment_info)
+# 	if validation_error:                           # outer alt [else] — steps 27–28
+# 		if PaymentViewRef:
+# 			PaymentViewRef.displayPaymentError(validation_error)
+# 		return
+
+# 	# Step 17: send to PaymentAPI via PaymentService
+# 	var payment_status = PaymentService.processPayment(payment_info, _convertedPrice, _selectedCurrency)
+
+# 	if payment_status == "success":                # inner alt [success]
+# 		# Steps 21–22: update order status in DB
+# 		updateOrderStatus(_currentOrder, "Sumokėtas")
+
+# 		if PaymentViewRef:                         # steps 23–24: success message
+# 			PaymentViewRef.displaySuccessMessage("Mokėjimas sėkmingai apdorotas")
+# 	else:                                          # inner alt [else] — steps 25–26
+# 		if PaymentViewRef:
+# 			PaymentViewRef.displayPaymentError("Mokėjimo klaida: " + payment_status)
+
+# func validatePayment(payment_info: Dictionary) -> String:
+# 	# Steps 15–16: local validation before hitting PaymentAPI
+# 	if not payment_info.has("card_number") or payment_info.card_number.strip_edges().is_empty():
+# 		return "Nenurodytas kortelės numeris"
+# 	if not payment_info.has("expiry") or payment_info.expiry.strip_edges().is_empty():
+# 		return "Nenurodytas galiojimo laikas"
+# 	if not payment_info.has("cvv") or payment_info.cvv.strip_edges().is_empty():
+# 		return "Nenurodytas CVV"
+# 	return "" # empty string = valid
+
+# func updateOrderStatus(order: Order, status: String) -> void:
+# 	# Steps 21–22
+# 	order.order_status = status
+# 	Order.updateOrderStatus(order.id, status)

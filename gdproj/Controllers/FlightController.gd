@@ -121,6 +121,7 @@ var step = 1
 var endTime = 0
 
 func validateEndDate(date):
+	simulationPlanets.clear()
 	var curDate = Time.get_date_dict_from_system()
 	curDate.hour = 0
 	curDate.minute = 0
@@ -135,7 +136,7 @@ func validateEndDate(date):
 			var simPlanet = SimulatedPlanet.new(planet)
 			simPlanet.x = (sin((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitXOffset
 			simPlanet.y = (cos((sysTime + planet.phase) * 2 * 3.14159265358979 / planet.orbitalPeriod) * planet.orbitalRadius) + planet.orbitYOffset
-			simulationPlanets.append(SimulatedPlanet.new(planet))
+			simulationPlanets.append(simPlanet)
 	return comp
 
 func findShortestDistance():
@@ -182,10 +183,10 @@ func compareOrbitDistances():
 func calculateNewStep(curDistDiff: float, lastDistDiff: float) -> void:
 	if curDistDiff < 0:
 		step *= 0.9
-		step = max(step, 0.1)
+		step = max(step, 3600.0)
 	elif curDistDiff > 0 and lastDistDiff > 0:
 		step *= 1.1
-		step = min(step, 1.0)
+		step = min(step, 86400.0)
 
 var flag = 0
 
@@ -263,10 +264,10 @@ func checkForAsteroidBelt(beltRadius: float) -> bool:
 func findRoute():
 	findShortestDistance()
 	var curDistDiff = -1
-	var lastDistDiff = -1
+	var lastDistDiff = 0.0
 	var lastDist = -1
 	var intersectPlanet = false
-	step = 2
+	step = 86400
 	print(currentTime)
 	print(endTime)
 	while true:
@@ -284,7 +285,7 @@ func findRoute():
 		if curDistDiff < 0:
 			calculateNewStep(curDistDiff, lastDistDiff)
 		elif curDistDiff > 0:
-			if lastDistDiff <= 0:
+			if lastDistDiff < 0:
 				setFlag()
 				var fuelUsage = calculateFuelUsage(curDist)
 				var fuelCapacity = _spaceship.fuelCapacity
@@ -311,7 +312,8 @@ func findRoute():
 					setFlag()
 					pass
 				if flag == 2:
-					var _trip = Trip.new(Time.get_date_dict_from_unix_time(currentTime), Time.get_date_dict_from_unix_time(currentTime + 1), curDist, fuelUsage)
+					var travel_seconds = (curDist / _spaceship.speed) * 86400.0
+					var _trip = Trip.new(Time.get_date_dict_from_unix_time(currentTime), Time.get_date_dict_from_unix_time(currentTime + int(travel_seconds)), curDist, fuelUsage)
 					_trip.intersectPlanet = intersectPlanet
 					print("Found trip")
 					print(_trip.departureTime)
